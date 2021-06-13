@@ -1,5 +1,5 @@
 ---
-title: vim-terminator
+title: Vim Terminator
 mathjax: true
 ---
 

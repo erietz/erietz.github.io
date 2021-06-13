@@ -15,10 +15,13 @@ pre {
     border-radius: 4px;
     background-color: #1d2021;
     padding: 0.5em;
+    font-weight: bold;
 }
 
 code {
     font-family: monospace;
+    font-weight: bold;
+    background-color: #1d2021;
 }
 
 h1, h2, h3, h4, h5, h6 {

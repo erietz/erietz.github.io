@@ -6,12 +6,13 @@ MD_PROJECTS := $(shell find _projects -type f -name '*.md')
 HTML_PROJECTS := $(MD_PROJECTS:.md=.html)
 HTML_PROJECTS :=  $(subst _projects/,projects/,$(HTML_PROJECTS))
 
-PD_FLAGS = -s --toc \
+PD_FLAGS = --standalone --toc --mathjax \
 					 -c /assets/css/master.css \
 					 -B ./assets/navigation.html \
 					 --highlight-style breezedark
 
 all: $(HTML_POSTS) $(HTML_PROJECTS) makefile
+	python assets/python/generate_index_files.py
 	sed -i.bak 's/\(href=".*\).md">/\1.html">/' ./posts/index.html
 	sed -i.bak 's/\(href=".*\).md">/\1.html">/' ./projects/index.html
 	rm ./posts/index.html.bak ./projects/index.html.bak

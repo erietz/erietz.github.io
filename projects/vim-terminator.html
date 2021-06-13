@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>vim-terminator</title>
+  <title>Vim Terminator</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -78,9 +78,9 @@
     code span.va { color: #27aeae; } /* Variable */
     code span.vs { color: #da4453; } /* VerbatimString */
     code span.wa { color: #da4453; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="/assets/css/master.css" />
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
@@ -88,7 +88,7 @@
 <body>
 <script src="/assets/js/navigation.js" charset="utf-8"></script>
 <header id="title-block-header">
-<h1 class="title">vim-terminator</h1>
+<h1 class="title">Vim Terminator</h1>
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
@@ -128,7 +128,7 @@
 <h2 id="option-5-dispatch">Option 5: Dispatch</h2>
 <p>I was a big fan of Tim Pope’s vim-dispatch plugin, and I still supplement my vim-terminator experience with dispatch. The two features I like about dispatch are that it is asynchronous and it puts errors into the quickfix window.</p>
 <blockquote>
-<p>I first found the quickfix window when using the <a href="https://github.com/lervag/vimtex">vimtex</a> plugin for editing <span class="math inline">$\LaTeX$</span>. It puts the errors and warnings from the compiler log into a small (quickfix) window which allows you to conveniently jump to them regardless of the file they are in.</p>
+<p>I first found the quickfix window when using the <a href="https://github.com/lervag/vimtex">vimtex</a> plugin for editing <span class="math inline">\(\LaTeX\)</span>. It puts the errors and warnings from the compiler log into a small (quickfix) window which allows you to conveniently jump to them regardless of the file they are in.</p>
 </blockquote>
 <p>In short, vim-dispatch basically makes an asynchronous version of the built in <code>:make</code> command. The <code>:make</code> command along with <code>:compiler</code>, <code>:makeprg</code>, and <code>errorformat</code> may take a decade to understand entirely. The key takeaway is that you can usually just set <code>:compiler</code> to one of the compilers provided by vim and the <code>:makeprg</code> to the command you want to run and everything works nicely. The other nice feature is that <code>:Make</code> allows you to use a Makefile if your build is more complicated than just compiling your current file.</p>
 <p>Vim-dispatch is great when you do not want to wait for a process to finish and you only want to see the output if there are errors. This works well for compiling programs and for runnings tests. Often times when writing code, I want to quickly run my current file (asynchronously) and <strong>see the output immediately</strong>. Trying to accomplish this with dispatch for a language like python is impossible for all practical purposes. For instance, to keep the quickfix window open after running a python program with dispatch, one needs to make the file executable and run it with a command like <code>:Dispatch ./%</code> such that there is not an <code>errorformat</code> hiding the quickfix window at the end of the job. The quickfix window was not designed to be used in this way.</p>

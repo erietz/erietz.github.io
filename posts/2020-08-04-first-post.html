@@ -78,9 +78,9 @@
     code span.va { color: #27aeae; } /* Variable */
     code span.vs { color: #da4453; } /* VerbatimString */
     code span.wa { color: #da4453; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="/assets/css/master.css" />
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
@@ -97,7 +97,7 @@
 </nav>
 <h1 id="welcome">Welcome</h1>
 <p>This is a test post. Everything appears to be working smoothly!</p>
-<p>In order to get <span class="math inline">$\LaTeX$</span> to work, I had to create a folder <code>_includes/head</code> with a file <code>custom.html</code> with the following content.</p>
+<p>In order to get <span class="math inline">\(\LaTeX\)</span> to work, I had to create a folder <code>_includes/head</code> with a file <code>custom.html</code> with the following content.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>{% if page.mathjax %}</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;script</span><span class="ot"> type=</span><span class="st">&quot;text/javascript&quot;</span> <span class="er">async</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ot">  src=</span><span class="st">&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML&quot;</span><span class="kw">&gt;</span></span>
