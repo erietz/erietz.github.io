@@ -12,10 +12,9 @@ PD_FLAGS = --standalone --toc --mathjax \
 					 --highlight-style breezedark
 
 all: $(HTML_POSTS) $(HTML_PROJECTS) makefile
-	python assets/python/generate_index_files.py
+	python assets/python/generate_posts_index.py
 	sed -i.bak 's/\(href=".*\).md">/\1.html">/' ./posts/index.html
-	sed -i.bak 's/\(href=".*\).md">/\1.html">/' ./projects/index.html
-	rm ./posts/index.html.bak ./projects/index.html.bak
+	rm ./posts/index.html.bak
 
 posts/%.html: _posts/%.md
 	pandoc $(PD_FLAGS) $^ -o $@
