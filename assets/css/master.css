@@ -24,13 +24,22 @@
   --fg4: #a89984;
 }
 
+html {
+  height: 100%;
+}
+
 body {
+  min-height: 100%;
+  position: relative;
+  padding-bottom: [footer-height];
+
   margin: auto;
   padding-right: 1em;
   padding-left: 1em;
   padding-top: 1em;
   padding-bottom: 1em;
-  max-width: 50em; 
+  max-width: 75%; 
+
   font-family: Ubuntu, Verdana, sans-serif;
   font-size: 100%;
   line-height: 140%;
@@ -141,12 +150,18 @@ a:active {
 }
 
 .footer {
-  text-align: center;
-  margin-left: 25%;
-  width:50%;
-  margin: 2em;
-  position: fixed;
+  position: absolute;
+  left: 0;
+  right: 0;
   bottom: 0;
+  height: [footer-height];
+
+  text-align: center;
+  /* margin-left: 25%; */
+  /* width:20%; */
+  margin: 3em;
+  /* position: relative; */
+  /* bottom: 0; */
 }
 
 .footer a {
