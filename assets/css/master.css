@@ -67,6 +67,20 @@ table {
   margin-right: auto;
 }
 
+/* table headings */
+th {
+  text-align: left;
+}
+
+/* input fields */
+input {
+  background-color: var(--fg0);
+}
+
+button {
+  background-color: var(--gray);
+}
+
 /* for centering images */
 .center {
   display: block;

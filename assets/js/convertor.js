@@ -1,4 +1,4 @@
-function convert(event) {
+function convert() {
     var energy = document.getElementById("energy").value;
 
     kcal_per_mol = (energy*627.5094740631).toExponential(5)
@@ -6,18 +6,18 @@ function convert(event) {
     eV = (energy*27.211386245988).toExponential(5)
     wavenumber = (energy*219474.63136320).toExponential(5)
 
-    var string = `${energy} hartrees is equal to: <br/>`
-    string += "<br/>"
-    string += `${kcal_per_mol} $\\frac{kcal}{mol}$ <br/>`
-    string += `${kJ_per_mol}   $\\frac{kJ}{mol}$ <br/>`
-    string += `${eV}           eV <br/>`
-    string += `${wavenumber}   $cm^{-1}$ <br/>`
-    string += "<br/>"
-    string += "Aren't you glad you used this today!"
+    var table = "<table>"
+    table += "<tr> <th>Energy</th> <th>Units</th> </tr>"
+    table += `<tr> <td>${energy}</td> <td>hartrees</td> </tr>`
 
-    document.getElementById("output").innerHTML = string;
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, 'output']);
-    // MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    table += `<tr> <td>${kcal_per_mol}</td> <td> kcal mol<sup>-1</sub> </tr>`
+    table += `<tr> <td>${kJ_per_mol}</td>   <td> kJ mol<sup>-1</sub> </tr>`
+    table += `<tr> <td>${eV}</td>           <td> eV </tr>`
+    table += `<tr> <td>${wavenumber}</td>   <td> cm <sup>-1</sup> </tr>`
+    table += "</table>"
+    table += "<br/>"
+    table += "Aren't you glad you used this today!"
 
-    event.preventDefault();
+    document.getElementById("output").innerHTML = table;
+    return false;
 }

@@ -4,21 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="/assets/css/master.css" type="text/css" charset="utf-8">
-    <script src="/node_modules/mathjax/es5/tex-chtml.js" id="MathJax-script" async></script>
     <title>Energy_convertor</title>
   </head>
   <body>
+
+    <script src="/assets/js/navigation.js" charset="utf-8"></script>
+
     <p>Enter your energy in the box below</p>
 
     <form>
       Energy (hartrees):
       <input type="text" size="12" id="energy" /><br />
-      <input type="submit" onclick="convert(event);" />
+      <input type="submit" onclick="return convert();" />
     </form>
 
     <script type="text/javascript" src="/assets/js/convertor.js"></script>
 
     <p id="output"></p>
+
 
   </body>
 </html>
