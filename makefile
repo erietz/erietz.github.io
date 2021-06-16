@@ -8,7 +8,9 @@ HTML_PROJECTS :=  $(subst _projects/,projects/,$(HTML_PROJECTS))
 
 PD_FLAGS = --standalone --toc --mathjax \
 					 -c /assets/css/master.css \
-					 -B ./assets/navigation.html \
+					 -c "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" \
+					 --include-before-body ./assets/navigation.html \
+					 --include-after-body ./assets/footer.html \
 					 --highlight-style breezedark
 
 all: $(HTML_POSTS) $(HTML_PROJECTS) makefile

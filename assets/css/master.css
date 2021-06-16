@@ -140,6 +140,30 @@ a:active {
   color: black;
 }
 
+.footer {
+  text-align: center;
+  margin-left: 25%;
+  width:50%;
+  margin: 2em;
+  position: fixed;
+  bottom: 0;
+}
+
+.footer a {
+  padding: 10px;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: var(--orange);
+}
+
+.footer-text {
+  display: block;
+  color: var(--gray);
+  font-size:0.8em;
+}
+
 /* /1* Add a color to the active/current link *1/ */
 /* .topnav a.active { */
 /*   /1* background-color: #04AA6D; *1/ */
