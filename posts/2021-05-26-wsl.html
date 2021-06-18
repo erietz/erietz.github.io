@@ -24,11 +24,29 @@
 <header id="title-block-header">
 <h1 class="title">Fix WSL File Permissions</h1>
 </header>
-<p>The file permissions on Windows Subsystem for Linux are very screwed up by default. To fix this, create the file <code>/etc/wsl.conf</code> if it does not already exist and add the following:</p>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#step-1">Step 1</a></li>
+<li><a href="#step-2">Step 2</a></li>
+</ul>
+</nav>
+<p>The file permissions on Windows Subsystem for Linux are very screwed up by default. To fix this…</p>
+<h2 id="step-1">Step 1</h2>
+<p>Create the file <code>/etc/wsl.conf</code> if it does not already exist and add the following:</p>
 <pre class="conf"><code>[automount]
 enabled = true
 options = &quot;metadata,umask=22,fmask=11&quot;</code></pre>
-<p>More information can be found at these links: - <a href="https://devblogs.microsoft.com/commandline/automatically-configuring-wsl/">Automatically Configuring WSL</a> - <a href="https://devblogs.microsoft.com/commandline/chmod-chown-wsl-improvements/">Chmod/Chown WSL Improvements</a> - <a href="https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-per-distro-launch-settings-with-wslconf">Configure per distro launch settings with wslconf</a></p>
+<p>More information can be found at these links:</p>
+<p><a href="https://devblogs.microsoft.com/commandline/automatically-configuring-wsl/">Automatically Configuring WSL</a></p>
+<p><a href="https://devblogs.microsoft.com/commandline/chmod-chown-wsl-improvements/">Chmod/Chown WSL Improvements</a></p>
+<p><a href="https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-per-distro-launch-settings-with-wslconf">Configure per distro launch settings with wslconf</a></p>
+<h2 id="step-2">Step 2</h2>
+<ol type="1">
+<li>Clone your windows drive to an extra 500GB HDD you have lying around using Macrium Reflect.</li>
+<li>Put the hard drive in a drawer and forget about it.</li>
+<li>Install Linux on your NVMe</li>
+<li>Enjoy the simplicity</li>
+</ol>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
 </body>
 </html>

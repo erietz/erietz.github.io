@@ -1,19 +1,14 @@
 ---
 title: Make life easier
-header:
-  image: /assets/images/GNU-Free-as-in-Freedom.svg
-  teaser: /assets/images/GNU-Free-as-in-Freedom.svg
 categories:
-  - computer
-tags:
-  - code
+  - make
 ---
 
 I have known about [GNU Make](https://www.gnu.org/software/make/) for quite
 some time but never got around to using it. I wish I would have started
 `make`ing my life easier much earlier...
 
-# Basic Usage
+## Basic Usage
 
 Lets say you have a complicated directory that looks like this
 ```
@@ -60,7 +55,7 @@ represents the target, `main`.
 
 In the next section, I will go over a more complicated example.
 
-# Pandoc Example
+## Pandoc Example
 
 Now, assume we have a directory full of markdown files and we want to convert
 all of them to html files in a separate directory. Lets `make` it happen. Gone
@@ -219,7 +214,7 @@ The directory now looks like this
 8 directories, 60 files
 ```
 
-# More Complicated Makefile
+## More Complicated Makefile
 
 Of course, `make` can do a ton of things... [Linux
 Makefile](https://github.com/torvalds/linux/blob/master/Makefile)

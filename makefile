@@ -13,16 +13,19 @@ PD_FLAGS = --standalone --toc --mathjax \
 					 --include-after-body ./assets/footer.html \
 					 --highlight-style breezedark
 
-all: $(HTML_POSTS) $(HTML_PROJECTS) makefile
-	python assets/python/generate_posts_index.py
-	sed -i.bak 's/\(href=".*\).md">/\1.html">/' ./posts/index.html
-	rm ./posts/index.html.bak
+all: $(HTML_POSTS) $(HTML_PROJECTS) index makefile
 
 posts/%.html: _posts/%.md
 	pandoc $(PD_FLAGS) $^ -o $@
 
 projects/%.html: _projects/%.md
 	pandoc $(PD_FLAGS) $^ -o $@
+
+index:
+	python ./assets/python/generate_posts_index.py
+	pandoc $(PD_FLAGS) _posts/index.md -o posts/index.html
+	sed -i.bak 's/\(href=".*\).md">/\1.html">/' ./posts/index.html
+	rm ./posts/index.html.bak
 
 clean:
 	rm $(HTML_POSTS) $(HTML_PROJECTS)

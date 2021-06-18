@@ -98,7 +98,7 @@
 </ul>
 </nav>
 <p>I have known about <a href="https://www.gnu.org/software/make/">GNU Make</a> for quite some time but never got around to using it. I wish I would have started <code>make</code>ing my life easier much earlier…</p>
-<h1 id="basic-usage">Basic Usage</h1>
+<h2 id="basic-usage">Basic Usage</h2>
 <p>Lets say you have a complicated directory that looks like this</p>
 <pre><code>.
 └── main.c
@@ -119,7 +119,7 @@
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    gcc <span class="ch">$^</span> -o <span class="ch">$@</span></span></code></pre></div>
 <p>Here <code>$^</code> represents all of the prerequisites (i.e. <code>main.c</code>) and <code>$@</code> represents the target, <code>main</code>.</p>
 <p>In the next section, I will go over a more complicated example.</p>
-<h1 id="pandoc-example">Pandoc Example</h1>
+<h2 id="pandoc-example">Pandoc Example</h2>
 <p>Now, assume we have a directory full of markdown files and we want to convert all of them to html files in a separate directory. Lets <code>make</code> it happen. Gone are the days of shell scripts. The directory of markdown files looks like this:</p>
 <pre><code>.
 ├── css
@@ -260,7 +260,7 @@
         └── salsa.md
 
 8 directories, 60 files</code></pre>
-<h1 id="more-complicated-makefile">More Complicated Makefile</h1>
+<h2 id="more-complicated-makefile">More Complicated Makefile</h2>
 <p>Of course, <code>make</code> can do a ton of things… <a href="https://github.com/torvalds/linux/blob/master/Makefile">Linux Makefile</a></p>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
 </body>

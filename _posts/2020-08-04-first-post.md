@@ -1,8 +1,10 @@
 ---
 title: First post
+categories:
+  - web
 ---
 
-# Welcome
+## Welcome
 
 This is a test post. Everything appears to be working smoothly!
 
