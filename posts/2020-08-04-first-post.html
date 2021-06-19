@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>First post</title>
+  <title>How its maked</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -89,16 +89,17 @@
 <body>
 <script src="/assets/js/navigation.js" charset="utf-8"></script>
 <header id="title-block-header">
-<h1 class="title">First post</h1>
+<h1 class="title">How its <code>maked</code></h1>
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#welcome">Welcome</a></li>
+<li><a href="#about-this-site">About this site</a></li>
+<li><a href="#how-this-site-is-made">How this site is made</a></li>
 </ul>
 </nav>
-<h2 id="welcome">Welcome</h2>
-<p>This is a test post. Everything appears to be working smoothly!</p>
-<p>In order to get <span class="math inline">\(\LaTeX\)</span> to work, I had to create a folder <code>_includes/head</code> with a file <code>custom.html</code> with the following content.</p>
+<h2 id="about-this-site">About this site</h2>
+<p>This is version 2.0 of my personal website. I made version 1.0 using <a href="https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll">Jekyll</a>, a static site generator, and a fork of <a href="https://github.com/mmistakes/minimal-mistakes">Minimal Mistakes</a>, a Jekyll theme. The idea of this approach is that it is “easy” to get a good looking site up and running with little configuration (a single <code>yaml</code> file), and you can write blog posts in markdown rather than html. My experience with Jekyll and the Minimal Mistakes theme was that it actually made things more complicated, it was not easily customizable, and it was not made by me.</p>
+<p>For example, trying to get Mathjax to work on the Jekyll site was a pain and required Jekyll’s custom liquid markup language. I had to create a folder <code>_includes/head</code> with a file <code>custom.html</code> with the following content.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>{% if page.mathjax %}</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;script</span><span class="ot"> type=</span><span class="st">&quot;text/javascript&quot;</span> <span class="er">async</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ot">  src=</span><span class="st">&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML&quot;</span><span class="kw">&gt;</span></span>
@@ -117,7 +118,110 @@
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;HTML-CSS&quot;</span><span class="op">:</span> { <span class="dt">availableFonts</span><span class="op">:</span> [<span class="st">&quot;TeX&quot;</span>] }</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/script&gt;</span> </span></code></pre></div>
-<p>This solution did not break the main theme because <code>custom.html</code> is meant for this purpose. Now I just have to at <code>mathjax: true</code> to posts to get mathjax.</p>
+<p>and add the <code>yaml</code> front matter <code>mathjax: true</code> to each of the markdown files to get <span class="math inline">\(\LaTeX\)</span> to work. I also found the <code>gem</code> dependencies to be difficult to manage/install and the site could take 20 minutes to update after being pushed to GitHub.</p>
+<p>Version 2.0 is made without the bloat using <code>make</code>, <code>pandoc</code>, and some <code>css</code>.</p>
+<h2 id="how-this-site-is-made">How this site is made</h2>
+<p>I am still able to write blog posts and pages using markdown by the help of a short makefile.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">SRC_DIRS </span><span class="ch">:=</span><span class="st"> _posts _projects _pages</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">MD_FILES </span><span class="ch">:=</span><span class="st"> </span><span class="ch">$(</span><span class="kw">shell</span><span class="st"> find </span><span class="ch">$(</span><span class="dt">SRC_DIRS</span><span class="ch">)</span><span class="st"> -type f -name &#39;*.md&#39;</span><span class="ch">)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">HTML_FILES </span><span class="ch">:=</span><span class="st">  </span><span class="ch">$(</span><span class="kw">patsubst</span><span class="st"> _%.md</span><span class="kw">,</span><span class="st">%.html</span><span class="kw">,</span><span class="ch">$(</span><span class="dt">MD_FILES</span><span class="ch">))</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dt">PD_FLAGS </span><span class="ch">=</span><span class="st"> --standalone --toc --mathjax </span><span class="ch">\</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="st">                     -c /assets/css/master.css </span><span class="ch">\</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">                     -c &quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css&quot; </span><span class="ch">\</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">                     --include-before-body ./assets/navigation.html </span><span class="ch">\</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="st">                     --include-after-body ./assets/footer.html </span><span class="ch">\</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="st">                     --highlight-style breezedark</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="dv">all:</span><span class="dt"> </span><span class="ch">$(</span><span class="dt">HTML_FILES</span><span class="ch">)</span><span class="dt"> index makefile</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="dv">posts/%.html:</span><span class="dt"> _posts/%.md</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    pandoc <span class="ch">$(</span><span class="dt">PD_FLAGS</span><span class="ch">)</span> <span class="ch">$^</span> -o <span class="ch">$@</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="dv">projects/%.html:</span><span class="dt"> _projects/%.md</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    pandoc <span class="ch">$(</span><span class="dt">PD_FLAGS</span><span class="ch">)</span> <span class="ch">$^</span> -o <span class="ch">$@</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="dv">pages/%.html:</span><span class="dt"> _pages/%.md</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    pandoc <span class="ch">$(</span><span class="dt">PD_FLAGS</span><span class="ch">)</span> <span class="ch">$^</span> -o <span class="ch">$@</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="dv">index:</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    python ./assets/python/generate_posts_index.py</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    pandoc <span class="ch">$(</span><span class="dt">PD_FLAGS</span><span class="ch">)</span> _posts/index.md -o posts/index.html</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    sed -i.bak <span class="st">&#39;s/\(href=&quot;.*\).md&quot;&gt;/\1.html&quot;&gt;/&#39;</span> ./posts/index.html</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    rm ./posts/index.html.bak</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="dv">clean:</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    rm <span class="ch">$(</span><span class="dt">HTML_FILES</span><span class="ch">)</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="dv">serve:</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    echo Serving the site at http://127.0.0.1:8000/</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    python3 -m http.server</span></code></pre></div>
+<p>This makefile will convert any markdown file in <code>_posts</code>, <code>_projects</code>, or <code>_pages</code> to a corresponding html file <code>posts</code>, <code>projects</code>, or <code>pages</code>.</p>
+<p>The basic directory structure of the site then look like this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> index.html</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> makefile</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> _pages</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">│  </span> └── command_line.md</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> pages</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">│  </span> ├── about.html</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">│  </span> ├── command_line.html</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="ex">│  </span> └── links.html</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> _posts</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="ex">│  </span> ├── 2020-08-04-first-post.md</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="ex">│  </span> ├── 2021-05-26-wsl.md</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="ex">│  </span> └── index.md</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> posts</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="ex">│  </span> ├── 2020-08-04-first-post.html</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="ex">│  </span> ├── 2021-05-26-wsl.html</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="ex">│  </span> ├── index.html</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> _projects</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="ex">│  </span> ├── vim-terminator.md</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> projects</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="ex">├──</span> index.html</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="ex">├──</span> vim-terminator.html</span></code></pre></div>
+<p>The cool thing about this approach is that the <code>.html</code> files are generated only when the corresponding <code>.md</code> file has changed. This makes it incredibly fast to build and preview the website offline. All I have to do is type <code>make</code>. This directory layout also allows the <code>.html</code> and <code>.md</code> files to link to other files in the project without issues from the conversion process.</p>
+<p>The <code>posts/index.html</code> file is automatically generated from a simple python script that I whipped together. It even allows for tagging of posts using <code>yaml</code> front matter in the same way the complicated Jekyll site did. The code to produce the index file is below:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yaml</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>FILES <span class="op">=</span> <span class="bu">sorted</span>(Path(<span class="st">&#39;./_posts/&#39;</span>).glob(<span class="st">&#39;*.md&#39;</span>), reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>FILES <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> FILES <span class="cf">if</span> <span class="st">&#39;index.md&#39;</span> <span class="kw">not</span> <span class="kw">in</span> f.name]</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>INDEX <span class="op">=</span> Path(<span class="st">&#39;./_posts/index.md&#39;</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_frontmatter(<span class="bu">file</span>):</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="bu">file</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        line <span class="op">=</span> <span class="bu">next</span>(f)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line <span class="op">!=</span> <span class="st">&#39;---</span><span class="ch">\n</span><span class="st">&#39;</span>:</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        frontmatter <span class="op">=</span> <span class="st">&#39;&#39;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        line <span class="op">=</span> <span class="bu">next</span>(f)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> line <span class="op">!=</span> <span class="st">&#39;---</span><span class="ch">\n</span><span class="st">&#39;</span>:</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>            frontmatter <span class="op">+=</span> line</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>            line <span class="op">=</span> <span class="bu">next</span>(f)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> yaml.safe_load(frontmatter)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(INDEX, <span class="st">&#39;w&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    f.write(<span class="st">&#39;---</span><span class="ch">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    f.write(<span class="st">&#39;title: Posts</span><span class="ch">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    f.write(<span class="st">&#39;---</span><span class="ch">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    f.write(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    f.write(<span class="st">&#39;|     |       |      |      |</span><span class="ch">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    f.write(<span class="st">&#39;|:--- | :---- | :--- | :--- |</span><span class="ch">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> FILES:</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        frontmatter <span class="op">=</span> parse_frontmatter(<span class="bu">file</span>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        title <span class="op">=</span> frontmatter.get(<span class="st">&#39;title&#39;</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        categories <span class="op">=</span> frontmatter.get(<span class="st">&#39;categories&#39;</span>)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> categories <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>            categories <span class="op">=</span> <span class="st">&#39;&#39;</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>            categories <span class="op">=</span> <span class="st">&#39;, &#39;</span>.join(categories)</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>        date <span class="op">=</span> <span class="bu">file</span>.name[:<span class="dv">10</span>]</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="ss">f&#39;| Ɣ | </span><span class="sc">{</span>date<span class="sc">}</span><span class="ss"> | [</span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">](</span><span class="sc">{</span><span class="bu">str</span>(<span class="bu">file</span>.name)<span class="sc">}</span><span class="ss">) | *</span><span class="sc">{</span>categories<span class="sc">}</span><span class="ss">* | </span><span class="ch">\n</span><span class="ss">&#39;</span>)</span></code></pre></div>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
 </body>
 </html>

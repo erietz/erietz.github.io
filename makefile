@@ -1,10 +1,6 @@
-MD_POSTS := $(shell find _posts -type f -name '*.md')
-HTML_POSTS := $(MD_POSTS:.md=.html)
-HTML_POSTS :=  $(subst _posts/,posts/,$(HTML_POSTS))
-
-MD_PROJECTS := $(shell find _projects -type f -name '*.md')
-HTML_PROJECTS := $(MD_PROJECTS:.md=.html)
-HTML_PROJECTS :=  $(subst _projects/,projects/,$(HTML_PROJECTS))
+SRC_DIRS := _posts _projects _pages
+MD_FILES := $(shell find $(SRC_DIRS) -type f -name '*.md')
+HTML_FILES :=  $(patsubst _%.md,%.html,$(MD_FILES))
 
 PD_FLAGS = --standalone --toc --mathjax \
 					 -c /assets/css/master.css \
@@ -13,12 +9,15 @@ PD_FLAGS = --standalone --toc --mathjax \
 					 --include-after-body ./assets/footer.html \
 					 --highlight-style breezedark
 
-all: $(HTML_POSTS) $(HTML_PROJECTS) index makefile
+all: $(HTML_FILES) index makefile
 
 posts/%.html: _posts/%.md
 	pandoc $(PD_FLAGS) $^ -o $@
 
 projects/%.html: _projects/%.md
+	pandoc $(PD_FLAGS) $^ -o $@
+
+pages/%.html: _pages/%.md
 	pandoc $(PD_FLAGS) $^ -o $@
 
 index:
@@ -28,8 +27,8 @@ index:
 	rm ./posts/index.html.bak
 
 clean:
-	rm $(HTML_POSTS) $(HTML_PROJECTS)
+	rm $(HTML_FILES)
 
 serve:
-	@echo Serving at http://127.0.0.1:8000/
+	echo Serving the site at http://127.0.0.1:8000/
 	python3 -m http.server
