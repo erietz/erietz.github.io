@@ -4,7 +4,7 @@ HTML_FILES :=  $(patsubst _%.md,%.html,$(MD_FILES))
 
 PD_FLAGS = --standalone --toc --mathjax \
 					 -c /assets/css/master.css \
-					 -c "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" \
+					 -c "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" \
 					 --include-before-body ./assets/navigation.html \
 					 --include-after-body ./assets/footer.html \
 					 --highlight-style breezedark
