@@ -196,3 +196,20 @@ a:active {
 /* ul { */
 /*   list-style-type: "→  "; */
 /* } */
+
+/* For putting images side by side */
+.container {
+    display: flex ;
+    flex-wrap: wrap ;
+    justify-content: center ;
+}
+.containerblock {
+    max-width: 350px ;
+    text-align: center ;
+    padding-left: 10px ;
+    padding-right: 10px ;
+}
+.containerblock code {
+  font-size: small ;
+  overflow-wrap: break-word ;
+}
