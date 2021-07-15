@@ -3,25 +3,22 @@
 /* Description : Styling for my website */
 
 :root {
-  --red: #fb4934;
-  --green: #b8bb26;
-  --yellow: #fabd2f;
-  --blue: #83a598;
-  --purple: #d3869b;
-  --aqua: #8ec07c;
-  --orange: #fe8019;
-  --gray: #a89984;
-  --bg0: #282828;
-  --bg0soft: #32302f;
-  --bg1: #3c3836;
-  --bg2: #504945;
-  --bg3: #665c54;
-  --bg4: #7c6f64;
-  --fg0: #fbf1c7;
-  --fg1: #ebdbb2;
-  --fg2: #d5c4a1;
-  --fg3: #bdae93;
-  --fg4: #a89984;
+  --red: #fc5d7c;
+  --green: #9ed072;
+  --yellow: #e7c664;
+  --blue: #76cce0;
+  --purple: #b39df3;
+  --orange: #f39660;
+  --grey90: #0c0c0d;
+  --grey80: #2a2a2e;
+  --grey70: #38383d;
+  --grey60: #4a4a4f;
+  --grey50: #737373;
+  --grey40: #b1b1b3;
+  --grey30: #d7d7db;
+  --grey20: #ededf0;
+  --grey10: #f9f9fa;
+  --white100: ##ffffff;
 }
 
 html {
@@ -42,14 +39,14 @@ body {
   font-family: Ubuntu, Verdana, sans-serif;
   font-size: 100%;
   line-height: 140%;
-  color: var(--fg0);
-  background-color: var(--bg0);
+  color: var(--grey10);
+  background-color: var(--grey70);
 }
 
 pre {
   border: 2px solid var(--blue);
   border-radius: 4px;
-  background-color: var(--bg0soft);
+  background-color: var(--grey60);
   padding: 0.5em;
   font-weight: bold;
 }
@@ -57,7 +54,7 @@ pre {
 code {
   font-family: Ubuntu Mono, Courier New, monospace;
   font-weight: bold;
-  background-color: var(--bg0soft);
+  background-color: var(--grey60);
   font-size: 110%;
 }
 
@@ -67,7 +64,7 @@ code {
 
 /* headings */
 h1, h2, h3, h4, h5, h6 {
-  color: var(--aqua);
+  color: var(--yellow);
   /* padding-top: 0.5em; */
   /* padding-bottom: 0.5em; */
   line-height: 140%;
@@ -92,11 +89,11 @@ th, td {
 
 /* input fields */
 input {
-  background-color: var(--fg0);
+  background-color: var(--grey10);
 }
 
 button {
-  background-color: var(--gray);
+  background-color: var(--grey10);
 }
 
 /* for centering images */
@@ -152,9 +149,9 @@ a:active {
 
 /* Change the color of links on hover */
 .topnav a:hover {
-  border: 2px solid var(--blue);
+  /* border: 2px solid var(--aqua); */
   border-radius: 4px;
-  background-color: var(--orange);
+  background-color: var(--blue);
   color: black;
 }
 
@@ -186,20 +183,9 @@ a:active {
 
 .footer-text {
   display: block;
-  color: var(--gray);
+  color: var(--grey10);
   font-size:0.8em;
 }
-
-/* /1* Add a color to the active/current link *1/ */
-/* .topnav a.active { */
-/*   /1* background-color: #04AA6D; *1/ */
-/*   /1* color: #1d2021; *1/ */
-/*   color: #04AA6D; */
-/* } */
-
-/* ul { */
-/*   list-style-type: "→  "; */
-/* } */
 
 /* For putting images side by side */
 .container {
