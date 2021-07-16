@@ -48,12 +48,10 @@ pre {
   border-radius: 4px;
   background-color: var(--grey60);
   padding: 0.5em;
-  font-weight: bold;
 }
 
 code {
   font-family: Ubuntu Mono, Courier New, monospace;
-  font-weight: bold;
   background-color: var(--grey60);
   font-size: 110%;
   border-radius: 4px;
