@@ -7,7 +7,7 @@ PD_FLAGS = --standalone --toc --mathjax \
 					 -c "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" \
 					 --include-before-body ./assets/navigation.html \
 					 --include-after-body ./assets/footer.html \
-					 --highlight-style breezedark
+					 --highlight-style zenburn
 
 all: $(HTML_FILES) index makefile
 
