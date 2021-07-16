@@ -152,6 +152,10 @@ a:active {
   font-size: 17px;
 }
 
+#topnav-home {
+  float: left;
+}
+
 /* Change the color of links on hover */
 .topnav a:hover {
   /* border: 2px solid var(--aqua); */
