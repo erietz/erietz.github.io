@@ -3,16 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="/assets/css/master.css" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width" />
     <title>Generate Post Index File</title>
   </head>
   <body>
 
+    <script src="/assets/js/navigation.js" charset="utf-8"></script>
+
     <h1>Posts</h1>
 
     <p>
-    A list of posts dynamically generated from client side javascript using the
-    Github API
+    A list of posts on this website dynamically generated from client side
+    javascript using the Github API
     </p>
 
     <script charset="utf-8">
@@ -39,9 +42,11 @@
         .then(data => {
           console.log(data)
           const code = document.createElement('pre')
-          code.innerHTML = data
+          code.textContent = data
           document.body.appendChild(code)
         })
     </script>
+
+    <script src="/assets/js/footer.js" charset="utf-8"></script>
   </body>
 </html>
