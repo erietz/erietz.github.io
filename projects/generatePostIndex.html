@@ -20,7 +20,7 @@
         list.innerHTML = '';
 
         fetch('https://api.github.com/repos/erietz/erietz.github.io/contents/posts')
-          .then(response => response)
+          .then(response => response.json())
           .then(data => {
             for (let file of data) {
               const listItem = '<li>' + `<a href="/${file.path}" >`  + file.name + '</a>' + '</li>';
