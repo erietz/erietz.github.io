@@ -34,18 +34,18 @@
         document.body.appendChild(list);
     </script>
 
-    For a real recursive headache, the content of this file are include here as
-    well...
+    For a real recursive headache, the contents of this file are include here
+    as well...
 
     <script>
-      fetch('https://raw.githubusercontent.com/erietz/erietz.github.io/master/projects/generatePostIndex.html')
+      fetch('https://erietz.github.io/projects/generatePostIndex.html')
         .then(response => response.text())
         .then(data => {
-          console.log(data)
           const code = document.createElement('pre')
           code.textContent = data
           document.body.appendChild(code)
         })
+        .catch(error => console.error(error));
     </script>
 
     <script src="/assets/js/footer.js" charset="utf-8"></script>
