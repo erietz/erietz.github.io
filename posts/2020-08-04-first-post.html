@@ -76,7 +76,6 @@
     code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
   </style>
   <link rel="stylesheet" href="/assets/css/master.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
@@ -124,34 +123,33 @@
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dt">PD_FLAGS </span><span class="ch">=</span><span class="st"> --standalone --toc --mathjax </span><span class="ch">\</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="st">                     -c /assets/css/master.css </span><span class="ch">\</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">                     -c &quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css&quot; </span><span class="ch">\</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">                     --include-before-body ./assets/navigation.html </span><span class="ch">\</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="st">                     --include-after-body ./assets/footer.html </span><span class="ch">\</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="st">                     --highlight-style breezedark</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="dv">all:</span><span class="dt"> </span><span class="ch">$(</span><span class="dt">HTML_FILES</span><span class="ch">)</span><span class="dt"> index makefile</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="dv">posts/%.html:</span><span class="dt"> _posts/%.md</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    pandoc <span class="ch">$(</span><span class="dt">PD_FLAGS</span><span class="ch">)</span> <span class="ch">$^</span> -o <span class="ch">$@</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="dv">projects/%.html:</span><span class="dt"> _projects/%.md</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    pandoc <span class="ch">$(</span><span class="dt">PD_FLAGS</span><span class="ch">)</span> <span class="ch">$^</span> -o <span class="ch">$@</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="dv">pages/%.html:</span><span class="dt"> _pages/%.md</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    pandoc <span class="ch">$(</span><span class="dt">PD_FLAGS</span><span class="ch">)</span> <span class="ch">$^</span> -o <span class="ch">$@</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="dv">index:</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    python ./assets/python/generate_posts_index.py</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    pandoc <span class="ch">$(</span><span class="dt">PD_FLAGS</span><span class="ch">)</span> _posts/index.md -o posts/index.html</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    sed -i.bak <span class="st">&#39;s/\(href=&quot;.*\).md&quot;&gt;/\1.html&quot;&gt;/&#39;</span> ./posts/index.html</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    rm ./posts/index.html.bak</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="dv">clean:</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    rm <span class="ch">$(</span><span class="dt">HTML_FILES</span><span class="ch">)</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="dv">serve:</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    echo Serving the site at http://127.0.0.1:8000/</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    python3 -m http.server</span></code></pre></div>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">                     --include-before-body ./assets/navigation.html </span><span class="ch">\</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">                     --include-after-body ./assets/footer.html </span><span class="ch">\</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="st">                     --highlight-style breezedark</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="dv">all:</span><span class="dt"> </span><span class="ch">$(</span><span class="dt">HTML_FILES</span><span class="ch">)</span><span class="dt"> index makefile</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="dv">posts/%.html:</span><span class="dt"> _posts/%.md</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    pandoc <span class="ch">$(</span><span class="dt">PD_FLAGS</span><span class="ch">)</span> <span class="ch">$^</span> -o <span class="ch">$@</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="dv">projects/%.html:</span><span class="dt"> _projects/%.md</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    pandoc <span class="ch">$(</span><span class="dt">PD_FLAGS</span><span class="ch">)</span> <span class="ch">$^</span> -o <span class="ch">$@</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="dv">pages/%.html:</span><span class="dt"> _pages/%.md</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    pandoc <span class="ch">$(</span><span class="dt">PD_FLAGS</span><span class="ch">)</span> <span class="ch">$^</span> -o <span class="ch">$@</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="dv">index:</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    python ./assets/python/generate_posts_index.py</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    pandoc <span class="ch">$(</span><span class="dt">PD_FLAGS</span><span class="ch">)</span> _posts/index.md -o posts/index.html</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    sed -i.bak <span class="st">&#39;s/\(href=&quot;.*\).md&quot;&gt;/\1.html&quot;&gt;/&#39;</span> ./posts/index.html</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    rm ./posts/index.html.bak</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="dv">clean:</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    rm <span class="ch">$(</span><span class="dt">HTML_FILES</span><span class="ch">)</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="dv">serve:</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    echo Serving the site at http://127.0.0.1:8000/</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    python3 -m http.server</span></code></pre></div>
 <p>This makefile will convert any markdown file in <code>_posts</code>, <code>_projects</code>, or <code>_pages</code> to a corresponding html file <code>posts</code>, <code>projects</code>, or <code>pages</code>.</p>
 <p>The basic directory structure of the site then look like this:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span></span>

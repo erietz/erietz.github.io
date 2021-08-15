@@ -2,13 +2,15 @@
 /* Date        : 2021-06-14 */
 /* Description : Styling for my website */
 
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css");
+
 :root {
-  --red: #fc5d7c;
-  --green: #9ed072;
-  --yellow: #e7c664;
-  --blue: #76cce0;
-  --purple: #b39df3;
-  --orange: #f39660;
+  --red: #fb8072;
+  --green: #b3de69;
+  --yellow: #ffffb3;
+  --blue: #8dd3c7;
+  --purple: #bebada;
+  --orange: #fdb462;
   --grey90: #0c0c0d;
   --grey80: #2a2a2e;
   --grey70: #38383d;
@@ -208,8 +210,9 @@ a:active {
 /* For putting images side by side */
 .container {
     display: flex ;
-    flex-wrap: wrap ;
-    justify-content: center ;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 2em;
 }
 .containerblock {
     max-width: 350px ;

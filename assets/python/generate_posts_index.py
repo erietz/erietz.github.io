@@ -25,6 +25,8 @@ with open(INDEX, 'w') as f:
     f.write('---\n')
     f.write('\n')
 
+    f.write('<center>')
+
     f.write('|     |       |      |      |\n')
     f.write('|:--- | :---- | :--- | :--- |\n')
     for file in FILES:
@@ -38,3 +40,5 @@ with open(INDEX, 'w') as f:
 
         date = file.name[:10]
         f.write(f'| Ɣ | {date} | [{title}]({str(file.name)}) | *{categories}* | \n')
+
+    f.write('</center>')
