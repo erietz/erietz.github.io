@@ -106,6 +106,16 @@ button {
   margin-left: auto;
   margin-right: auto;
   width: 70%;
+  animation: rotation 180s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }
 
 /* anchors */
