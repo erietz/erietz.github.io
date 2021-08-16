@@ -48,7 +48,8 @@ body {
 /* inline source code */
 code {
   font-family: Ubuntu Mono, Courier New, monospace;
-  background-color: var(--grey60);
+  background-color: #333333;
+  color: var(--red);
   font-size: 110%;
   border-radius: 4px;
 }
@@ -65,6 +66,7 @@ pre {
 /* Do not put background color on code in preformatted blocks */
 pre code {
   background-color: unset;
+  color: unset;
 }
 
 .sourceCode {
