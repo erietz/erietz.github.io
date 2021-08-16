@@ -45,19 +45,26 @@ body {
   background-color: var(--grey70);
 }
 
-pre {
-  border: 2px solid var(--blue);
-  border-radius: 4px;
-  background-color: var(--grey60);
-  padding: 0.5em;
-  overflow: scroll;
-}
-
+/* inline source code */
 code {
   font-family: Ubuntu Mono, Courier New, monospace;
   background-color: var(--grey60);
   font-size: 110%;
   border-radius: 4px;
+}
+
+/* pre formatted text (code syntax highlighting) */
+pre {
+  border: 2px solid var(--blue);
+  border-radius: 4px;
+  background-color: unset;
+  padding: 0.5em;
+  overflow: scroll;
+}
+
+/* Do not put background color on code in preformatted blocks */
+pre code {
+  background-color: unset;
 }
 
 .sourceCode {
