@@ -2,8 +2,8 @@
 title: Linux Configuration
 ---
 
-One of things that comes with using a minimalist window manager, such as [i3],
-is having to maintain additional configuration files that a desktop environment
+One of things that comes with using a minimal window manager, such as [i3], is
+having to maintain additional configuration files that a desktop environment
 would normally take care of. Most of my configuration files are kept under
 [version control], but I have not found a clean way to maintain some of the X11
 config files across multiple machines. For the time being, it seems that the
@@ -52,8 +52,7 @@ configuration tool to work properly, an environmental variable had to be set:
 export QT_QPA_PLATFORMTHEME="qt5ct"
 ```
 
-
-### Tweaks that GUI programs cannot set
+### Additional GTK/QT5 Tweaks
 
 - The toolbar icons in programs such as `pcmanfm` were not fixable using
   `lxappearance` and had to be manually set. In order to make these settings
@@ -70,6 +69,24 @@ gtk-icon-sizes = "panel-menu=48,48:panel=48,48:gtk-menu=48,48\
 ```zsh
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
 ```
+
+### morc_menu
+
+Sometimes it is nice to use [morc_menu] rather than dmenu. Out of the box the
+text is completely squashed and illegible. To fix this, play with the value of
+`avg_char_width`.
+
+```sh
+line_height=20
+avg_char_width=9
+avg_err_char_width=10
+menu_width=350
+err_menu_width=350
+```
+
+I changed the value from `9` to `20` to get a nice looking morc menu.
+
+<img src="/assets/img/morc_menu.png" alt="morc_menu" class="center" width=400 height=400>
 
 ## Key remaps
 
