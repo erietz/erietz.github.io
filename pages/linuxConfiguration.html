@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Linux Configuration</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #665c54;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #665c54;  padding-left: 4px; }
+    div.sourceCode
+      { color: #ededed; background-color: #333333; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffffb3; font-weight: bold; } /* Alert */
+    code span.an { color: #80b1d3; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #b3de69; } /* Attribute */
+    code span.bn { color: #bebada; } /* BaseN */
+    code span.bu { color: #fdb462; } /* BuiltIn */
+    code span.cf { color: #fb8072; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #b3de69; } /* Char */
+    code span.cn { color: #ffffb3; } /* Constant */
+    code span.co { color: #80b1d3; font-style: italic; } /* Comment */
+    code span.cv { color: #80b1d3; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #ffffb3; } /* DataType */
+    code span.dv { color: #bebada; } /* DecVal */
+    code span.er { color: #ffffb3; font-weight: bold; } /* Error */
+    code span.ex { color: #fdb462; } /* Extension */
+    code span.fl { color: #bebada; } /* Float */
+    code span.fu { color: #b3de69; } /* Function */
+    code span.im { color: #fb8072; } /* Import */
+    code span.in { color: #80b1d3; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #fb8072; font-weight: bold; } /* Keyword */
+    code span.op { color: #ededed; } /* Operator */
+    code span.ot { color: #fb8072; } /* Other */
+    code span.pp { color: #80b1d3; } /* Preprocessor */
+    code span.sc { color: #b3de69; } /* SpecialChar */
+    code span.ss { color: #8dd3c7; } /* SpecialString */
+    code span.st { color: #8dd3c7; } /* String */
+    code span.va { color: #bebada; } /* Variable */
+    code span.vs { color: #8dd3c7; } /* VerbatimString */
+    code span.wa { color: #80b1d3; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="/assets/css/master.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<script src="/assets/js/navigation.js" charset="utf-8"></script>
+<header id="title-block-header">
+<h1 class="title">Linux Configuration</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#screen-resolution">Screen Resolution</a></li>
+<li><a href="#high-dpi">High DPI</a>
+<ul>
+<li><a href="#gtk-themeicons">GTK Theme/Icons</a></li>
+<li><a href="#qt5">QT5</a></li>
+<li><a href="#tweaks-that-gui-programs-cannot-set">Tweaks that GUI programs cannot set</a></li>
+</ul></li>
+<li><a href="#key-remaps">Key remaps</a></li>
+</ul>
+</nav>
+<p>One of things that comes with using a minimalist window manager, such as <a href="https://i3wm.org/">i3</a>, is having to maintain additional configuration files that a desktop environment would normally take care of. Most of my configuration files are kept under <a href="https://github.com/erietz/.ewr">version control</a>, but I have not found a clean way to maintain some of the X11 config files across multiple machines. For the time being, it seems that the best solution is to simply take notes of how I have configured things.</p>
+<h2 id="screen-resolution">Screen Resolution</h2>
+<p>The screen resolution can be set using the <code>xrandr</code> command. For a complicated multi monitor setup, it can be a lot easier to use a gui tool such as <code>arandr</code> which helps to write <code>xrandr</code> scripts.</p>
+<h2 id="high-dpi">High DPI</h2>
+<p>On both my laptop and desktop setups, I have higher than 1080p resolution. This usually means on Linux that the scaling is going to be off and everything will be way too tiny to read. To fix this issue, I modified the dpi setting in the <code>~/.Xresources</code> file. For my laptop, which has a resolution of <code>2560x1600</code>, I doubled the scaling by bumping up <code>Xft.dpi</code> from <code>96</code> to <code>192</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode xorg"><code class="sourceCode xorg"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>#<span class="co"> Xft.dpi:       96</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>#<span class="co"> the number 192 is an integer multiple of 96</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Xft.dpi:       192 </span></code></pre></div>
+<p>Adjusting the dpi value alone fixes most of the resolution problems, but certain icons and font sizes do not always scale properly for all programs. Most of the configuration in the following sections come from the <a href="https://wiki.archlinux.org/title/HiDPI">archwiki</a>, but some comes from various other places.</p>
+<h3 id="gtk-themeicons">GTK Theme/Icons</h3>
+<p>Since there are config files scattered around for both GTK2 and GTK3 programs, it can be a pain to manage. The easiest thing here seems to just use a GUI tool such as <code>lxappearance</code>. <code>lxappearance</code> will overwrite the files <code>~/.gtkrc-2.0</code> and <code>/etc/gtk-2.0/gtkrc</code> for GTK2 settings and <code>~/.config/gtk-3.0/settings.ini</code> and <code>/etc/gtk-3.0/settings.ini</code> for GTK3 settings.</p>
+<h3 id="qt5">QT5</h3>
+<p>Increasing the icon size for a few QT programs was accomplished using the qt5 gui configuration tool which is launched using the <code>qt5ct</code> command. For the configuration tool to work properly, an environmental variable had to be set:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">export</span> <span class="ot">QT_QPA_PLATFORMTHEME=</span><span class="st">&quot;qt5ct&quot;</span></span></code></pre></div>
+<h3 id="tweaks-that-gui-programs-cannot-set">Tweaks that GUI programs cannot set</h3>
+<ul>
+<li>The toolbar icons in programs such as <code>pcmanfm</code> were not fixable using <code>lxappearance</code> and had to be manually set. In order to make these settings last and not be overwritten by the GUI tool, the following was saved into <code>~/.gtkrc-2.0.mine</code></li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gtk-icon-sizes</span> = <span class="st">&quot;panel-menu=48,48:panel=48,48:gtk-menu=48,48</span><span class="dt">\</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">:gtk-large-toolbar=48,48:gtk-small-toolbar=48,48:gtk-button=48,48&quot;</span></span></code></pre></div>
+<ul>
+<li>To automatically adjust qt icons depending on the dpi:</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">export</span> <span class="ot">QT_AUTO_SCREEN_SCALE_FACTOR=</span>1</span></code></pre></div>
+<h2 id="key-remaps">Key remaps</h2>
+<ul>
+<li>To set the (useless) caps lock key as a (useful) control key, add the following to <code>~/.Xmodmap</code>.</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clear</span> lock</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">clear</span> control</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">keycode</span> 66 = Control_L</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">add</span> control = Control_L Control_R</span></code></pre></div>
+<p>Note: Every time you plug in an external keyboard you will have to reload this file using <code>xmodmap ~/.Xmodmap</code>. This can be set to a keybinding using i3.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bindsym</span> <span class="va">$mod</span>+Shift+x exec <span class="at">--no-startup-id</span> <span class="st">&quot;xmodmap </span><span class="va">$HOME</span><span class="st">/.Xmodmap&quot;</span></span></code></pre></div>
+<p><em>TODO: explore <a href="https://wiki.archlinux.org/title/X_keyboard_extension">xkb</a> as an alternative to Xresources</em></p>
+<script src="/assets/js/footer.js" charset="utf-8"></script>
+</body>
+</html>
