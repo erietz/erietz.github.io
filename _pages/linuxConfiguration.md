@@ -88,6 +88,18 @@ I changed the value from `9` to `20` to get a nice looking morc menu.
 
 <img src="/assets/img/morc_menu.png" alt="morc_menu" class="center" width=400 height=400>
 
+### Electron Apps
+
+To increase the scaling of electron apps, you can start the program using the
+`--force-device-scale-factor` flag. This can be added to the `.desktop` file so
+that the the program uses the flag when launched with `dmenu` or `rofi`.  The
+flag should be added to the line beginning with `Exec=`. For example, editing
+spotify's desktop file at `/usr/share/applications/spotify.desktop`:
+
+```ini
+Exec=spotify --force-device-scale-factor=1.75 %U
+```
+
 ## Key remaps
 
 - To set the (useless) caps lock key as a (useful) control key, add the following

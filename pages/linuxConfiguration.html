@@ -95,6 +95,7 @@
 <li><a href="#qt5">QT5</a></li>
 <li><a href="#additional-gtkqt5-tweaks">Additional GTK/QT5 Tweaks</a></li>
 <li><a href="#morc_menu">morc_menu</a></li>
+<li><a href="#electron-apps">Electron Apps</a></li>
 </ul></li>
 <li><a href="#key-remaps">Key remaps</a></li>
 </ul>
@@ -132,16 +133,19 @@
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="va">err_menu_width</span><span class="op">=</span>350</span></code></pre></div>
 <p>I changed the value from <code>9</code> to <code>20</code> to get a nice looking morc menu.</p>
 <p><img src="/assets/img/morc_menu.png" alt="morc_menu" class="center" width=400 height=400></p>
+<h3 id="electron-apps">Electron Apps</h3>
+<p>To increase the scaling of electron apps, you can start the program using the <code>--force-device-scale-factor</code> flag. This can be added to the <code>.desktop</code> file so that the the program uses the flag when launched with <code>dmenu</code> or <code>rofi</code>. The flag should be added to the line beginning with <code>Exec=</code>. For example, editing spotify’s desktop file at <code>/usr/share/applications/spotify.desktop</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Exec</span><span class="ot">=</span><span class="st">spotify --force-device-scale-factor=</span><span class="fl">1.75</span><span class="st"> %U</span></span></code></pre></div>
 <h2 id="key-remaps">Key remaps</h2>
 <ul>
 <li>To set the (useless) caps lock key as a (useful) control key, add the following to <code>~/.Xmodmap</code>.</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clear</span> lock</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">clear</span> control</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">keycode</span> 66 = Control_L</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">add</span> control = Control_L Control_R</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clear</span> lock</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">clear</span> control</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">keycode</span> 66 = Control_L</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">add</span> control = Control_L Control_R</span></code></pre></div>
 <p>Note: Every time you plug in an external keyboard you will have to reload this file using <code>xmodmap ~/.Xmodmap</code>. This can be set to a keybinding using i3.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bindsym</span> <span class="va">$mod</span>+Shift+x exec <span class="at">--no-startup-id</span> <span class="st">&quot;xmodmap </span><span class="va">$HOME</span><span class="st">/.Xmodmap&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bindsym</span> <span class="va">$mod</span>+Shift+x exec <span class="at">--no-startup-id</span> <span class="st">&quot;xmodmap </span><span class="va">$HOME</span><span class="st">/.Xmodmap&quot;</span></span></code></pre></div>
 <p><em>TODO: explore <a href="https://wiki.archlinux.org/title/X_keyboard_extension">xkb</a> as an alternative to Xresources</em></p>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
 </body>
