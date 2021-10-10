@@ -24,8 +24,8 @@ be way too tiny to read. To fix this issue, I modified the dpi setting in the
 doubled the scaling by bumping up `Xft.dpi` from `96` to `192`.
 
 ```xorg
-# Xft.dpi:       96
-# the number 192 is an integer multiple of 96
+! Xft.dpi:       96
+! the number 192 is an integer multiple of 96
 Xft.dpi:       192 
 ```
 
@@ -121,6 +121,36 @@ bindsym $mod+Shift+x exec --no-startup-id "xmodmap $HOME/.Xmodmap"
 
 *TODO: explore [xkb] as an alternative to Xresources*
 
+### System Wide Emacs Keybindings
+
+One of the great features of a Mac is the system wide Emacs keybindings. These
+are the essentials:
+
+| Key    | Description                     |
+| ---    | ---                             |
+| ctrl-a | Go to the beginning of the line |
+| ctrl-e | Go to the end of the line       |
+| ctrl-k | Kill to the end of the line     |
+| ctrl-f | Go forward one character        |
+| ctrl-b | Go backward one character       |
+| ctrl-n | Go to the next line             |
+| ctrl-p | Go to the previous line         |
+| ctrl-w | Delete the word to the left     |
+| ctrl-u | Delete the entire line          |
+| ctrl-h | Delete one character left       |
+| ctrl-d | Delete one character right      |
+
+To enable these: Add the following line to `~/.config/gtk-3.0/settings.ini`
+
+```ini
+gtk-key-theme-name = Emacs
+```
+
+The equivalent for gtk-2 is to add the following line to `~/.gtkrc-2.0`
+
+```conf
+gtk-key-theme-name = "Emacs"
+```
 
 [i3]: https://i3wm.org/
 [version control]: https://github.com/erietz/.ewr

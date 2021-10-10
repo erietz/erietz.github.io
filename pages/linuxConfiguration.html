@@ -97,7 +97,10 @@
 <li><a href="#morc_menu">morc_menu</a></li>
 <li><a href="#electron-apps">Electron Apps</a></li>
 </ul></li>
-<li><a href="#key-remaps">Key remaps</a></li>
+<li><a href="#key-remaps">Key remaps</a>
+<ul>
+<li><a href="#system-wide-emacs-keybindings">System Wide Emacs Keybindings</a></li>
+</ul></li>
 </ul>
 </nav>
 <p>One of things that comes with using a minimal window manager, such as <a href="https://i3wm.org/">i3</a>, is having to maintain additional configuration files that a desktop environment would normally take care of. Most of my configuration files are kept under <a href="https://github.com/erietz/.ewr">version control</a>, but I have not found a clean way to maintain some of the X11 config files across multiple machines. For the time being, it seems that the best solution is to simply take notes of how I have configured things.</p>
@@ -105,8 +108,8 @@
 <p>The screen resolution can be set using the <code>xrandr</code> command. For a complicated multi monitor setup, it can be a lot easier to use a gui tool such as <code>arandr</code> which helps to write <code>xrandr</code> scripts.</p>
 <h2 id="high-dpi">High DPI</h2>
 <p>On both my laptop and desktop setups, I have higher than 1080p resolution. This usually means on Linux that the scaling is going to be off and everything will be way too tiny to read. To fix this issue, I modified the dpi setting in the <code>~/.Xresources</code> file. For my laptop, which has a resolution of <code>2560x1600</code>, I doubled the scaling by bumping up <code>Xft.dpi</code> from <code>96</code> to <code>192</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode xorg"><code class="sourceCode xorg"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>#<span class="co"> Xft.dpi:       96</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>#<span class="co"> the number 192 is an integer multiple of 96</span></span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode xorg"><code class="sourceCode xorg"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>! Xft.dpi:       96</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>! the number 192 is an integer multiple of 96</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Xft.dpi:       192 </span></code></pre></div>
 <p>Adjusting the dpi value alone fixes most of the resolution problems, but certain icons and font sizes do not always scale properly for all programs. Most of the configuration in the following sections come from the <a href="https://wiki.archlinux.org/title/HiDPI">archwiki</a>, but some comes from various other places.</p>
 <h3 id="gtk-themeicons">GTK Theme/Icons</h3>
@@ -147,6 +150,66 @@
 <p>Note: Every time you plug in an external keyboard you will have to reload this file using <code>xmodmap ~/.Xmodmap</code>. This can be set to a keybinding using i3.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bindsym</span> <span class="va">$mod</span>+Shift+x exec <span class="at">--no-startup-id</span> <span class="st">&quot;xmodmap </span><span class="va">$HOME</span><span class="st">/.Xmodmap&quot;</span></span></code></pre></div>
 <p><em>TODO: explore <a href="https://wiki.archlinux.org/title/X_keyboard_extension">xkb</a> as an alternative to Xresources</em></p>
+<h3 id="system-wide-emacs-keybindings">System Wide Emacs Keybindings</h3>
+<p>One of the great features of a Mac is the system wide Emacs keybindings. These are the essentials:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ctrl-a</td>
+<td>Go to the beginning of the line</td>
+</tr>
+<tr class="even">
+<td>ctrl-e</td>
+<td>Go to the end of the line</td>
+</tr>
+<tr class="odd">
+<td>ctrl-k</td>
+<td>Kill to the end of the line</td>
+</tr>
+<tr class="even">
+<td>ctrl-f</td>
+<td>Go forward one character</td>
+</tr>
+<tr class="odd">
+<td>ctrl-b</td>
+<td>Go backward one character</td>
+</tr>
+<tr class="even">
+<td>ctrl-n</td>
+<td>Go to the next line</td>
+</tr>
+<tr class="odd">
+<td>ctrl-p</td>
+<td>Go to the previous line</td>
+</tr>
+<tr class="even">
+<td>ctrl-w</td>
+<td>Delete the word to the left</td>
+</tr>
+<tr class="odd">
+<td>ctrl-u</td>
+<td>Delete the entire line</td>
+</tr>
+<tr class="even">
+<td>ctrl-h</td>
+<td>Delete one character left</td>
+</tr>
+<tr class="odd">
+<td>ctrl-d</td>
+<td>Delete one character right</td>
+</tr>
+</tbody>
+</table>
+<p>To enable these: Add the following line to <code>~/.config/gtk-3.0/settings.ini</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">gtk-key-theme-name </span><span class="ot">=</span><span class="st"> Emacs</span></span></code></pre></div>
+<p>The equivalent for gtk-2 is to add the following line to <code>~/.gtkrc-2.0</code></p>
+<pre class="conf"><code>gtk-key-theme-name = &quot;Emacs&quot;</code></pre>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
 </body>
 </html>
