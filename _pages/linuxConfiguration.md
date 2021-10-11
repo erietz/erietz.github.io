@@ -148,7 +148,7 @@ gtk-key-theme-name = Emacs
 
 The equivalent for gtk-2 is to add the following line to `~/.gtkrc-2.0`
 
-```conf
+```ini
 gtk-key-theme-name = "Emacs"
 ```
 
