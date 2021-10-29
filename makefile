@@ -2,11 +2,11 @@ SRC_DIRS := _posts _projects _pages
 MD_FILES := $(shell find $(SRC_DIRS) -type f -name '*.md')
 HTML_FILES :=  $(patsubst _%.md,%.html,$(MD_FILES))
 
-PD_FLAGS = --standalone --toc --mathjax \
-					 -c /assets/css/master.css \
-					 --include-before-body ./assets/navigation.html \
-					 --include-after-body ./assets/footer.html \
-					 --highlight-style ./assets/pandoc/set3.theme
+PD_FLAGS := --standalone --toc --mathjax \
+		   -c /assets/css/master.css \
+		   --include-before-body ./assets/navigation.html \
+		   --include-after-body ./assets/footer.html \
+		   --highlight-style ./assets/pandoc/set3.theme
 
 all: $(HTML_FILES) index makefile
 

@@ -116,7 +116,7 @@
 <p>Since there are config files scattered around for both GTK2 and GTK3 programs, it can be a pain to manage. The easiest thing here seems to just use a GUI tool such as <code>lxappearance</code>. <code>lxappearance</code> will overwrite the files <code>~/.gtkrc-2.0</code> and <code>/etc/gtk-2.0/gtkrc</code> for GTK2 settings and <code>~/.config/gtk-3.0/settings.ini</code> and <code>/etc/gtk-3.0/settings.ini</code> for GTK3 settings.</p>
 <h3 id="qt5">QT5</h3>
 <p>Increasing the icon size for a few QT programs was accomplished using the qt5 gui configuration tool which is launched using the <code>qt5ct</code> command. For the configuration tool to work properly, an environmental variable had to be set:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">export</span> <span class="ot">QT_QPA_PLATFORMTHEME=</span><span class="st">&quot;qt5ct&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">QT_QPA_PLATFORMTHEME</span><span class="op">=</span><span class="st">&quot;qt5ct&quot;</span></span></code></pre></div>
 <h3 id="additional-gtkqt5-tweaks">Additional GTK/QT5 Tweaks</h3>
 <ul>
 <li>The toolbar icons in programs such as <code>pcmanfm</code> were not fixable using <code>lxappearance</code> and had to be manually set. In order to make these settings last and not be overwritten by the GUI tool, the following was saved into <code>~/.gtkrc-2.0.mine</code></li>
@@ -126,7 +126,7 @@
 <ul>
 <li>To automatically adjust qt icons depending on the dpi:</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">export</span> <span class="ot">QT_AUTO_SCREEN_SCALE_FACTOR=</span>1</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">QT_AUTO_SCREEN_SCALE_FACTOR</span><span class="op">=</span>1</span></code></pre></div>
 <h3 id="morc_menu">morc_menu</h3>
 <p>Sometimes it is nice to use <a href="#morc_menu">morc_menu</a> rather than dmenu. Out of the box the text is completely squashed and illegible. To fix this, play with the value of <code>avg_char_width</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">line_height</span><span class="op">=</span>20</span>
@@ -138,7 +138,7 @@
 <p><img src="/assets/img/morc_menu.png" alt="morc_menu" class="center" width=400 height=400></p>
 <h3 id="electron-apps">Electron Apps</h3>
 <p>To increase the scaling of electron apps, you can start the program using the <code>--force-device-scale-factor</code> flag. This can be added to the <code>.desktop</code> file so that the the program uses the flag when launched with <code>dmenu</code> or <code>rofi</code>. The flag should be added to the line beginning with <code>Exec=</code>. For example, editing spotify’s desktop file at <code>/usr/share/applications/spotify.desktop</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Exec</span><span class="ot">=</span><span class="st">spotify --force-device-scale-factor=</span><span class="fl">1.75</span><span class="st"> %U</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Exec</span><span class="ot">=</span><span class="st">spotify --force-device-scale-factor=1.75 %U</span></span></code></pre></div>
 <h2 id="key-remaps">Key remaps</h2>
 <ul>
 <li>To set the (useless) caps lock key as a (useful) control key, add the following to <code>~/.Xmodmap</code>.</li>
@@ -209,7 +209,7 @@
 <p>To enable these: Add the following line to <code>~/.config/gtk-3.0/settings.ini</code></p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">gtk-key-theme-name </span><span class="ot">=</span><span class="st"> Emacs</span></span></code></pre></div>
 <p>The equivalent for gtk-2 is to add the following line to <code>~/.gtkrc-2.0</code></p>
-<pre class="conf"><code>gtk-key-theme-name = &quot;Emacs&quot;</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">gtk-key-theme-name </span><span class="ot">=</span><span class="st"> &quot;Emacs&quot;</span></span></code></pre></div>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
 </body>
 </html>
