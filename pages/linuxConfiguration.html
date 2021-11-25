@@ -101,6 +101,7 @@
 <ul>
 <li><a href="#system-wide-emacs-keybindings">System Wide Emacs Keybindings</a></li>
 </ul></li>
+<li><a href="#verbose-boot-up">Verbose Boot Up</a></li>
 </ul>
 </nav>
 <p>One of things that comes with using a minimal window manager, such as <a href="https://i3wm.org/">i3</a>, is having to maintain additional configuration files that a desktop environment would normally take care of. Most of my configuration files are kept under <a href="https://github.com/erietz/.ewr">version control</a>, but I have not found a clean way to maintain some of the X11 config files across multiple machines. For the time being, it seems that the best solution is to simply take notes of how I have configured things.</p>
@@ -210,6 +211,10 @@
 <div class="sourceCode" id="cb9"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">gtk-key-theme-name </span><span class="ot">=</span><span class="st"> Emacs</span></span></code></pre></div>
 <p>The equivalent for gtk-2 is to add the following line to <code>~/.gtkrc-2.0</code></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">gtk-key-theme-name </span><span class="ot">=</span><span class="st"> &quot;Emacs&quot;</span></span></code></pre></div>
+<h2 id="verbose-boot-up">Verbose Boot Up</h2>
+<p>Open the file <code>/etc/default/grub</code> and look for a line like</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">GRUB_CMDLINE_LINUX_DEFAULT</span><span class="op">=</span><span class="st">&quot;quiet udev.log_priority=3&quot;</span></span></code></pre></div>
+<p>Remove the word <code>quite</code> from the line. Then run <code>sudo update-grub</code>. Note, this line will look slightly different if the disk is encrypted.</p>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
 </body>
 </html>

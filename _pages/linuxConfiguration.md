@@ -152,6 +152,17 @@ The equivalent for gtk-2 is to add the following line to `~/.gtkrc-2.0`
 gtk-key-theme-name = "Emacs"
 ```
 
+## Verbose Boot Up
+
+Open the file `/etc/default/grub` and look for a line like
+
+```sh
+GRUB_CMDLINE_LINUX_DEFAULT="quiet udev.log_priority=3"
+```
+
+Remove the word `quite` from the line. Then run `sudo update-grub`. Note, this
+line will look slightly different if the disk is encrypted.
+
 [i3]: https://i3wm.org/
 [version control]: https://github.com/erietz/.ewr
 [archwiki]: https://wiki.archlinux.org/title/HiDPI
