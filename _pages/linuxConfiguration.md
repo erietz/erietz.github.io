@@ -154,7 +154,9 @@ gtk-key-theme-name = "Emacs"
 
 ## Verbose Boot Up
 
-Open the file `/etc/default/grub` and look for a line like
+I prefer to see the boot messages as my machine starts up rather than a black
+screen. To show the messages, open the file `/etc/default/grub` and look for a
+line like
 
 ```sh
 GRUB_CMDLINE_LINUX_DEFAULT="quiet udev.log_priority=3"
