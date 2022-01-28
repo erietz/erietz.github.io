@@ -136,7 +136,7 @@
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="va">menu_width</span><span class="op">=</span>350</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="va">err_menu_width</span><span class="op">=</span>350</span></code></pre></div>
 <p>I changed the value from <code>9</code> to <code>20</code> to get a nice looking morc menu.</p>
-<p><img src="/assets/img/morc_menu.png" alt="morc_menu" class="center" width=400 height=400></p>
+<p><img src="/assets/img/morc_menu.png" alt="morc_menu" class="center" width=400></p>
 <h3 id="electron-apps">Electron Apps</h3>
 <p>To increase the scaling of electron apps, you can start the program using the <code>--force-device-scale-factor</code> flag. This can be added to the <code>.desktop</code> file so that the the program uses the flag when launched with <code>dmenu</code> or <code>rofi</code>. The flag should be added to the line beginning with <code>Exec=</code>. For example, editing spotify’s desktop file at <code>/usr/share/applications/spotify.desktop</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Exec</span><span class="ot">=</span><span class="st">spotify --force-device-scale-factor=1.75 %U</span></span></code></pre></div>

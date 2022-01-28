@@ -86,7 +86,7 @@ err_menu_width=350
 
 I changed the value from `9` to `20` to get a nice looking morc menu.
 
-<img src="/assets/img/morc_menu.png" alt="morc_menu" class="center" width=400 height=400>
+<img src="/assets/img/morc_menu.png" alt="morc_menu" class="center" width=400>
 
 ### Electron Apps
 
