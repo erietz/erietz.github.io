@@ -150,7 +150,7 @@
 <p>Fortunately, this problem is solved with <a href="https://www.docker.com/">Docker</a>.</p>
 <h3 id="docker">Docker</h3>
 <p>The very first link from <a href="https://pi-hole.net/">pi-hole</a>’s documentation points to how to run the software in a docker container. Even though I could now theoretically run pi-hole from any Linux distro/machine, I chose to continue on the raspberry pi 4 as there is a low energy cost with keeping it running all the time.</p>
-<p>I followed the <a href="https://github.com/pi-hole/docker-pi-hole/#running-pi-hole-docker">quick start guide</a> on GitHub which is well documented. You can have pi-hole up and running be simply following the next steps!</p>
+<p>I followed the <a href="https://github.com/pi-hole/docker-pi-hole/#running-pi-hole-docker">quick start guide</a> on GitHub which is well documented. You can have pi-hole up and running by simply following the next steps!</p>
 <h4 id="steps">Steps</h4>
 <ol type="1">
 <li><code>sudo pacman -Syu docker docker-compose</code></li>
@@ -203,7 +203,7 @@
 <pre><code>[global-dns-domain-*]
 servers=::1,192.168.0.29
 </code></pre>
-<p>More information about this file can be found at the <a href="https://wiki.archlinux.org/title/NetworkManager#DHCP_client">NetworkManager</a> page on the arch wiki.</p>
+<p>where <code>192.168.0.29</code> is the <a href="#setup-static-ip-address">static IP address</a> of my pi. More information about this file can be found at the <a href="https://wiki.archlinux.org/title/NetworkManager#DHCP_client">NetworkManager</a> page on the arch wiki.</p>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
 </body>
 </html>
