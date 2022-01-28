@@ -8,7 +8,7 @@ PD_FLAGS := --standalone --toc --mathjax \
 		   --include-after-body ./assets/footer.html \
 		   --highlight-style ./assets/pandoc/set3.theme
 
-all: $(HTML_FILES) index makefile
+all: $(HTML_FILES) index Makefile
 
 posts/%.html: _posts/%.md
 	pandoc $(PD_FLAGS) $^ -o $@

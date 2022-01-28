@@ -109,7 +109,7 @@
 <p>I thought that perhaps the SSD was going bad since the computer was made in 2012. However, it turned out that repairing the disk was all that needed to be done. The SSD is still kicking.</p>
 <h2 id="solution">Solution</h2>
 <p>Luckily, I still had my bootable USB lying around with the manjaro installation, so I was able to boot into the machine and run <code>fsck</code> on the unmounted root partition. To make things more difficult on myself, the hard drive is encrypted with <a href="https://wiki.archlinux.org/title/dm-crypt/Device_encryption#Cryptsetup_usage">LUKS</a>, so I had to first “create a device mapper” for the encrypted drive at <code>/dev/sda2</code>. Running <code>cryptsetup luksOpen /dev/sda2 foo</code> and entering the password for the disk opened the device at <code>/dev/mapper/foo</code>. Then I was able to run <code>fsck</code> on the opened device, <code>fsck /dev/mapper/foo</code>, and repair the file system.</p>
-<p>After booting back into the system, I was able to run <code>sudo rm -rf ~/snap</code> and <code>sudo pacman -Rs snapd</code>. The moral of the story is that snaps, flatpaks, and appimages are a joke and you should use the package manager like a good boy.</p>
+<p>After booting back into the system, I was able to run <code>sudo rm -rf ~/snap</code> and <code>sudo pacman -Rs snapd</code>. The moral of the story is that snaps a joke and you should just use the package manager.</p>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
 </body>
 </html>
