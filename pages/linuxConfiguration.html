@@ -93,66 +93,121 @@
 <ul>
 <li><a href="#gtk-themeicons">GTK Theme/Icons</a></li>
 <li><a href="#qt5">QT5</a></li>
-<li><a href="#additional-gtkqt5-tweaks">Additional GTK/QT5 Tweaks</a></li>
+<li><a href="#additional-gtkqt5-tweaks">Additional GTK/QT5
+Tweaks</a></li>
 <li><a href="#morc_menu">morc_menu</a></li>
 <li><a href="#electron-apps">Electron Apps</a></li>
 </ul></li>
 <li><a href="#key-remaps">Key remaps</a>
 <ul>
-<li><a href="#system-wide-emacs-keybindings">System Wide Emacs Keybindings</a></li>
+<li><a href="#system-wide-emacs-keybindings">System Wide Emacs
+Keybindings</a></li>
 </ul></li>
 <li><a href="#verbose-boot-up">Verbose Boot Up</a></li>
 </ul>
 </nav>
-<p>One of things that comes with using a minimal window manager, such as <a href="https://i3wm.org/">i3</a>, is having to maintain additional configuration files that a desktop environment would normally take care of. Most of my configuration files are kept under <a href="https://github.com/erietz/.ewr">version control</a>, but I have not found a clean way to maintain some of the X11 config files across multiple machines. For the time being, it seems that the best solution is to simply take notes of how I have configured things.</p>
+<p>One of things that comes with using a minimal window manager, such as
+<a href="https://i3wm.org/">i3</a>, is having to maintain additional
+configuration files that a desktop environment would normally take care
+of. Most of my configuration files are kept under <a
+href="https://github.com/erietz/.ewr">version control</a>, but I have
+not found a clean way to maintain some of the X11 config files across
+multiple machines. For the time being, it seems that the best solution
+is to simply take notes of how I have configured things.</p>
 <h2 id="screen-resolution">Screen Resolution</h2>
-<p>The screen resolution can be set using the <code>xrandr</code> command. For a complicated multi monitor setup, it can be a lot easier to use a gui tool such as <code>arandr</code> which helps to write <code>xrandr</code> scripts.</p>
+<p>The screen resolution can be set using the <code>xrandr</code>
+command. For a complicated multi monitor setup, it can be a lot easier
+to use a gui tool such as <code>arandr</code> which helps to write
+<code>xrandr</code> scripts.</p>
 <h2 id="high-dpi">High DPI</h2>
-<p>On both my laptop and desktop setups, I have higher than 1080p resolution. This usually means on Linux that the scaling is going to be off and everything will be way too tiny to read. To fix this issue, I modified the dpi setting in the <code>~/.Xresources</code> file. For my laptop, which has a resolution of <code>2560x1600</code>, I doubled the scaling by bumping up <code>Xft.dpi</code> from <code>96</code> to <code>192</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode xorg"><code class="sourceCode xorg"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>! Xft.dpi:       96</span>
+<p>On both my laptop and desktop setups, I have higher than 1080p
+resolution. This usually means on Linux that the scaling is going to be
+off and everything will be way too tiny to read. To fix this issue, I
+modified the dpi setting in the <code>~/.Xresources</code> file. For my
+laptop, which has a resolution of <code>2560x1600</code>, I doubled the
+scaling by bumping up <code>Xft.dpi</code> from <code>96</code> to
+<code>192</code>.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode xorg"><code class="sourceCode xorg"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>! Xft.dpi:       96</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>! the number 192 is an integer multiple of 96</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Xft.dpi:       192 </span></code></pre></div>
-<p>Adjusting the dpi value alone fixes most of the resolution problems, but certain icons and font sizes do not always scale properly for all programs. Most of the configuration in the following sections come from the <a href="https://wiki.archlinux.org/title/HiDPI">archwiki</a>, but some comes from various other places.</p>
+<p>Adjusting the dpi value alone fixes most of the resolution problems,
+but certain icons and font sizes do not always scale properly for all
+programs. Most of the configuration in the following sections come from
+the <a href="https://wiki.archlinux.org/title/HiDPI">archwiki</a>, but
+some comes from various other places.</p>
 <h3 id="gtk-themeicons">GTK Theme/Icons</h3>
-<p>Since there are config files scattered around for both GTK2 and GTK3 programs, it can be a pain to manage. The easiest thing here seems to just use a GUI tool such as <code>lxappearance</code>. <code>lxappearance</code> will overwrite the files <code>~/.gtkrc-2.0</code> and <code>/etc/gtk-2.0/gtkrc</code> for GTK2 settings and <code>~/.config/gtk-3.0/settings.ini</code> and <code>/etc/gtk-3.0/settings.ini</code> for GTK3 settings.</p>
+<p>Since there are config files scattered around for both GTK2 and GTK3
+programs, it can be a pain to manage. The easiest thing here seems to
+just use a GUI tool such as <code>lxappearance</code>.
+<code>lxappearance</code> will overwrite the files
+<code>~/.gtkrc-2.0</code> and <code>/etc/gtk-2.0/gtkrc</code> for GTK2
+settings and <code>~/.config/gtk-3.0/settings.ini</code> and
+<code>/etc/gtk-3.0/settings.ini</code> for GTK3 settings.</p>
 <h3 id="qt5">QT5</h3>
-<p>Increasing the icon size for a few QT programs was accomplished using the qt5 gui configuration tool which is launched using the <code>qt5ct</code> command. For the configuration tool to work properly, an environmental variable had to be set:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">QT_QPA_PLATFORMTHEME</span><span class="op">=</span><span class="st">&quot;qt5ct&quot;</span></span></code></pre></div>
+<p>Increasing the icon size for a few QT programs was accomplished using
+the qt5 gui configuration tool which is launched using the
+<code>qt5ct</code> command. For the configuration tool to work properly,
+an environmental variable had to be set:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode zsh"><code class="sourceCode zsh"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">QT_QPA_PLATFORMTHEME</span><span class="op">=</span><span class="st">&quot;qt5ct&quot;</span></span></code></pre></div>
 <h3 id="additional-gtkqt5-tweaks">Additional GTK/QT5 Tweaks</h3>
 <ul>
-<li>The toolbar icons in programs such as <code>pcmanfm</code> were not fixable using <code>lxappearance</code> and had to be manually set. In order to make these settings last and not be overwritten by the GUI tool, the following was saved into <code>~/.gtkrc-2.0.mine</code></li>
+<li>The toolbar icons in programs such as <code>pcmanfm</code> were not
+fixable using <code>lxappearance</code> and had to be manually set. In
+order to make these settings last and not be overwritten by the GUI
+tool, the following was saved into <code>~/.gtkrc-2.0.mine</code></li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gtk-icon-sizes</span> = <span class="st">&quot;panel-menu=48,48:panel=48,48:gtk-menu=48,48</span><span class="dt">\</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">:gtk-large-toolbar=48,48:gtk-small-toolbar=48,48:gtk-button=48,48&quot;</span></span></code></pre></div>
 <ul>
 <li>To automatically adjust qt icons depending on the dpi:</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode zsh"><code class="sourceCode zsh"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">QT_AUTO_SCREEN_SCALE_FACTOR</span><span class="op">=</span>1</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode zsh"><code class="sourceCode zsh"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">QT_AUTO_SCREEN_SCALE_FACTOR</span><span class="op">=</span>1</span></code></pre></div>
 <h3 id="morc_menu">morc_menu</h3>
-<p>Sometimes it is nice to use <a href="#morc_menu">morc_menu</a> rather than dmenu. Out of the box the text is completely squashed and illegible. To fix this, play with the value of <code>avg_char_width</code>.</p>
+<p>Sometimes it is nice to use <a href="#morc_menu">morc_menu</a> rather
+than dmenu. Out of the box the text is completely squashed and
+illegible. To fix this, play with the value of
+<code>avg_char_width</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">line_height</span><span class="op">=</span>20</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="va">avg_char_width</span><span class="op">=</span>9</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="va">avg_err_char_width</span><span class="op">=</span>10</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="va">menu_width</span><span class="op">=</span>350</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="va">err_menu_width</span><span class="op">=</span>350</span></code></pre></div>
-<p>I changed the value from <code>9</code> to <code>20</code> to get a nice looking morc menu.</p>
+<p>I changed the value from <code>9</code> to <code>20</code> to get a
+nice looking morc menu.</p>
 <p><img src="/assets/img/morc_menu.png" alt="morc_menu" class="center" width=400></p>
 <h3 id="electron-apps">Electron Apps</h3>
-<p>To increase the scaling of electron apps, you can start the program using the <code>--force-device-scale-factor</code> flag. This can be added to the <code>.desktop</code> file so that the the program uses the flag when launched with <code>dmenu</code> or <code>rofi</code>. The flag should be added to the line beginning with <code>Exec=</code>. For example, editing spotify’s desktop file at <code>/usr/share/applications/spotify.desktop</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Exec</span><span class="ot">=</span><span class="st">spotify --force-device-scale-factor=1.75 %U</span></span></code></pre></div>
+<p>To increase the scaling of electron apps, you can start the program
+using the <code>--force-device-scale-factor</code> flag. This can be
+added to the <code>.desktop</code> file so that the the program uses the
+flag when launched with <code>dmenu</code> or <code>rofi</code>. The
+flag should be added to the line beginning with <code>Exec=</code>. For
+example, editing spotify’s desktop file at
+<code>/usr/share/applications/spotify.desktop</code>:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode ini"><code class="sourceCode ini"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Exec</span><span class="ot">=</span><span class="st">spotify --force-device-scale-factor=1.75 %U</span></span></code></pre></div>
 <h2 id="key-remaps">Key remaps</h2>
 <ul>
-<li>To set the (useless) caps lock key as a (useful) control key, add the following to <code>~/.Xmodmap</code>.</li>
+<li>To set the (useless) caps lock key as a (useful) control key, add
+the following to <code>~/.Xmodmap</code>.</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clear</span> lock</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">clear</span> control</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">keycode</span> 66 = Control_L</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">add</span> control = Control_L Control_R</span></code></pre></div>
-<p>Note: Every time you plug in an external keyboard you will have to reload this file using <code>xmodmap ~/.Xmodmap</code>. This can be set to a keybinding using i3.</p>
+<p>Note: Every time you plug in an external keyboard you will have to
+reload this file using <code>xmodmap ~/.Xmodmap</code>. This can be set
+to a keybinding using i3.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bindsym</span> <span class="va">$mod</span>+Shift+x exec <span class="at">--no-startup-id</span> <span class="st">&quot;xmodmap </span><span class="va">$HOME</span><span class="st">/.Xmodmap&quot;</span></span></code></pre></div>
-<p><em>TODO: explore <a href="https://wiki.archlinux.org/title/X_keyboard_extension">xkb</a> as an alternative to Xresources</em></p>
-<h3 id="system-wide-emacs-keybindings">System Wide Emacs Keybindings</h3>
-<p>One of the great features of a Mac is the system wide Emacs keybindings. These are the essentials:</p>
+<p><em>TODO: explore <a
+href="https://wiki.archlinux.org/title/X_keyboard_extension">xkb</a> as
+an alternative to Xresources</em></p>
+<h3 id="system-wide-emacs-keybindings">System Wide Emacs
+Keybindings</h3>
+<p>One of the great features of a Mac is the system wide Emacs
+keybindings. These are the essentials:</p>
 <table>
 <thead>
 <tr class="header">
@@ -207,14 +262,23 @@
 </tr>
 </tbody>
 </table>
-<p>To enable these: Add the following line to <code>~/.config/gtk-3.0/settings.ini</code></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">gtk-key-theme-name </span><span class="ot">=</span><span class="st"> Emacs</span></span></code></pre></div>
-<p>The equivalent for gtk-2 is to add the following line to <code>~/.gtkrc-2.0</code></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">gtk-key-theme-name </span><span class="ot">=</span><span class="st"> &quot;Emacs&quot;</span></span></code></pre></div>
+<p>To enable these: Add the following line to
+<code>~/.config/gtk-3.0/settings.ini</code></p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode ini"><code class="sourceCode ini"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">gtk-key-theme-name </span><span class="ot">=</span><span class="st"> Emacs</span></span></code></pre></div>
+<p>The equivalent for gtk-2 is to add the following line to
+<code>~/.gtkrc-2.0</code></p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode ini"><code class="sourceCode ini"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">gtk-key-theme-name </span><span class="ot">=</span><span class="st"> &quot;Emacs&quot;</span></span></code></pre></div>
 <h2 id="verbose-boot-up">Verbose Boot Up</h2>
-<p>I prefer to see the boot messages as my machine starts up rather than a black screen. To show the messages, open the file <code>/etc/default/grub</code> and look for a line like</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">GRUB_CMDLINE_LINUX_DEFAULT</span><span class="op">=</span><span class="st">&quot;quiet udev.log_priority=3&quot;</span></span></code></pre></div>
-<p>Remove the word <code>quite</code> from the line. Then run <code>sudo update-grub</code>. Note, this line will look slightly different if the disk is encrypted.</p>
+<p>I prefer to see the boot messages as my machine starts up rather than
+a black screen. To show the messages, open the file
+<code>/etc/default/grub</code> and look for a line like</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">GRUB_CMDLINE_LINUX_DEFAULT</span><span class="op">=</span><span class="st">&quot;quiet udev.log_priority=3&quot;</span></span></code></pre></div>
+<p>Remove the word <code>quite</code> from the line. Then run <code>sudo
+update-grub</code>. Note, this line will look slightly different if the
+disk is encrypted.</p>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
 </body>
 </html>

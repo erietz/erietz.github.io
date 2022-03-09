@@ -77,7 +77,9 @@
     code span.wa { color: #80b1d3; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="/assets/css/master.css" />
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
@@ -89,62 +91,147 @@
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#life-without-the-terminator">Life without the terminator</a>
+<li><a href="#life-without-the-terminator">Life without the
+terminator</a>
 <ul>
-<li><a href="#option-1-the-vim-command-line">Option 1: The vim command line</a></li>
-<li><a href="#option-2-putting-vim-in-the-background">Option 2: Putting vim in the background</a></li>
+<li><a href="#option-1-the-vim-command-line">Option 1: The vim command
+line</a></li>
+<li><a href="#option-2-putting-vim-in-the-background">Option 2: Putting
+vim in the background</a></li>
 <li><a href="#option-3-tmux">Option 3: Tmux</a></li>
-<li><a href="#option-4-built-in-vim-terminal">Option 4: Built in vim terminal</a></li>
+<li><a href="#option-4-built-in-vim-terminal">Option 4: Built in vim
+terminal</a></li>
 <li><a href="#option-5-dispatch">Option 5: Dispatch</a></li>
 </ul></li>
 <li><a href="#life-with-the-terminator">Life with the terminator</a>
 <ul>
-<li><a href="#output-buffer-speed-test">Output buffer speed test</a></li>
+<li><a href="#output-buffer-speed-test">Output buffer speed
+test</a></li>
 <li><a href="#vim-terminal-speed-test">Vim terminal speed test</a></li>
 <li><a href="#quickfix-speed-test">Quickfix speed test</a></li>
 <li><a href="#summary">Summary</a></li>
 </ul></li>
 </ul>
 </nav>
-<p>There are vim plugins for nearly everything, but when it comes to actually running your code in vim the options are rather limited. Hence, I created <a href="https://github.com/erietz/vim-terminator">vim-terminator</a>, an asynchronous code running plugin for vim (version 8 and above) and neovim.</p>
+<p>There are vim plugins for nearly everything, but when it comes to
+actually running your code in vim the options are rather limited. Hence,
+I created <a
+href="https://github.com/erietz/vim-terminator">vim-terminator</a>, an
+asynchronous code running plugin for vim (version 8 and above) and
+neovim.</p>
 <figure>
-<img src="https://raw.githubusercontent.com/erietz/vim-terminator/main/media/resizing.gif" alt="Async code running" /><figcaption aria-hidden="true">Async code running</figcaption>
+<img
+src="https://raw.githubusercontent.com/erietz/vim-terminator/main/media/resizing.gif"
+alt="Async code running" />
+<figcaption aria-hidden="true">Async code running</figcaption>
 </figure>
 <h2 id="life-without-the-terminator">Life without the terminator</h2>
-<p>Before creating this plugin, I ran my code in several ways, each of which had its shortcomings.</p>
-<h3 id="option-1-the-vim-command-line">Option 1: The vim command line</h3>
-<p>Commands can be executed in a shell by using command mode in vim and prefixing with an exclamation mark. For example <code>:!echo "hello"</code> will run the command <code>echo "hello"</code> and the result will appear in a temporary window (which vanishes after pressing any key).</p>
-<p>I used this for a while and set up some key bindings to run my file using things such as <code>nnoremap &lt;leader&gt;r :!python3 %&lt;CR&gt;</code> to run the current file using python. This is the worst solution. You have to wait for the entire process to finish before being able to see your editor again, and the second you press a key you can no longer view the output.</p>
-<h3 id="option-2-putting-vim-in-the-background">Option 2: Putting vim in the background</h3>
-<p>By pressing <code>ctrl-z</code>, the vim process is put in the background. Then you can run your code in the terminal vim is running in. To get vim back you can just type the command <code>fg</code>. This may or may not be an improvement from the vim command line.</p>
+<p>Before creating this plugin, I ran my code in several ways, each of
+which had its shortcomings.</p>
+<h3 id="option-1-the-vim-command-line">Option 1: The vim command
+line</h3>
+<p>Commands can be executed in a shell by using command mode in vim and
+prefixing with an exclamation mark. For example <code>:!echo
+"hello"</code> will run the command <code>echo "hello"</code> and the
+result will appear in a temporary window (which vanishes after pressing
+any key).</p>
+<p>I used this for a while and set up some key bindings to run my file
+using things such as <code>nnoremap &lt;leader&gt;r :!python3
+%&lt;CR&gt;</code> to run the current file using python. This is the
+worst solution. You have to wait for the entire process to finish before
+being able to see your editor again, and the second you press a key you
+can no longer view the output.</p>
+<h3 id="option-2-putting-vim-in-the-background">Option 2: Putting vim in
+the background</h3>
+<p>By pressing <code>ctrl-z</code>, the vim process is put in the
+background. Then you can run your code in the terminal vim is running
+in. To get vim back you can just type the command <code>fg</code>. This
+may or may not be an improvement from the vim command line.</p>
 <h3 id="option-3-tmux">Option 3: Tmux</h3>
-<p>Tmux is pretty amazing. For a while I had vim in a tmux split and a terminal in the other pane. Then you can switch between vim and the terminal to run the code. My complaint with this solution is that you have one more set of key bindings to keep track of, and tmux can add a layer of complexity that does not need to exist. I ran into issues with python virtual environments not starting correctly and terminal colors not being properly displayed.</p>
-<h3 id="option-4-built-in-vim-terminal">Option 4: Built in vim terminal</h3>
-<p>In vim8 or neovim there is a built in terminal! The terminal emulator inside of vim is pretty good as compared to my experience with emacs… My one complaint with the built-in vim terminal is having to navigate to and from it. To get out of insert mode inside the terminal, you must press the key combination <code>&lt;c-\&gt;&lt;c-n&gt;</code>. Then of course you can navigate back to your current buffer from normal mode using shortcuts such as <code>&lt;c-^&gt;</code>, but this becomes clumsy.</p>
-<p>Vim-terminator makes the terminal experience inside of vim more pleasant by allowing you to send text to the terminal rather than having to manually type it!</p>
+<p>Tmux is pretty amazing. For a while I had vim in a tmux split and a
+terminal in the other pane. Then you can switch between vim and the
+terminal to run the code. My complaint with this solution is that you
+have one more set of key bindings to keep track of, and tmux can add a
+layer of complexity that does not need to exist. I ran into issues with
+python virtual environments not starting correctly and terminal colors
+not being properly displayed.</p>
+<h3 id="option-4-built-in-vim-terminal">Option 4: Built in vim
+terminal</h3>
+<p>In vim8 or neovim there is a built in terminal! The terminal emulator
+inside of vim is pretty good as compared to my experience with emacs… My
+one complaint with the built-in vim terminal is having to navigate to
+and from it. To get out of insert mode inside the terminal, you must
+press the key combination <code>&lt;c-\&gt;&lt;c-n&gt;</code>. Then of
+course you can navigate back to your current buffer from normal mode
+using shortcuts such as <code>&lt;c-^&gt;</code>, but this becomes
+clumsy.</p>
+<p>Vim-terminator makes the terminal experience inside of vim more
+pleasant by allowing you to send text to the terminal rather than having
+to manually type it!</p>
 <h3 id="option-5-dispatch">Option 5: Dispatch</h3>
-<p>I was a big fan of Tim Pope’s vim-dispatch plugin, and I still supplement my vim-terminator experience with dispatch. The two features I like about dispatch are that it is asynchronous and it puts errors into the quickfix window.</p>
+<p>I was a big fan of Tim Pope’s vim-dispatch plugin, and I still
+supplement my vim-terminator experience with dispatch. The two features
+I like about dispatch are that it is asynchronous and it puts errors
+into the quickfix window.</p>
 <blockquote>
-<p>I first found the quickfix window when using the <a href="https://github.com/lervag/vimtex">vimtex</a> plugin for editing <span class="math inline">\(\LaTeX\)</span>. It puts the errors and warnings from the compiler log into a small (quickfix) window which allows you to conveniently jump to them regardless of the file they are in.</p>
+<p>I first found the quickfix window when using the <a
+href="https://github.com/lervag/vimtex">vimtex</a> plugin for editing
+<span class="math inline">\(\LaTeX\)</span>. It puts the errors and
+warnings from the compiler log into a small (quickfix) window which
+allows you to conveniently jump to them regardless of the file they are
+in.</p>
 </blockquote>
-<p>In short, vim-dispatch basically makes an asynchronous version of the built in <code>:make</code> command. The <code>:make</code> command along with <code>:compiler</code>, <code>:makeprg</code>, and <code>errorformat</code> may take a decade to understand entirely. The key takeaway is that you can usually just set <code>:compiler</code> to one of the compilers provided by vim and the <code>:makeprg</code> to the command you want to run and everything works nicely. The other nice feature is that <code>:Make</code> allows you to use a Makefile if your build is more complicated than just compiling your current file.</p>
-<p>Vim-dispatch is great when you do not want to wait for a process to finish and you only want to see the output if there are errors. This works well for compiling programs and for runnings tests. Often times when writing code, I want to quickly run my current file (asynchronously) and <strong>see the output immediately</strong>. Trying to accomplish this with dispatch for a language like python is impossible for all practical purposes. For instance, to keep the quickfix window open after running a python program with dispatch, one needs to make the file executable and run it with a command like <code>:Dispatch ./%</code> such that there is not an <code>errorformat</code> hiding the quickfix window at the end of the job. The quickfix window was not designed to be used in this way.</p>
+<p>In short, vim-dispatch basically makes an asynchronous version of the
+built in <code>:make</code> command. The <code>:make</code> command
+along with <code>:compiler</code>, <code>:makeprg</code>, and
+<code>errorformat</code> may take a decade to understand entirely. The
+key takeaway is that you can usually just set <code>:compiler</code> to
+one of the compilers provided by vim and the <code>:makeprg</code> to
+the command you want to run and everything works nicely. The other nice
+feature is that <code>:Make</code> allows you to use a Makefile if your
+build is more complicated than just compiling your current file.</p>
+<p>Vim-dispatch is great when you do not want to wait for a process to
+finish and you only want to see the output if there are errors. This
+works well for compiling programs and for runnings tests. Often times
+when writing code, I want to quickly run my current file
+(asynchronously) and <strong>see the output immediately</strong>. Trying
+to accomplish this with dispatch for a language like python is
+impossible for all practical purposes. For instance, to keep the
+quickfix window open after running a python program with dispatch, one
+needs to make the file executable and run it with a command like
+<code>:Dispatch ./%</code> such that there is not an
+<code>errorformat</code> hiding the quickfix window at the end of the
+job. The quickfix window was not designed to be used in this way.</p>
 <h2 id="life-with-the-terminator">Life with the terminator</h2>
-<p>For me, vim-terminator fixes all of these problems. It runs asynchronously, it puts the output of your code in an output buffer that always opens, it automatically sets the command to run for you based on file type, and it puts the errors in the quickfix window. Plus it has many additional features for working with the vim terminal, which is where the plugin gets its name.</p>
-<p>One final interesting observation is that vim-terminator can actually run code faster than in the terminal or using vim-dispatch given that there is a non-trivial amount of STDOUT. This has to do with scrolling. As a simple test, the following code was run in the output buffer, the vim terminal, and in the quickfix window using dispatch.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
+<p>For me, vim-terminator fixes all of these problems. It runs
+asynchronously, it puts the output of your code in an output buffer that
+always opens, it automatically sets the command to run for you based on
+file type, and it puts the errors in the quickfix window. Plus it has
+many additional features for working with the vim terminal, which is
+where the plugin gets its name.</p>
+<p>One final interesting observation is that vim-terminator can actually
+run code faster than in the terminal or using vim-dispatch given that
+there is a non-trivial amount of STDOUT. This has to do with scrolling.
+As a simple test, the following code was run in the output buffer, the
+vim terminal, and in the quickfix window using dispatch.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000000</span>):</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&#39;test&#39;</span>, i)</span></code></pre></div>
 <h3 id="output-buffer-speed-test">Output buffer speed test</h3>
-<p>The command <code>&lt;leader&gt; rf</code> was used (which runs <code>python test.py</code>) and resulted in:</p>
+<p>The command <code>&lt;leader&gt; rf</code> was used (which runs
+<code>python test.py</code>) and resulted in:</p>
 <p><code>[Done] in 8.222829 seconds</code></p>
 <h3 id="vim-terminal-speed-test">Vim terminal speed test</h3>
 <p>The command <code>time ./test.py</code> was used and resulted in:</p>
-<p><code>./test.py  4.64s user 3.01s system 55% cpu 13.835 total</code></p>
+<p><code>./test.py  4.64s user 3.01s system 55% cpu 13.835
+total</code></p>
 <h3 id="quickfix-speed-test">Quickfix speed test</h3>
-<p>The command <code>:Dispatch time ./test.py</code> was used and resulted in:</p>
-<p><code>./test.py  4.41s user 3.07s system 53% cpu 13.888 total</code></p>
+<p>The command <code>:Dispatch time ./test.py</code> was used and
+resulted in:</p>
+<p><code>./test.py  4.41s user 3.07s system 53% cpu 13.888
+total</code></p>
 <h3 id="summary">Summary</h3>
 <table>
 <thead>

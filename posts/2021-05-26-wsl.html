@@ -92,23 +92,40 @@
 <li><a href="#step-2">Step 2</a></li>
 </ul>
 </nav>
-<p>The file permissions on Windows Subsystem for Linux are very screwed up by default. To fix this…</p>
+<p>The file permissions on Windows Subsystem for Linux are very screwed
+up by default. To fix this…</p>
 <h2 id="step-1">Step 1</h2>
-<p>Create the file <code>/etc/wsl.conf</code> if it does not already exist and add the following:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[automount]</span></span>
+<p>Create the file <code>/etc/wsl.conf</code> if it does not already
+exist and add the following:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode ini"><code class="sourceCode ini"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[automount]</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">enabled </span><span class="ot">=</span><span class="st"> </span><span class="kw">true</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">options </span><span class="ot">=</span><span class="st"> &quot;metadata,umask=</span><span class="dv">22</span><span class="st">,fmask=</span><span class="dv">11</span><span class="st">&quot;</span></span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">options </span><span class="ot">=</span><span class="st"> &quot;metadata,umask=22,fmask=11&quot;</span></span></code></pre></div>
 <p>More information can be found at these links:</p>
-<p><a href="https://devblogs.microsoft.com/commandline/automatically-configuring-wsl/">Automatically Configuring WSL</a></p>
-<p><a href="https://devblogs.microsoft.com/commandline/chmod-chown-wsl-improvements/">Chmod/Chown WSL Improvements</a></p>
-<p><a href="https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-per-distro-launch-settings-with-wslconf">Configure per distro launch settings with wslconf</a></p>
+<p><a
+href="https://devblogs.microsoft.com/commandline/automatically-configuring-wsl/">Automatically
+Configuring WSL</a></p>
+<p><a
+href="https://devblogs.microsoft.com/commandline/chmod-chown-wsl-improvements/">Chmod/Chown
+WSL Improvements</a></p>
+<p><a
+href="https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-per-distro-launch-settings-with-wslconf">Configure
+per distro launch settings with wslconf</a></p>
 <h2 id="step-2">Step 2</h2>
 <ol type="1">
-<li>Clone your windows drive to an extra 500GB HDD you have lying around using Macrium Reflect.</li>
+<li>Clone your windows drive to an extra 500GB HDD you have lying around
+using Macrium Reflect.</li>
 <li>Put the hard drive in a drawer and forget about it.</li>
 <li>Install Linux on your NVMe</li>
 <li>Enjoy the simplicity</li>
 </ol>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
+<script src="https://utteranc.es/client.js"
+        repo="https://github.com/erietz/erietz.github.io"
+        issue-term="pathname"
+        theme="gruvbox-dark"
+        crossorigin="anonymous"
+        async>
+</script>
 </body>
 </html>

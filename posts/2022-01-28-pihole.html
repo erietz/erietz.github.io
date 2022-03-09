@@ -103,15 +103,32 @@
 </ul>
 </nav>
 <h2 id="intro">Intro</h2>
-<p>Last night I installed <a href="https://pi-hole.net/">pi-hole</a> on one of my raspberry pies and am quite pleased with the results. I spent several days reading a about pi-hole and figured it would be complicated to get configured. In all it took about 10 minutes to get up and running and I wish I would have done it sooner.</p>
+<p>Last night I installed <a href="https://pi-hole.net/">pi-hole</a> on
+one of my raspberry pies and am quite pleased with the results. I spent
+several days reading a about pi-hole and figured it would be complicated
+to get configured. In all it took about 10 minutes to get up and running
+and I wish I would have done it sooner.</p>
 <p><img src="/assets/img/pi-hole.png" alt="pi hole admin panel" class="center" width=400></p>
 <h2 id="installation">Installation</h2>
 <h3 id="setup-static-ip-address">Setup Static IP Address</h3>
-<p>First you need to set up a static IP address for the pi to make thing easier. The easiest way to do this in my case was to simply login to the router and change the settings there. On my router settings there was a button called “Add device with reserved IP” which takes you to a simple form.</p>
+<p>First you need to set up a static IP address for the pi to make thing
+easier. The easiest way to do this in my case was to simply login to the
+router and change the settings there. On my router settings there was a
+button called “Add device with reserved IP” which takes you to a simple
+form.</p>
 <p><img src="/assets/img/cox.png" alt="router screenshot" class="center" width=400></p>
 <h3 id="supported-os">Supported OS</h3>
-<p>I would have run pi-hole directly on my device, but unfortunately I am running the <a href="https://manjaro.org/download/#raspberry-pi-4">Manjaro Arm</a> edition on all of my pies. At the time of writing, the operating systems show below support pi-hole.</p>
+<p>I would have run pi-hole directly on my device, but unfortunately I
+am running the <a
+href="https://manjaro.org/download/#raspberry-pi-4">Manjaro Arm</a>
+edition on all of my pies. At the time of writing, the operating systems
+show below support pi-hole.</p>
 <table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Distribution</th>
@@ -147,16 +164,26 @@
 </tr>
 </tbody>
 </table>
-<p>Fortunately, this problem is solved with <a href="https://www.docker.com/">Docker</a>.</p>
+<p>Fortunately, this problem is solved with <a
+href="https://www.docker.com/">Docker</a>.</p>
 <h3 id="docker">Docker</h3>
-<p>The very first link from <a href="https://pi-hole.net/">pi-hole</a>’s documentation points to how to run the software in a docker container. Even though I could now theoretically run pi-hole from any Linux distro/machine, I chose to continue on the raspberry pi 4 as there is a low energy cost with keeping it running all the time.</p>
-<p>I followed the <a href="https://github.com/pi-hole/docker-pi-hole/#running-pi-hole-docker">quick start guide</a> on GitHub which is well documented. You can have pi-hole up and running by simply following the next steps!</p>
+<p>The very first link from <a href="https://pi-hole.net/">pi-hole</a>’s
+documentation points to how to run the software in a docker container.
+Even though I could now theoretically run pi-hole from any Linux
+distro/machine, I chose to continue on the raspberry pi 4 as there is a
+low energy cost with keeping it running all the time.</p>
+<p>I followed the <a
+href="https://github.com/pi-hole/docker-pi-hole/#running-pi-hole-docker">quick
+start guide</a> on GitHub which is well documented. You can have pi-hole
+up and running by simply following the next steps!</p>
 <h4 id="steps">Steps</h4>
 <ol type="1">
 <li><code>sudo pacman -Syu docker docker-compose</code></li>
-<li>Paste the following code into a file named <code>docker-compose.yml</code></li>
+<li>Paste the following code into a file named
+<code>docker-compose.yml</code></li>
 </ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;3&quot;</span></span>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode yml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;3&quot;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
@@ -180,13 +207,21 @@
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> NET_ADMIN</span><span class="co"> # Recommended but not required (DHCP needs NET_ADMIN)      </span></span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> unless-stopped</span></span></code></pre></div>
 <ol start="3" type="1">
-<li>Change the <code>WEBPASSWORD</code> and other settings as necessary</li>
-<li>Run <code>docker-compose up -d</code> to build and start pi-hole</li>
-<li>Go to the IP address of your pi in your browser (e.g. <code>192.168.0.foo/admin</code>) to get to the pi hole web UI.</li>
+<li>Change the <code>WEBPASSWORD</code> and other settings as
+necessary</li>
+<li>Run <code>docker-compose up -d</code> to build and start
+pi-hole</li>
+<li>Go to the IP address of your pi in your browser
+(e.g. <code>192.168.0.foo/admin</code>) to get to the pi hole web
+UI.</li>
 <li>Setup your devices with the DNS of your pi.</li>
 </ol>
 <h2 id="setup-dns-on-each-device">Setup DNS on each device</h2>
-<p>For the time being, I decided that I wanted to manually configure each device to use pi-hole rather than configuring my entire network through the router’s settings. The main reason being that if the pi goes down for some reason, I can still connect to the internet by simply reverting the devices settings rather than messing with the router.</p>
+<p>For the time being, I decided that I wanted to manually configure
+each device to use pi-hole rather than configuring my entire network
+through the router’s settings. The main reason being that if the pi goes
+down for some reason, I can still connect to the internet by simply
+reverting the devices settings rather than messing with the router.</p>
 <h3 id="iphone">iPhone</h3>
 <ul>
 <li>Go to Settings</li>
@@ -198,12 +233,27 @@
 <li>Enter the IP address of you pi</li>
 </ul>
 <h3 id="desktop-linux">Desktop Linux</h3>
-<p>I initially tried changing the DNS settings using Network Manager through a GUI called “Advanced Network Configuration” but the settings did not appear to do anything.</p>
-<p>What worked for me was to create the file <code>/etc/NetworkManager/conf.d/dns-servers.conf</code> which contains</p>
+<p>I initially tried changing the DNS settings using Network Manager
+through a GUI called “Advanced Network Configuration” but the settings
+did not appear to do anything.</p>
+<p>What worked for me was to create the file
+<code>/etc/NetworkManager/conf.d/dns-servers.conf</code> which
+contains</p>
 <pre><code>[global-dns-domain-*]
 servers=::1,192.168.0.29
 </code></pre>
-<p>where <code>192.168.0.29</code> is the <a href="#setup-static-ip-address">static IP address</a> of my pi. More information about this file can be found at the <a href="https://wiki.archlinux.org/title/NetworkManager#DHCP_client">NetworkManager</a> page on the arch wiki.</p>
+<p>where <code>192.168.0.29</code> is the <a
+href="#setup-static-ip-address">static IP address</a> of my pi. More
+information about this file can be found at the <a
+href="https://wiki.archlinux.org/title/NetworkManager#DHCP_client">NetworkManager</a>
+page on the arch wiki.</p>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
+<script src="https://utteranc.es/client.js"
+        repo="https://github.com/erietz/erietz.github.io"
+        issue-term="pathname"
+        theme="gruvbox-dark"
+        crossorigin="anonymous"
+        async>
+</script>
 </body>
 </html>

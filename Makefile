@@ -8,10 +8,12 @@ PD_FLAGS := --standalone --toc --mathjax \
 		   --include-after-body ./assets/footer.html \
 		   --highlight-style ./assets/pandoc/set3.theme
 
-all: $(HTML_FILES) index Makefile
+PD_FLAGS_FOR_POSTS := --include-after-body ./assets/comments.html
+
+build: $(HTML_FILES) index Makefile
 
 posts/%.html: _posts/%.md
-	pandoc $(PD_FLAGS) $^ -o $@
+	pandoc $(PD_FLAGS) $(PD_FLAGS_FOR_POSTS) $^ -o $@
 
 projects/%.html: _projects/%.md
 	pandoc $(PD_FLAGS) $^ -o $@
