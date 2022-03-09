@@ -4,6 +4,7 @@ title: Posts
 
 <center>|     |       |      |      |
 |:--- | :---- | :--- | :--- |
+| Ɣ | 2022-03-09 | [Blog Post Comments](2022-03-09-comments.md) | *web* | 
 | Ɣ | 2022-01-28 | [Quick Pi-hole Setup](2022-01-28-pihole.md) | *linux, raspberry pi, ad block* | 
 | Ɣ | 2021-08-14 | [Snapcraft is garbage](2021-08-14-snapd.md) | *linux, snap* | 
 | Ɣ | 2021-05-26 | [Fix WSL File Permissions](2021-05-26-wsl.md) | *linux, windows* | 
