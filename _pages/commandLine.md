@@ -34,24 +34,6 @@ sudo pacman-mirrors --fasttrack && sudo pacman -Syyu
 > Tip: Every run of pacman-mirrors requires you to syncronize your database and
 update your system. 
 
-### Update all packages on system
-
-```sh
-sudo pacman -Syyu
-```
-
-### List installed packages
-
-To list all packages and versions
-```sh
-pacman -Q
-```
-
-To list packages explicitly installed 
-```sh
-pacman -Qe
-```
-
 ## SSH Port Forwarding
 
 To access what is being served on port 8384 from the remote computer on your
