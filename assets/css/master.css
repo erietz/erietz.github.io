@@ -158,6 +158,12 @@ a:active {
   color: var(--green);
 }
 
+/* lists */
+dt {
+  color: var(--green);
+  font-weight: bold;
+}
+
 
 /* Add a black background color to the top navigation */
 .topnav {
