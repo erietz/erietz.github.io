@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Home Server Upgrade</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #665c54;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #665c54;  padding-left: 4px; }
+    div.sourceCode
+      { color: #ededed; background-color: #333333; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffffb3; font-weight: bold; } /* Alert */
+    code span.an { color: #80b1d3; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #b3de69; } /* Attribute */
+    code span.bn { color: #bebada; } /* BaseN */
+    code span.bu { color: #fdb462; } /* BuiltIn */
+    code span.cf { color: #fb8072; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #b3de69; } /* Char */
+    code span.cn { color: #ffffb3; } /* Constant */
+    code span.co { color: #80b1d3; font-style: italic; } /* Comment */
+    code span.cv { color: #80b1d3; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #ffffb3; } /* DataType */
+    code span.dv { color: #bebada; } /* DecVal */
+    code span.er { color: #ffffb3; font-weight: bold; } /* Error */
+    code span.ex { color: #fdb462; } /* Extension */
+    code span.fl { color: #bebada; } /* Float */
+    code span.fu { color: #b3de69; } /* Function */
+    code span.im { color: #fb8072; } /* Import */
+    code span.in { color: #80b1d3; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #fb8072; font-weight: bold; } /* Keyword */
+    code span.op { color: #ededed; } /* Operator */
+    code span.ot { color: #fb8072; } /* Other */
+    code span.pp { color: #80b1d3; } /* Preprocessor */
+    code span.sc { color: #b3de69; } /* SpecialChar */
+    code span.ss { color: #8dd3c7; } /* SpecialString */
+    code span.st { color: #8dd3c7; } /* String */
+    code span.va { color: #bebada; } /* Variable */
+    code span.vs { color: #8dd3c7; } /* VerbatimString */
+    code span.wa { color: #80b1d3; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="/assets/css/master.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<script src="/assets/js/navigation.js" charset="utf-8"></script>
+<header id="title-block-header">
+<h1 class="title">Home Server Upgrade</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#background">Background</a></li>
+<li><a href="#log-to-github">Log to GitHub</a></li>
+<li><a href="#install-dotfiles">Install dotfiles</a></li>
+<li><a href="#upgrade-neovim">Upgrade Neovim</a></li>
+<li><a href="#repartition-the-drive">Repartition the drive</a>
+<ul>
+<li><a href="#before">Before</a></li>
+<li><a href="#running-fdisk">Running <code>fdisk</code></a></li>
+<li><a href="#after">After</a></li>
+</ul></li>
+<li><a href="#format-the-drive-as-ext4">Format the drive as
+ext4</a></li>
+<li><a href="#automount-drive-on-login">Automount drive on
+login</a></li>
+<li><a href="#create-a-new-user">Create a new user</a></li>
+<li><a
+href="#change-owner-user-and-group-of-folder-on-second-drive">Change
+owner (user and group) of folder on second drive</a></li>
+<li><a href="#copy-files-from-external-drive-to-second-drive">Copy files
+from external drive to second drive</a></li>
+<li><a href="#samba-config">Samba Config</a>
+<ul>
+<li><a href="#create-a-samba-user">Create a samba user</a></li>
+<li><a href="#create-samba-shares-for-the-two-users">Create samba shares
+for the two users</a></li>
+<li><a
+href="#create-a-shared-public-folder-for-any-registered-user">Create a
+shared public folder for any registered user</a></li>
+<li><a href="#check-smb.conf-file-for-errors">Check smb.conf file for
+errors</a></li>
+<li><a href="#mounting-samba-from-a-client">Mounting samba from a
+client</a></li>
+</ul></li>
+<li><a href="#todo">TODO</a></li>
+</ul>
+</nav>
+<h2 id="background">Background</h2>
+<p>I have been using a Mac Mini as a home server for the last few years
+for network file/printer sharing and Time Machine backups. It is old
+enough that the OS cannot be upgraded passed Catalina which will <a
+href="https://computing.cs.cmu.edu/desktop/os-lifecycle">no longer be
+receiving security updates</a> as of November 2022 (). I decided it was
+about time that I was due for another Linux installation and went with
+Ubuntu Server. The following information is for how I migrated from this
+setup</p>
+<ul>
+<li>Mac Mini Server (late 2012) running Catalina
+<ul>
+<li>Internal Drives
+<ul>
+<li>500GB SSD (APFS)</li>
+<li>1TB HDD (Mac OS Extended Journaled)</li>
+</ul></li>
+<li>External Drives
+<ul>
+<li>4TB HDD (Mac OS External Journaled)</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>To this setup</p>
+<ul>
+<li>Ubuntu Server 22.04
+<ul>
+<li>Internal Drives
+<ul>
+<li>500GB SSD (EXT4)</li>
+<li>1TB HDD (EXT4)</li>
+</ul></li>
+<li>External Drives
+<ul>
+<li>4TB HDD (Still need to figure out how to backup mac laptops to
+this)</li>
+<li>4TB HDD (EXT4 for backup of internal drives)</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="log-to-github">Log to GitHub</h2>
+<p>I have found the easiest thing these days is to just use the <a
+href="https://cli.github.com/">GitHub CLI</a></p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install gh</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gh</span> auth login</span></code></pre></div>
+<p>And you are off to the races with your ssh keys automatically
+imported into GitHub.</p>
+<h2 id="install-dotfiles">Install dotfiles</h2>
+<p>I had already automated this process for an Ubuntu machine using
+Ansible. <a href="https://github.com/erietz/machine-setup">The source
+code</a> for this part can be found here. All I had to do was to run
+<code>ansible-playbook --ask-become-pass ubuntu.yml</code>.</p>
+<h2 id="upgrade-neovim">Upgrade Neovim</h2>
+<p>Since Ubuntu is not a rolling release distro, Neovim is out of date
+and I cannot live with that. To install the latest release I simply
+downloaded the <code>.deb</code> package from the GitHub releases,
+verified the checksum, and installed using <code>apt</code>.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb.sha256sum</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">sha256sum</span> <span class="at">-c</span> nvim-linux64.deb.sha256sum</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install ./nvim-linux64.deb</span></code></pre></div>
+<h2 id="repartition-the-drive">Repartition the drive</h2>
+<p>Before repartitioning the drive, I checked to see what the devices
+were using <code>lsblk</code> and <code>fdisk -l</code>.</p>
+<h3 id="before">Before</h3>
+<p>As we can see here, <code>snap</code> is installed by default these
+days on Ubuntu Server and is making my block device list messy.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> lsblk</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">loop0</span>    7:0    0  61.9M  1 loop /snap/core20/1405</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">loop1</span>    7:1    0  79.9M  1 loop /snap/lxd/22923</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">loop2</span>    7:2    0  44.7M  1 loop /snap/snapd/15534</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">loop3</span>    7:3    0  61.9M  1 loop /snap/core20/1434</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">sda</span>      8:0    0 465.8G  0 disk</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">├─sda1</span>   8:1    0     1G  0 part /boot/efi</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="ex">└─sda2</span>   8:2    0 464.7G  0 part /</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="ex">sdb</span>      8:16   0 931.5G  0 disk</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="ex">├─sdb1</span>   8:17   0   200M  0 part</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="ex">├─sdb2</span>   8:18   0 930.7G  0 part</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="ex">└─sdb3</span>   8:19   0 619.9M  0 part</span></code></pre></div>
+<p>Here we can see my two hard drives. The 500GB solid state drive is
+named <code>sda</code> and has two partitions. The second internal hard
+drive is named <code>sdb</code> and has three partitions. I will not be
+needing these three parititions and I will up repartitioning this drive
+to only have one <code>ext4</code> partition for storage.</p>
+<p>More information about the drives is displayed below using
+<code>fdisk -l</code>.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> sudo <span class="ex">fdisk</span> <span class="at">-l</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> /dev/loop0: 61.89 MiB, 64901120 bytes, 126760 sectors</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Units:</span> sectors of 1 <span class="pp">*</span> 512 = 512 bytes</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Sector</span> size <span class="er">(</span><span class="ex">logical/physical</span><span class="kw">)</span><span class="bu">:</span> 512 bytes / 512 bytes</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">I/O</span> size <span class="er">(</span><span class="ex">minimum/optimal</span><span class="kw">)</span><span class="bu">:</span> 512 bytes / 512 bytes</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> /dev/loop1: 79.95 MiB, 83832832 bytes, 163736 sectors</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Units:</span> sectors of 1 <span class="pp">*</span> 512 = 512 bytes</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Sector</span> size <span class="er">(</span><span class="ex">logical/physical</span><span class="kw">)</span><span class="bu">:</span> 512 bytes / 512 bytes</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="ex">I/O</span> size <span class="er">(</span><span class="ex">minimum/optimal</span><span class="kw">)</span><span class="bu">:</span> 512 bytes / 512 bytes</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> /dev/loop2: 44.68 MiB, 46845952 bytes, 91496 sectors</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="ex">Units:</span> sectors of 1 <span class="pp">*</span> 512 = 512 bytes</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="ex">Sector</span> size <span class="er">(</span><span class="ex">logical/physical</span><span class="kw">)</span><span class="bu">:</span> 512 bytes / 512 bytes</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="ex">I/O</span> size <span class="er">(</span><span class="ex">minimum/optimal</span><span class="kw">)</span><span class="bu">:</span> 512 bytes / 512 bytes</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> /dev/loop3: 61.9 MiB, 64909312 bytes, 126776 sectors</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="ex">Units:</span> sectors of 1 <span class="pp">*</span> 512 = 512 bytes</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="ex">Sector</span> size <span class="er">(</span><span class="ex">logical/physical</span><span class="kw">)</span><span class="bu">:</span> 512 bytes / 512 bytes</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="ex">I/O</span> size <span class="er">(</span><span class="ex">minimum/optimal</span><span class="kw">)</span><span class="bu">:</span> 512 bytes / 512 bytes</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> /dev/sdb: 931.51 GiB, 1000204886016 bytes, 1953525168 sectors</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> model: APPLE HDD ST1000</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="ex">Units:</span> sectors of 1 <span class="pp">*</span> 512 = 512 bytes</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="ex">Sector</span> size <span class="er">(</span><span class="ex">logical/physical</span><span class="kw">)</span><span class="bu">:</span> 512 bytes / 4096 bytes</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="ex">I/O</span> size <span class="er">(</span><span class="ex">minimum/optimal</span><span class="kw">)</span><span class="bu">:</span> 4096 bytes / 4096 bytes</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="ex">Disklabel</span> type: gpt</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> identifier: 836857F7-4F20-47E2-BB79-F8C1EFCDBAFD</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="ex">Device</span>          Start        End    Sectors   Size Type</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/sdb1</span>          40     409639     409600   200M EFI System</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/sdb2</span>      409640 1952255591 1951845952 930.7G Apple HFS/HFS+</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/sdb3</span>  1952255592 1953525127    1269536 619.9M Apple boot</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> /dev/sda: 465.76 GiB, 500107862016 bytes, 976773168 sectors</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> model: Samsung SSD 860</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="ex">Units:</span> sectors of 1 <span class="pp">*</span> 512 = 512 bytes</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="ex">Sector</span> size <span class="er">(</span><span class="ex">logical/physical</span><span class="kw">)</span><span class="bu">:</span> 512 bytes / 512 bytes</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="ex">I/O</span> size <span class="er">(</span><span class="ex">minimum/optimal</span><span class="kw">)</span><span class="bu">:</span> 512 bytes / 512 bytes</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="ex">Disklabel</span> type: gpt</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> identifier: 89968A95-CDFD-4253-9017-59C8711C0D0F</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="ex">Device</span>       Start       End   Sectors   Size Type</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/sda1</span>     2048   2203647   2201600     1G EFI System</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/sda2</span>  2203648 976771071 974567424 464.7G Linux filesystem</span></code></pre></div>
+<h3 id="running-fdisk">Running <code>fdisk</code></h3>
+<p>Repartitioning the drive is very straight forward using
+<code>fdisk</code>.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> sudo <span class="ex">fdisk</span> /dev/sdb</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to fdisk <span class="er">(</span><span class="ex">util-linux</span> 2.37.2<span class="kw">)</span><span class="bu">.</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Changes</span> will remain in memory only, until you decide to write them.</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Be</span> careful before using the write command.</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Command</span> <span class="er">(</span><span class="ex">m</span> for help<span class="kw">)</span><span class="bu">:</span> m</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Help:</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="ex">GPT</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>   <span class="ex">M</span>   enter protective/hybrid MBR</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Generic</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>   <span class="ex">d</span>   delete a partition</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>   <span class="ex">F</span>   list free unpartitioned space</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>   <span class="ex">l</span>   list known partition types</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>   <span class="ex">n</span>   add a new partition</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>   <span class="ex">p</span>   print the partition table</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>   <span class="ex">t</span>   change a partition type</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>   <span class="ex">v</span>   verify the partition table</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>   <span class="ex">i</span>   print information about a partition</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Misc</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>   <span class="ex">m</span>   print this menu</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>   <span class="ex">x</span>   extra functionality <span class="er">(</span><span class="ex">experts</span> only<span class="kw">)</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Script</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>   <span class="ex">I</span>   load disk layout from sfdisk script file</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>   <span class="ex">O</span>   dump disk layout to sfdisk script file</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Save</span> <span class="kw">&amp;</span> <span class="ex">Exit</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>   <span class="fu">w</span>   write table to disk and exit</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>   <span class="ex">q</span>   quit without saving changes</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Create</span> a new label</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>   <span class="ex">g</span>   create a new empty GPT partition table</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>   <span class="ex">G</span>   create a new empty SGI <span class="er">(</span><span class="ex">IRIX</span><span class="kw">)</span> <span class="ex">partition</span> table</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>   <span class="ex">o</span>   create a new empty DOS partition table</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>   <span class="ex">s</span>   create a new empty Sun partition table</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="ex">Command</span> <span class="er">(</span><span class="ex">m</span> for help<span class="kw">)</span><span class="bu">:</span> p</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> /dev/sdb: 931.51 GiB, 1000204886016 bytes, 1953525168 sectors</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> model: APPLE HDD ST1000</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="ex">Units:</span> sectors of 1 <span class="pp">*</span> 512 = 512 bytes</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="ex">Sector</span> size <span class="er">(</span><span class="ex">logical/physical</span><span class="kw">)</span><span class="bu">:</span> 512 bytes / 4096 bytes</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="ex">I/O</span> size <span class="er">(</span><span class="ex">minimum/optimal</span><span class="kw">)</span><span class="bu">:</span> 4096 bytes / 4096 bytes</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="ex">Disklabel</span> type: gpt</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> identifier: 836857F7-4F20-47E2-BB79-F8C1EFCDBAFD</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="ex">Device</span>          Start        End    Sectors   Size Type</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/sdb1</span>          40     409639     409600   200M EFI System</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/sdb2</span>      409640 1952255591 1951845952 930.7G Apple HFS/HFS+</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/sdb3</span>  1952255592 1953525127    1269536 619.9M Apple boot</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="ex">Command</span> <span class="er">(</span><span class="ex">m</span> for help<span class="kw">)</span><span class="bu">:</span> d</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="ex">Partition</span> number <span class="er">(</span><span class="ex">1-3,</span> default 3<span class="kw">)</span><span class="bu">:</span> 3</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="ex">Partition</span> 3 has been deleted.</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="ex">Command</span> <span class="er">(</span><span class="ex">m</span> for help<span class="kw">)</span><span class="bu">:</span> d</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="ex">Partition</span> number <span class="er">(</span><span class="ex">1,2,</span> default 2<span class="kw">)</span><span class="bu">:</span> 2</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a><span class="ex">Partition</span> 2 has been deleted.</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="ex">Command</span> <span class="er">(</span><span class="ex">m</span> for help<span class="kw">)</span><span class="bu">:</span> d</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="ex">Selected</span> partition 1</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a><span class="ex">Partition</span> 1 has been deleted.</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a><span class="ex">Command</span> <span class="er">(</span><span class="ex">m</span> for help<span class="kw">)</span><span class="bu">:</span> p</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> /dev/sdb: 931.51 GiB, 1000204886016 bytes, 1953525168 sectors</span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> model: APPLE HDD ST1000</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a><span class="ex">Units:</span> sectors of 1 <span class="pp">*</span> 512 = 512 bytes</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a><span class="ex">Sector</span> size <span class="er">(</span><span class="ex">logical/physical</span><span class="kw">)</span><span class="bu">:</span> 512 bytes / 4096 bytes</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a><span class="ex">I/O</span> size <span class="er">(</span><span class="ex">minimum/optimal</span><span class="kw">)</span><span class="bu">:</span> 4096 bytes / 4096 bytes</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a><span class="ex">Disklabel</span> type: gpt</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> identifier: 836857F7-4F20-47E2-BB79-F8C1EFCDBAFD</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a><span class="ex">Command</span> <span class="er">(</span><span class="ex">m</span> for help<span class="kw">)</span><span class="bu">:</span> n</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a><span class="ex">Partition</span> number <span class="er">(</span><span class="ex">1-128,</span> default 1<span class="kw">)</span><span class="bu">:</span></span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a><span class="ex">First</span> sector <span class="er">(</span><span class="ex">34-1953525134,</span> default 2048<span class="kw">)</span><span class="bu">:</span></span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a><span class="ex">Last</span> sector, +/-sectors or +/-size<span class="dt">{K</span><span class="op">,</span><span class="dt">M</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">P}</span> <span class="er">(</span><span class="ex">2048-1953525134,</span> default 1953525134<span class="kw">)</span><span class="bu">:</span></span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a><span class="ex">Created</span> a new partition 1 of type <span class="st">&#39;Linux filesystem&#39;</span> and of size 931.5 GiB.</span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a><span class="ex">Command</span> <span class="er">(</span><span class="ex">m</span> for help<span class="kw">)</span><span class="bu">:</span> p</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> /dev/sdb: 931.51 GiB, 1000204886016 bytes, 1953525168 sectors</span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> model: APPLE HDD ST1000</span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a><span class="ex">Units:</span> sectors of 1 <span class="pp">*</span> 512 = 512 bytes</span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a><span class="ex">Sector</span> size <span class="er">(</span><span class="ex">logical/physical</span><span class="kw">)</span><span class="bu">:</span> 512 bytes / 4096 bytes</span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a><span class="ex">I/O</span> size <span class="er">(</span><span class="ex">minimum/optimal</span><span class="kw">)</span><span class="bu">:</span> 4096 bytes / 4096 bytes</span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a><span class="ex">Disklabel</span> type: gpt</span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a><span class="ex">Disk</span> identifier: 836857F7-4F20-47E2-BB79-F8C1EFCDBAFD</span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a><span class="ex">Device</span>     Start        End    Sectors   Size Type</span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/sdb1</span>   2048 1953525134 1953523087 931.5G Linux filesystem</span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a><span class="ex">Command</span> <span class="er">(</span><span class="ex">m</span> for help<span class="kw">)</span><span class="bu">:</span> w</span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> partition table has been altered.</span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a><span class="ex">Calling</span> ioctl<span class="er">(</span><span class="kw">)</span> <span class="ex">to</span> re-read partition table.</span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a><span class="ex">Syncing</span> disks.</span></code></pre></div>
+<h3 id="after">After</h3>
+<p>This is what the same commands show after writing the changes from
+<code>fdisk</code>.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> lsblk</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">NAME</span>   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">loop0</span>    7:0    0  61.9M  1 loop /snap/core20/1405</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">loop1</span>    7:1    0  79.9M  1 loop /snap/lxd/22923</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">loop2</span>    7:2    0  44.7M  1 loop /snap/snapd/15534</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">loop3</span>    7:3    0  61.9M  1 loop /snap/core20/1434</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ex">sda</span>      8:0    0 465.8G  0 disk</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ex">├─sda1</span>   8:1    0     1G  0 part /boot/efi</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="ex">└─sda2</span>   8:2    0 464.7G  0 part /</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="ex">sdb</span>      8:16   0 931.5G  0 disk</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="ex">└─sdb1</span>   8:17   0 931.5G  0 part</span></code></pre></div>
+<p>Now we only have one partition for drive <code>sdb</code>.</p>
+<h2 id="format-the-drive-as-ext4">Format the drive as ext4</h2>
+<p>After partitioning using <code>fdisk</code>, we use <code>mkfs</code>
+to format the partition on the drive.</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> sudo <span class="ex">mkfs</span> <span class="at">-t</span> ext4 /dev/sdb1</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mke2fs</span> 1.46.5 <span class="er">(</span><span class="ex">30-Dec-2021</span><span class="kw">)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Creating</span> filesystem with 244190385 4k blocks and 61054976 inodes</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Filesystem</span> UUID: 1427af59-def0-4380-b0ce-92555e7dcec0</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Superblock</span> backups stored on blocks:</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="ex">32768,</span> 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="ex">4096000,</span> 7962624, 11239424, 20480000, 23887872, 71663616, 78675968,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">102400000,</span> 214990848</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Allocating</span> group tables: done</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ex">Writing</span> inode tables: done</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="ex">Creating</span> journal <span class="er">(</span><span class="ex">262144</span> blocks<span class="kw">)</span><span class="bu">:</span> done</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Writing</span> superblocks and filesystem accounting information: done</span></code></pre></div>
+<h2 id="automount-drive-on-login">Automount drive on login</h2>
+<p>First make sure that the drive is not mounted.</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> umount /mnt/hd2</span></code></pre></div>
+<p>Check for the UUID using <code>blkid</code>. We will use the UUID
+instead of the device name <code>sdb</code> when editing
+<code>/etc/fstab</code>.</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> sudo <span class="ex">blkid</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/sda2:</span> UUID=<span class="st">&quot;e6bff312-28be-4d23-a1e2-f2f10afbf9e6&quot;</span> BLOCK_SIZE=<span class="st">&quot;4096&quot;</span> TYPE=<span class="st">&quot;ext4&quot;</span> PARTUUID=<span class="st">&quot;0beea851-f2bb-4b6d-9f76-9745563d1b1d&quot;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/sda1:</span> UUID=<span class="st">&quot;EA75-47A4&quot;</span> BLOCK_SIZE=<span class="st">&quot;512&quot;</span> TYPE=<span class="st">&quot;vfat&quot;</span> PARTUUID=<span class="st">&quot;8f73a2aa-afd7-46a6-8c12-12a1d2044802&quot;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/loop1:</span> TYPE=<span class="st">&quot;squashfs&quot;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/sdb1:</span> UUID=<span class="st">&quot;1427af59-def0-4380-b0ce-92555e7dcec0&quot;</span> BLOCK_SIZE=<span class="st">&quot;4096&quot;</span> TYPE=<span class="st">&quot;ext4&quot;</span> PARTUUID=<span class="st">&quot;ace85f13-56dd-ce4d-a930-de12c1743881&quot;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/loop2:</span> TYPE=<span class="st">&quot;squashfs&quot;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/loop0:</span> TYPE=<span class="st">&quot;squashfs&quot;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/loop3:</span> TYPE=<span class="st">&quot;squashfs&quot;</span></span></code></pre></div>
+<p>Very carefully edit the <code>fstab</code> file</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> sudoedit <span class="ex">/etc/fstab</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[ethan@rietz</span> ~]</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> cat <span class="ex">/etc/fstab</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># /etc/fstab: static file system information.</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Use &#39;blkid&#39; to print the universally unique identifier for a</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># device; this may be used with UUID= as a more robust way to name devices</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># that works even if disks are added and removed. See fstab(5).</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;file system&gt; &lt;mount point&gt;   &lt;type&gt;  &lt;options&gt;       &lt;dump&gt;  &lt;pass&gt;</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># / was on /dev/sda2 during curtin installation</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/disk/by-uuid/e6bff312-28be-4d23-a1e2-f2f10afbf9e6</span> / ext4 defaults 0 1</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># /boot/efi was on /dev/sda1 during curtin installation</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/disk/by-uuid/EA75-47A4</span> /boot/efi vfat defaults 0 1</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="ex">/swap.img</span>       none    swap    sw      0       0</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># ADDED BY ETHAN BELOW HERE</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="va">UUID</span><span class="op">=</span>1427af59-def0-4380-b0ce-92555e7dcec0   <span class="ex">/mnt/hd2</span>    ext4    defaults    0   2</span></code></pre></div>
+<p>Now we can mount the hard drive at the mount directory automatically
+since the fstab file knows what is supposed to be mounted there.</p>
+<pre><code>[ethan@rietz ~]
+&gt; ls /mnt/hd2
+[ethan@rietz ~]
+&gt; sudo mount /mnt/hd2
+[ethan@rietz ~]
+&gt; ls /mnt/hd2
+lost+found
+[ethan@rietz ~]</code></pre>
+<p>We can see that the drive has correctly been mounted and has a
+<code>lost+found</code> directory.</p>
+<h2 id="create-a-new-user">Create a new user</h2>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> useradd <span class="at">--create-home</span> yaneli</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> passwd yaneli</span></code></pre></div>
+<h2 id="change-owner-user-and-group-of-folder-on-second-drive">Change
+owner (user and group) of folder on second drive</h2>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown ethan:ethan /mnt/hd2/ethan</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown yaneli:yaneli /mnt/hd2/yaneli</span></code></pre></div>
+<h2 id="copy-files-from-external-drive-to-second-drive">Copy files from
+external drive to second drive</h2>
+<p>To copy files I used <code>rsync</code> rather than <code>cp</code>
+for better feedback of the progress.</p>
+<p><code>rcp: aliased to rsync --progress --verbose
+--recursive</code></p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> rcp <span class="ex">/media/flashdrive/Docs</span> /mnt/hd2/ethan</span></code></pre></div>
+<h2 id="samba-config">Samba Config</h2>
+<h3 id="create-a-samba-user">Create a samba user</h3>
+<p>A linux user account must exist before you can create a “Samba” user.
+All we have to do is just configure a password (can be different from
+unix password) for the samba user.</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> smbpasswd <span class="at">-a</span> ethan</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> smbpasswd <span class="at">-a</span> yaneli</span></code></pre></div>
+<h3 id="create-samba-shares-for-the-two-users">Create samba shares for
+the two users</h3>
+<p>I added the following to <code>/etc/samba/smb.conf</code>.</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[ethan]</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">comment</span> = Ethan<span class="st">&#39;s directory on the second internal harddrive</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">    path = /mnt/hd2/ethan</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="st">    valid users = ethan</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="st">    public = no</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="st">    writeable = yes</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st">    create mask = 0644</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="st">    force create mode = 0644</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="st">    directory mask = 0775</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="st">    force directory mode = 0775</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="st">[yaneli]</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="st">    comment = Yaneli&#39;</span>s directory on the second internal harddrive</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    <span class="ex">path</span> = /mnt/hd2/yaneli</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="ex">valid</span> users = yaneli</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="ex">public</span> = no</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="ex">writeable</span> = yes</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="ex">create</span> mask = 0644</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="ex">force</span> create mode = 0644</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="ex">directory</span> mask = 0775</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    <span class="ex">force</span> directory mode = 0775</span></code></pre></div>
+<h3 id="create-a-shared-public-folder-for-any-registered-user">Create a
+shared public folder for any registered user</h3>
+<ul>
+<li>First create a new group called “smbgroup”</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> groupadd <span class="at">--system</span> smbgroup</span></code></pre></div>
+<ul>
+<li>Then create a new system user named “smbuser” who is a member of
+group “smbgroup”. The user has an invalid shell so they cannot ssh
+in.</li>
+</ul>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> useradd <span class="at">--system</span> <span class="at">--no-create-home</span> <span class="at">--group</span> smbgroup <span class="at">-s</span> /bin/false smbuser</span></code></pre></div>
+<ul>
+<li>Change the ownership of the public shared directory.</li>
+</ul>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> smbuser:smbgroup /mnt/hd2/public</span></code></pre></div>
+<ul>
+<li>Add a new share in /etc/samba/smb.conf</li>
+</ul>
+<pre class="conf"><code>[public]
+    comment = A shared directory on the second internal harddrive
+    path = /mnt/hd2/public
+    public = no
+    browseable = yes
+    writeable = yes
+    force user = smbuser
+    force group = smbgroup
+
+    create mask = 0644
+    force create mode = 0644
+    directory mask = 0775
+    force directory mode = 0775</code></pre>
+<h3 id="check-smb.conf-file-for-errors">Check smb.conf file for
+errors</h3>
+<p>Here is the what the final samba config file looked like below
+without comments.</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> testparm</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Load</span> smb config files from /etc/samba/smb.conf</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Loaded</span> services file OK.</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Weak</span> crypto is allowed</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Server</span> role: ROLE_STANDALONE</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Press</span> enter to see a dump of your service definitions</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Global parameters</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="ex">[global]</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">client</span> min protocol = SMB2</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">log</span> file = /var/log/samba/log.%m</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>        <span class="ex">logging</span> = file</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">map</span> to guest = Bad User</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">max</span> log size = 1000</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>        <span class="ex">obey</span> pam restrictions = Yes</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>        <span class="ex">pam</span> password change = Yes</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>        <span class="ex">panic</span> action = /usr/share/samba/panic-action %d</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">passwd</span> chat = <span class="pp">*</span>Enter\snew\s<span class="pp">*</span><span class="dt">\s</span>password:<span class="pp">*</span> %n<span class="dt">\n</span> <span class="pp">*</span>Retype\snew\s<span class="pp">*</span><span class="dt">\s</span>password:<span class="pp">*</span> %n<span class="dt">\n</span> <span class="pp">*</span>password\supdated\ssuccessfully<span class="pp">*</span> .</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">passwd</span> program = /usr/bin/passwd %u</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>        <span class="ex">server</span> role = standalone server</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>        <span class="ex">server</span> string = %h server <span class="er">(</span><span class="ex">Samba,</span> Ubuntu<span class="kw">)</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>        <span class="ex">unix</span> password sync = Yes</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>        <span class="ex">usershare</span> allow guests = Yes</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>        <span class="ex">idmap</span> config <span class="pp">*</span> : backend = tdb</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="ex">[printers]</span></span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>        <span class="ex">browseable</span> = No</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>        <span class="ex">comment</span> = All Printers</span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>        <span class="ex">create</span> mask = 0700</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>        <span class="ex">path</span> = /var/spool/samba</span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>        <span class="ex">printable</span> = Yes</span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a><span class="ex">[print$]</span></span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a>        <span class="ex">comment</span> = Printer Drivers</span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a>        <span class="ex">path</span> = /var/lib/samba/printers</span>
+<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a><span class="ex">[ethan]</span></span>
+<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a>        <span class="ex">comment</span> = Ethan<span class="st">&#39;s directory on the second internal harddrive</span></span>
+<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a><span class="st">        create mask = 0644</span></span>
+<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a><span class="st">        directory mask = 0775</span></span>
+<span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a><span class="st">        force create mode = 0644</span></span>
+<span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a><span class="st">        force directory mode = 0775</span></span>
+<span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a><span class="st">        path = /mnt/hd2/ethan</span></span>
+<span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a><span class="st">        read only = No</span></span>
+<span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a><span class="st">        valid users = ethan</span></span>
+<span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-52"><a href="#cb21-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-53"><a href="#cb21-53" aria-hidden="true" tabindex="-1"></a><span class="st">[yaneli]</span></span>
+<span id="cb21-54"><a href="#cb21-54" aria-hidden="true" tabindex="-1"></a><span class="st">        comment = Yaneli&#39;</span>s directory on the second internal harddrive</span>
+<span id="cb21-55"><a href="#cb21-55" aria-hidden="true" tabindex="-1"></a>        <span class="ex">create</span> mask = 0644</span>
+<span id="cb21-56"><a href="#cb21-56" aria-hidden="true" tabindex="-1"></a>        <span class="ex">directory</span> mask = 0775</span>
+<span id="cb21-57"><a href="#cb21-57" aria-hidden="true" tabindex="-1"></a>        <span class="ex">force</span> create mode = 0644</span>
+<span id="cb21-58"><a href="#cb21-58" aria-hidden="true" tabindex="-1"></a>        <span class="ex">force</span> directory mode = 0775</span>
+<span id="cb21-59"><a href="#cb21-59" aria-hidden="true" tabindex="-1"></a>        <span class="ex">path</span> = /mnt/hd2/yaneli</span>
+<span id="cb21-60"><a href="#cb21-60" aria-hidden="true" tabindex="-1"></a>        <span class="bu">read</span> <span class="va">only</span> <span class="op">=</span> <span class="va">No</span></span>
+<span id="cb21-61"><a href="#cb21-61" aria-hidden="true" tabindex="-1"></a>        <span class="ex">valid</span> users = yaneli</span>
+<span id="cb21-62"><a href="#cb21-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-63"><a href="#cb21-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-64"><a href="#cb21-64" aria-hidden="true" tabindex="-1"></a><span class="ex">[public]</span></span>
+<span id="cb21-65"><a href="#cb21-65" aria-hidden="true" tabindex="-1"></a>        <span class="ex">comment</span> = A shared directory on the second internal harddrive</span>
+<span id="cb21-66"><a href="#cb21-66" aria-hidden="true" tabindex="-1"></a>        <span class="ex">create</span> mask = 0644</span>
+<span id="cb21-67"><a href="#cb21-67" aria-hidden="true" tabindex="-1"></a>        <span class="ex">directory</span> mask = 0775</span>
+<span id="cb21-68"><a href="#cb21-68" aria-hidden="true" tabindex="-1"></a>        <span class="ex">force</span> create mode = 0644</span>
+<span id="cb21-69"><a href="#cb21-69" aria-hidden="true" tabindex="-1"></a>        <span class="ex">force</span> directory mode = 0775</span>
+<span id="cb21-70"><a href="#cb21-70" aria-hidden="true" tabindex="-1"></a>        <span class="ex">force</span> group = smbgroup</span>
+<span id="cb21-71"><a href="#cb21-71" aria-hidden="true" tabindex="-1"></a>        <span class="ex">force</span> user = smbuser</span>
+<span id="cb21-72"><a href="#cb21-72" aria-hidden="true" tabindex="-1"></a>        <span class="ex">path</span> = /mnt/hd2/public</span>
+<span id="cb21-73"><a href="#cb21-73" aria-hidden="true" tabindex="-1"></a>        <span class="bu">read</span> <span class="va">only</span> <span class="op">=</span> <span class="va">No</span></span></code></pre></div>
+<h3 id="mounting-samba-from-a-client">Mounting samba from a client</h3>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mount <span class="at">-t</span> cifs <span class="at">-o</span> user=ethan,uid=ethan,gid=ethan,dir_mode=0755,file_mode=0644 //192.168.0.160/public /mnt/samba</span></code></pre></div>
+<p>For some reason I cannot use the server by name and I must use the IP
+address.</p>
+<p>Also the <code>uid</code> and <code>gid</code> parameters are
+necessary because without them the share is mounted as root and I cannot
+create files without using <code>sudo</code>. The <code>dir_mode</code>
+and <code>file_mode</code> parameters must be added by default when
+connecting from pcmanfm but they are necessary to create files with the
+correct permissions when mounted from the cli.</p>
+<h2 id="todo">TODO</h2>
+<p>In the next post I will describe how I will setup the backups and
+other software. I also need to figure out how to login using the
+hostname rather than the IP address of the machine. I would like to
+leave the server connected via Ethernet to the network for
+performance/stability reasons, but since I live in a tiny apartment I
+need to figure out how to connect it to wifi so I can physically move
+the machine :).</p>
+<script src="/assets/js/footer.js" charset="utf-8"></script>
+<hr>
+<script src="https://utteranc.es/client.js"
+        repo="erietz/erietz.github.io"
+        issue-term="pathname"
+        theme="photon-dark"
+        crossorigin="anonymous"
+        async>
+</script>
+<hr>
+</body>
+</html>
