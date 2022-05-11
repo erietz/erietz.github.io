@@ -9,7 +9,7 @@ categories:
 
 I have been using a Mac Mini as a home server for the last few years for
 network file/printer sharing and Time Machine backups. It is old enough that
-the OS cannot be upgraded passed Catalina which will [no longer be receiving
+the OS cannot be upgraded past Catalina which will [no longer be receiving
 security updates][macos-eol] as of November 2022 . I decided it was about time
 that I was due for another Linux installation and went with Ubuntu Server. The
 following information is for how I migrated from this setup
