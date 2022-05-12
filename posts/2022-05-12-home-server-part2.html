@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Home Server Upgrade (Part 2)</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #665c54;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #665c54;  padding-left: 4px; }
+    div.sourceCode
+      { color: #ededed; background-color: #333333; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffffb3; font-weight: bold; } /* Alert */
+    code span.an { color: #80b1d3; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #b3de69; } /* Attribute */
+    code span.bn { color: #bebada; } /* BaseN */
+    code span.bu { color: #fdb462; } /* BuiltIn */
+    code span.cf { color: #fb8072; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #b3de69; } /* Char */
+    code span.cn { color: #ffffb3; } /* Constant */
+    code span.co { color: #80b1d3; font-style: italic; } /* Comment */
+    code span.cv { color: #80b1d3; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #ffffb3; } /* DataType */
+    code span.dv { color: #bebada; } /* DecVal */
+    code span.er { color: #ffffb3; font-weight: bold; } /* Error */
+    code span.ex { color: #fdb462; } /* Extension */
+    code span.fl { color: #bebada; } /* Float */
+    code span.fu { color: #b3de69; } /* Function */
+    code span.im { color: #fb8072; } /* Import */
+    code span.in { color: #80b1d3; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #fb8072; font-weight: bold; } /* Keyword */
+    code span.op { color: #ededed; } /* Operator */
+    code span.ot { color: #fb8072; } /* Other */
+    code span.pp { color: #80b1d3; } /* Preprocessor */
+    code span.sc { color: #b3de69; } /* SpecialChar */
+    code span.ss { color: #8dd3c7; } /* SpecialString */
+    code span.st { color: #8dd3c7; } /* String */
+    code span.va { color: #bebada; } /* Variable */
+    code span.vs { color: #8dd3c7; } /* VerbatimString */
+    code span.wa { color: #80b1d3; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="/assets/css/master.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<script src="/assets/js/navigation.js" charset="utf-8"></script>
+<header id="title-block-header">
+<h1 class="title">Home Server Upgrade (Part 2)</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#hostname-resolution">Hostname Resolution</a></li>
+<li><a href="#connecting-to-wi-fi">Connecting to Wi-Fi</a>
+<ul>
+<li><a href="#checking-hardware">Checking Hardware</a></li>
+<li><a href="#connecting-to-wi-fi-1">Connecting to Wi-Fi</a></li>
+</ul></li>
+<li><a href="#todo">TODO</a></li>
+</ul>
+</nav>
+<h2 id="hostname-resolution">Hostname Resolution</h2>
+<p>Today I figured out that I need to install <a
+href="https://wiki.archlinux.org/title/avahi">Avahi</a>. Avahi basically
+provides DNS on your local network so that you can ssh into your machine
+using <code>hostname.local</code> rather than its IP address. With zero
+configuration, installing avahi also made it so that my Samba Server is
+advertised as an available machine for other computers on the local
+network. All I had to do was</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install avahi-daemon</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable avahi-daemon</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start avahi-daemon</span></code></pre></div>
+<h2 id="connecting-to-wi-fi">Connecting to Wi-Fi</h2>
+<p>To connect to the network wirelessly, I first installed <a
+href="https://wiki.archlinux.org/title/NetworkManager">Network
+Manger</a>.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install network-manager</span></code></pre></div>
+<p>Installing network manager apparently also enabled and started the
+systemd service as well as it showed that is was running from
+<code>systemctl status NetworkManager.service</code>.</p>
+<p>I then tried to list the available networks using <code>nmcli</code>.
+When I ran <code>nmcli device wifi list</code>, there was no output at
+all. I search around google and confirmed that I had <a
+href="https://wiki.archlinux.org/title/wpa_supplicant">wpa_supplicant</a>
+running via <code>systemctl status wpa_supplicant</code>. I then did
+some checks to see what wifi card I had in the Mac Mini.</p>
+<h3 id="checking-hardware">Checking Hardware</h3>
+<p>If you run <code>nmcli</code> with no arguments, it displays
+information about the available devices.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> nmcli</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">enp1s0f0:</span> unmanaged</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Broadcom and subsidiaries NetXtreme BCM57766&quot;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="ex">ethernet</span> <span class="er">(</span><span class="ex">tg3</span><span class="kw">)</span><span class="ex">,</span> 68:5B:35:99:BD:B8, hw, mtu 1500</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">lo:</span> unmanaged</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;lo&quot;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">loopback</span> <span class="er">(</span><span class="ex">unknown</span><span class="kw">)</span><span class="ex">,</span> 00:00:00:00:00:00, sw, mtu 65536</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Use</span> <span class="st">&quot;nmcli device show&quot;</span> to get complete information about known devices and</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;nmcli connection show&quot;</span> to get an overview on active connection profiles.</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Consult</span> nmcli<span class="er">(</span><span class="ex">1</span><span class="kw">)</span> <span class="ex">and</span> nmcli-examples<span class="er">(</span><span class="ex">7</span><span class="kw">)</span> <span class="ex">manual</span> pages for complete usage details.</span></code></pre></div>
+<p>Here it only shows the Ethernet device <code>enp1s0f0</code> as
+available.</p>
+<p>I then used <a
+href="https://man.archlinux.org/man/lspci.8.en">lspci</a> to find
+information about other PCI devices on my machine.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> lspci <span class="ex">-v</span> <span class="kw">|</span> <span class="fu">grep</span> Network</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">02:00.0</span> Network controller: Broadcom Inc. and subsidiaries BCM4331 802.11a/b/g/n <span class="er">(</span><span class="fu">rev</span> 02<span class="kw">)</span></span></code></pre></div>
+<p>This showed me that I have a Broadcom wireless card which is model
+BCM4331. There is a community maintained list of articles for wireless
+card compatibility <a
+href="https://help.ubuntu.com/community/WifiDocs/WirelessCardsSupported">here</a>.
+According to their information about my specific <a
+href="https://help.ubuntu.com/community/HardwareSupportComponentsWirelessNetworkCardsBroadcom">Broadcom
+card</a>, the driver does not work out of the box. However, I searched
+<code>apt</code> for the <code>wl</code> driver for <code>bcm</code>
+model, installed the one that matched, and so far it appears to work out
+of the box. Fingers crossed…</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> apt <span class="ex">search</span> bcm wl</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Sorting...</span> Done</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Full</span> Text Search... Done</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">bcmwl-kernel-source/jammy</span> 6.30.223.271+bdcom-0ubuntu8 amd64</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Broadcom</span> 802.11 Linux STA wireless driver source</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ex">broadcom-sta-dkms/jammy</span> 6.30.223.271-17 all</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">dkms</span> source for the Broadcom STA Wireless driver</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="ex">broadcom-sta-source/jammy</span> 6.30.223.271-17 all</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Source</span> for the Broadcom STA Wireless driver</span></code></pre></div>
+<p>I just ran a <code>sudo apt install bcmwl-kernel-source</code> and
+then my wireless card was detected as an available option to network
+manager. It shows as device <code>wlp2s0</code>.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> nmcli</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">wlp2s0:</span> disconnected</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Broadcom and subsidiaries BCM4331&quot;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="ex">wifi</span> <span class="er">(</span><span class="ex">wl</span><span class="kw">)</span><span class="ex">,</span> A8:86:DD:A1:F1:F7, hw, mtu 1500</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">enp1s0f0:</span> unmanaged</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;Broadcom and subsidiaries NetXtreme BCM57766&quot;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">ethernet</span> <span class="er">(</span><span class="ex">tg3</span><span class="kw">)</span><span class="ex">,</span> 68:5B:35:99:BD:B8, hw, mtu 1500</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="ex">lo:</span> unmanaged</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;lo&quot;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">loopback</span> <span class="er">(</span><span class="ex">unknown</span><span class="kw">)</span><span class="ex">,</span> 00:00:00:00:00:00, sw, mtu 65536</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="ex">Use</span> <span class="st">&quot;nmcli device show&quot;</span> to get complete information about known devices and</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;nmcli connection show&quot;</span> to get an overview on active connection profiles.</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="ex">Consult</span> nmcli<span class="er">(</span><span class="ex">1</span><span class="kw">)</span> <span class="ex">and</span> nmcli-examples<span class="er">(</span><span class="ex">7</span><span class="kw">)</span> <span class="ex">manual</span> pages for complete usage details.</span></code></pre></div>
+<h3 id="connecting-to-wi-fi-1">Connecting to Wi-Fi</h3>
+<p>Finally, to actually connect to the internet, I ran</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nmcli device wifi list</span></code></pre></div>
+<p>to find my network. Then I ran</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nmcli device wifi connect <span class="op">&lt;</span>SSID or BSSID<span class="op">&gt;</span> password <span class="op">&lt;</span>PASSWORD<span class="op">&gt;</span></span></code></pre></div>
+<p>Where <code>&lt;SSID or BSSID&gt;</code> is the name of your network
+or the mac address listed by <code>nmcli device wifi list</code> and
+<code>&lt;PASSWORD&gt;</code> is the network password.</p>
+<p>Now the server automatically connects to my network without the
+ethernet cord after rebooting.</p>
+<h2 id="todo">TODO</h2>
+<p>Backups are next on the list.</p>
+<script src="/assets/js/footer.js" charset="utf-8"></script>
+<hr>
+<script src="https://utteranc.es/client.js"
+        repo="erietz/erietz.github.io"
+        issue-term="pathname"
+        theme="photon-dark"
+        crossorigin="anonymous"
+        async>
+</script>
+<hr>
+</body>
+</html>
