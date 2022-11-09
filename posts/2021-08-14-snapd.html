@@ -42,7 +42,7 @@
       }
     pre.numberSource { margin-left: 3em; border-left: 1px solid #665c54;  padding-left: 4px; }
     div.sourceCode
-      { color: #ededed; background-color: #333333; }
+      { color: #ededed; background-color: #282828; }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
@@ -88,10 +88,10 @@
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#tldr">tl;dr</a></li>
-<li><a href="#snap-broke-my-filesystem">Snap broke my
-filesystem</a></li>
-<li><a href="#solution">Solution</a></li>
+<li><a href="#tldr" id="toc-tldr">tl;dr</a></li>
+<li><a href="#snap-broke-my-filesystem"
+id="toc-snap-broke-my-filesystem">Snap broke my filesystem</a></li>
+<li><a href="#solution" id="toc-solution">Solution</a></li>
 </ul>
 </nav>
 <h2 id="tldr">tl;dr</h2>
@@ -102,13 +102,14 @@ the package needed updated. Unfortunately, updating the package using
 <code>pacman</code> led to the same problem since the version in
 Manjaro’s repositories was also out of date.</p>
 <p>I am ashamed to admit that I installed <a
-href="https://snapcraft.io/">snapd</a> and proceeded to run a <code>snap
-install discord</code>.</p>
+href="https://snapcraft.io/">snapd</a> and proceeded to run a
+<code>snap install discord</code>.</p>
 <p>Today I was successfully able to install discord using
 <code>pacman</code> and decided to remove the version that I had
-installed using snap. I tried some series of <code>snap remove
-discord</code>, <code>snap remove --purge discord</code> but was met
-with a series of errors. So I tried the brute force way and issued a
+installed using snap. I tried some series of
+<code>snap remove discord</code>,
+<code>snap remove --purge discord</code> but was met with a series of
+errors. So I tried the brute force way and issued a
 <code>sudo rm -rf ~/snap/</code> which resulted in the following:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">rm:</span> cannot remove <span class="st">&#39;snap/discord/122/.config/discord/Cache/426b6c378616834c_0&#39;</span>: Structure needs cleaning</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rm:</span> cannot remove <span class="st">&#39;snap/discord/122/.config/discord/Cache/edf3e64c37bbcba6_0&#39;</span>: Bad message</span>
@@ -116,11 +117,11 @@ with a series of errors. So I tried the brute force way and issued a
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div>
-<p>After consulting the internet, I discovered that <code>Structure
-needs cleaning</code> is a strong indication that your file system is
-corrupt. Yep, indeed, the file system had been corrupted. I wasn’t even
-able to do an <code>ls</code> in that directory without the shell
-complaining.</p>
+<p>After consulting the internet, I discovered that
+<code>Structure needs cleaning</code> is a strong indication that your
+file system is corrupt. Yep, indeed, the file system had been corrupted.
+I wasn’t even able to do an <code>ls</code> in that directory without
+the shell complaining.</p>
 <p>I thought that perhaps the SSD was going bad since the computer was
 made in 2012. However, it turned out that repairing the disk was all
 that needed to be done. The SSD is still kicking.</p>
@@ -131,15 +132,15 @@ installation, so I was able to boot into the machine and run
 difficult on myself, the hard drive is encrypted with <a
 href="https://wiki.archlinux.org/title/dm-crypt/Device_encryption#Cryptsetup_usage">LUKS</a>,
 so I had to first “create a device mapper” for the encrypted drive at
-<code>/dev/sda2</code>. Running <code>cryptsetup luksOpen /dev/sda2
-foo</code> and entering the password for the disk opened the device at
-<code>/dev/mapper/foo</code>. Then I was able to run <code>fsck</code>
-on the opened device, <code>fsck /dev/mapper/foo</code>, and repair the
-file system.</p>
-<p>After booting back into the system, I was able to run <code>sudo rm
--rf ~/snap</code> and <code>sudo pacman -Rs snapd</code>. The moral of
-the story is that snaps a joke and you should just use the package
-manager.</p>
+<code>/dev/sda2</code>. Running
+<code>cryptsetup luksOpen /dev/sda2 foo</code> and entering the password
+for the disk opened the device at <code>/dev/mapper/foo</code>. Then I
+was able to run <code>fsck</code> on the opened device,
+<code>fsck /dev/mapper/foo</code>, and repair the file system.</p>
+<p>After booting back into the system, I was able to run
+<code>sudo rm -rf ~/snap</code> and <code>sudo pacman -Rs snapd</code>.
+The moral of the story is that snaps a joke and you should just use the
+package manager.</p>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
 <hr>
 <script src="https://utteranc.es/client.js"

@@ -42,7 +42,7 @@
       }
     pre.numberSource { margin-left: 3em; border-left: 1px solid #665c54;  padding-left: 4px; }
     div.sourceCode
-      { color: #ededed; background-color: #333333; }
+      { color: #ededed; background-color: #282828; }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
@@ -91,25 +91,33 @@
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#life-without-the-terminator">Life without the
-terminator</a>
+<li><a href="#life-without-the-terminator"
+id="toc-life-without-the-terminator">Life without the terminator</a>
 <ul>
-<li><a href="#option-1-the-vim-command-line">Option 1: The vim command
+<li><a href="#option-1-the-vim-command-line"
+id="toc-option-1-the-vim-command-line">Option 1: The vim command
 line</a></li>
-<li><a href="#option-2-putting-vim-in-the-background">Option 2: Putting
-vim in the background</a></li>
-<li><a href="#option-3-tmux">Option 3: Tmux</a></li>
-<li><a href="#option-4-built-in-vim-terminal">Option 4: Built in vim
+<li><a href="#option-2-putting-vim-in-the-background"
+id="toc-option-2-putting-vim-in-the-background">Option 2: Putting vim in
+the background</a></li>
+<li><a href="#option-3-tmux" id="toc-option-3-tmux">Option 3:
+Tmux</a></li>
+<li><a href="#option-4-built-in-vim-terminal"
+id="toc-option-4-built-in-vim-terminal">Option 4: Built in vim
 terminal</a></li>
-<li><a href="#option-5-dispatch">Option 5: Dispatch</a></li>
+<li><a href="#option-5-dispatch" id="toc-option-5-dispatch">Option 5:
+Dispatch</a></li>
 </ul></li>
-<li><a href="#life-with-the-terminator">Life with the terminator</a>
+<li><a href="#life-with-the-terminator"
+id="toc-life-with-the-terminator">Life with the terminator</a>
 <ul>
-<li><a href="#output-buffer-speed-test">Output buffer speed
-test</a></li>
-<li><a href="#vim-terminal-speed-test">Vim terminal speed test</a></li>
-<li><a href="#quickfix-speed-test">Quickfix speed test</a></li>
-<li><a href="#summary">Summary</a></li>
+<li><a href="#output-buffer-speed-test"
+id="toc-output-buffer-speed-test">Output buffer speed test</a></li>
+<li><a href="#vim-terminal-speed-test"
+id="toc-vim-terminal-speed-test">Vim terminal speed test</a></li>
+<li><a href="#quickfix-speed-test" id="toc-quickfix-speed-test">Quickfix
+speed test</a></li>
+<li><a href="#summary" id="toc-summary">Summary</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -131,16 +139,17 @@ which had its shortcomings.</p>
 <h3 id="option-1-the-vim-command-line">Option 1: The vim command
 line</h3>
 <p>Commands can be executed in a shell by using command mode in vim and
-prefixing with an exclamation mark. For example <code>:!echo
-"hello"</code> will run the command <code>echo "hello"</code> and the
-result will appear in a temporary window (which vanishes after pressing
-any key).</p>
+prefixing with an exclamation mark. For example
+<code>:!echo "hello"</code> will run the command
+<code>echo "hello"</code> and the result will appear in a temporary
+window (which vanishes after pressing any key).</p>
 <p>I used this for a while and set up some key bindings to run my file
-using things such as <code>nnoremap &lt;leader&gt;r :!python3
-%&lt;CR&gt;</code> to run the current file using python. This is the
-worst solution. You have to wait for the entire process to finish before
-being able to see your editor again, and the second you press a key you
-can no longer view the output.</p>
+using things such as
+<code>nnoremap &lt;leader&gt;r :!python3 %&lt;CR&gt;</code> to run the
+current file using python. This is the worst solution. You have to wait
+for the entire process to finish before being able to see your editor
+again, and the second you press a key you can no longer view the
+output.</p>
 <h3 id="option-2-putting-vim-in-the-background">Option 2: Putting vim in
 the background</h3>
 <p>By pressing <code>ctrl-z</code>, the vim process is put in the
@@ -225,13 +234,11 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a hr
 <p><code>[Done] in 8.222829 seconds</code></p>
 <h3 id="vim-terminal-speed-test">Vim terminal speed test</h3>
 <p>The command <code>time ./test.py</code> was used and resulted in:</p>
-<p><code>./test.py  4.64s user 3.01s system 55% cpu 13.835
-total</code></p>
+<p><code>./test.py  4.64s user 3.01s system 55% cpu 13.835 total</code></p>
 <h3 id="quickfix-speed-test">Quickfix speed test</h3>
 <p>The command <code>:Dispatch time ./test.py</code> was used and
 resulted in:</p>
-<p><code>./test.py  4.41s user 3.07s system 53% cpu 13.888
-total</code></p>
+<p><code>./test.py  4.41s user 3.07s system 53% cpu 13.888 total</code></p>
 <h3 id="summary">Summary</h3>
 <table>
 <thead>

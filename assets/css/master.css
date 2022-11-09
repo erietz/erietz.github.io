@@ -31,32 +31,34 @@ body {
   position: relative;
   min-height: 80%;
 
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+
   padding-right: 1em;
   padding-left: 1em;
   padding-top: 1em;
-  padding-bottom: 1em;
-  max-width: 800px; 
+  padding-bottom: 4em;
 
-  font-family: Ubuntu, Verdana, sans-serif;
-  font-size: 100%;
-  line-height: 140%;
-  color: var(--grey10);
-  background-color: var(--grey70);
+  max-width: 60em;
+
+  font-family: sans-serif;
+  font-size: calc(1em * 0.875);
+  line-height: 1.6;
+  color: var(--grey20);
+  background-color: #202224;
 }
 
 /* inline source code */
 code {
-  font-family: Ubuntu Mono, Courier New, monospace;
-  background-color: #333333;
+  font-family: monospace;
+  background-color: var(--grey70);
   color: var(--green);
-  font-size: 110%;
   border-radius: 4px;
 }
 
 /* pre formatted text (code syntax highlighting) */
 pre {
-  border: 2px solid var(--blue);
+  border: 1px solid #007d9c;
   border-radius: 4px;
   background-color: unset;
   padding: 0.5em;
@@ -69,6 +71,11 @@ pre code {
   color: unset;
 }
 
+div.sourceCode {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
 .sourceCode {
   overflow: scroll;
 }
@@ -76,8 +83,6 @@ pre code {
 /* headings */
 h1, h2, h3, h4, h5, h6 {
   color: var(--yellow);
-  /* padding-top: 0.5em; */
-  /* padding-bottom: 0.5em; */
   line-height: 140%;
 }
 
@@ -86,9 +91,6 @@ h1 {
 }
 
 table {
-  /* width: 50%; */
-  /* margin-left: auto; */
-  /* margin-right: auto; */
   border-collapse: collapse;
   overflow-x: scroll;
 }
@@ -100,7 +102,7 @@ th, td {
 }
 
 tr:hover {
-  background-color: rgb(243, 150, 96, 0.3);
+  background-color: #253443;
 }
 
 /* input fields */
@@ -150,7 +152,7 @@ a:visited {
 
 /* mouse over link */
 a:hover {
-  color: var(--orange);
+  color: var(--white100);
 }
 
 /* selected link */
@@ -173,8 +175,6 @@ dt {
 /* Style the links inside the navigation bar */
 .topnav a {
   float: right;
-  /* color: black; */
-  /* background-color: #83a598; */
   color: var(--blue);
   text-align: center;
   padding: 6px 12px;
@@ -188,7 +188,6 @@ dt {
 
 /* Change the color of links on hover */
 .topnav a:hover {
-  /* border: 2px solid var(--aqua); */
   border-radius: 4px;
   background-color: var(--blue);
   color: black;
@@ -202,13 +201,7 @@ dt {
   bottom: 0;
 
   padding: 0px;
-  /* margin-bottom: -10px; */
   text-align: center;
-  /* margin-left: 25%; */
-  /* width:20%; */
-  /* margin: 5em; */
-  /* position: relative; */
-  /* bottom: 0; */
 }
 
 .footer a {
@@ -217,7 +210,7 @@ dt {
 }
 
 .footer a:hover {
-  color: var(--orange);
+  color: var(--white100);
 }
 
 .footer-text {

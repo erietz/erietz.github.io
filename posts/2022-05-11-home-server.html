@@ -42,7 +42,7 @@
       }
     pre.numberSource { margin-left: 3em; border-left: 1px solid #665c54;  padding-left: 4px; }
     div.sourceCode
-      { color: #ededed; background-color: #333333; }
+      { color: #ededed; background-color: #282828; }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
@@ -88,40 +88,51 @@
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#background">Background</a></li>
-<li><a href="#log-to-github">Log to GitHub</a></li>
-<li><a href="#install-dotfiles">Install dotfiles</a></li>
-<li><a href="#upgrade-neovim">Upgrade Neovim</a></li>
-<li><a href="#repartition-the-drive">Repartition the drive</a>
+<li><a href="#background" id="toc-background">Background</a></li>
+<li><a href="#log-to-github" id="toc-log-to-github">Log to
+GitHub</a></li>
+<li><a href="#install-dotfiles" id="toc-install-dotfiles">Install
+dotfiles</a></li>
+<li><a href="#upgrade-neovim" id="toc-upgrade-neovim">Upgrade
+Neovim</a></li>
+<li><a href="#repartition-the-drive"
+id="toc-repartition-the-drive">Repartition the drive</a>
 <ul>
-<li><a href="#before">Before</a></li>
-<li><a href="#running-fdisk">Running <code>fdisk</code></a></li>
-<li><a href="#after">After</a></li>
+<li><a href="#before" id="toc-before">Before</a></li>
+<li><a href="#running-fdisk" id="toc-running-fdisk">Running
+<code>fdisk</code></a></li>
+<li><a href="#after" id="toc-after">After</a></li>
 </ul></li>
-<li><a href="#format-the-drive-as-ext4">Format the drive as
-ext4</a></li>
-<li><a href="#automount-drive-on-login">Automount drive on
-login</a></li>
-<li><a href="#create-a-new-user">Create a new user</a></li>
-<li><a
-href="#change-owner-user-and-group-of-folder-on-second-drive">Change
+<li><a href="#format-the-drive-as-ext4"
+id="toc-format-the-drive-as-ext4">Format the drive as ext4</a></li>
+<li><a href="#automount-drive-on-login"
+id="toc-automount-drive-on-login">Automount drive on login</a></li>
+<li><a href="#create-a-new-user" id="toc-create-a-new-user">Create a new
+user</a></li>
+<li><a href="#change-owner-user-and-group-of-folder-on-second-drive"
+id="toc-change-owner-user-and-group-of-folder-on-second-drive">Change
 owner (user and group) of folder on second drive</a></li>
-<li><a href="#copy-files-from-external-drive-to-second-drive">Copy files
-from external drive to second drive</a></li>
-<li><a href="#samba-config">Samba Config</a>
+<li><a href="#copy-files-from-external-drive-to-second-drive"
+id="toc-copy-files-from-external-drive-to-second-drive">Copy files from
+external drive to second drive</a></li>
+<li><a href="#samba-config" id="toc-samba-config">Samba Config</a>
 <ul>
-<li><a href="#create-a-samba-user">Create a samba user</a></li>
-<li><a href="#create-samba-shares-for-the-two-users">Create samba shares
-for the two users</a></li>
-<li><a
-href="#create-a-shared-public-folder-for-any-registered-user">Create a
+<li><a href="#create-a-samba-user" id="toc-create-a-samba-user">Create a
+samba user</a></li>
+<li><a href="#create-samba-shares-for-the-two-users"
+id="toc-create-samba-shares-for-the-two-users">Create samba shares for
+the two users</a></li>
+<li><a href="#create-a-shared-public-folder-for-any-registered-user"
+id="toc-create-a-shared-public-folder-for-any-registered-user">Create a
 shared public folder for any registered user</a></li>
-<li><a href="#check-smb.conf-file-for-errors">Check smb.conf file for
+<li><a href="#check-smb.conf-file-for-errors"
+id="toc-check-smb.conf-file-for-errors">Check smb.conf file for
 errors</a></li>
-<li><a href="#mounting-samba-from-a-client">Mounting samba from a
+<li><a href="#mounting-samba-from-a-client"
+id="toc-mounting-samba-from-a-client">Mounting samba from a
 client</a></li>
 </ul></li>
-<li><a href="#todo">TODO</a></li>
+<li><a href="#todo" id="toc-todo">TODO</a></li>
 </ul>
 </nav>
 <h2 id="background">Background</h2>
@@ -185,7 +196,7 @@ verified the checksum, and installed using <code>apt</code>.</p>
 <div class="sourceCode" id="cb2"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb.sha256sum</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">sha256sum</span> <span class="at">-c</span> nvim-linux64.deb.sha256sum</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sha256sum</span> <span class="at">-c</span> nvim-linux64.deb.sha256sum</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install ./nvim-linux64.deb</span></code></pre></div>
 <h2 id="repartition-the-drive">Repartition the drive</h2>
 <p>Before repartitioning the drive, I checked to see what the devices
@@ -466,8 +477,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href=
 external drive to second drive</h2>
 <p>To copy files I used <code>rsync</code> rather than <code>cp</code>
 for better feedback of the progress.</p>
-<p><code>rcp: aliased to rsync --progress --verbose
---recursive</code></p>
+<p><code>rcp: aliased to rsync --progress --verbose --recursive</code></p>
 <div class="sourceCode" id="cb14"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> rcp <span class="ex">/media/flashdrive/Docs</span> /mnt/hd2/ethan</span></code></pre></div>
 <h2 id="samba-config">Samba Config</h2>
