@@ -3,13 +3,17 @@
 /* Description : Styling for my website */
 
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@100;400;500&display=swap');
 
 :root {
+  --bg: #353535;
   --red: #fb8072;
   --green: #b3de69;
   --yellow: #ffffb3;
-  --blue: #8dd3c7;
-  --purple: #bebada;
+  --blue: #80B1D3;
+  --magenta: #bebada;
+  --cyan: #8dd3c7;
   --orange: #fdb462;
   --grey90: #0c0c0d;
   --grey80: #2a2a2e;
@@ -39,18 +43,18 @@ body {
   padding-top: 1em;
   padding-bottom: 4em;
 
-  max-width: 60em;
+  max-width: 55em;
 
-  font-family: sans-serif;
-  font-size: calc(1em * 0.875);
+  font-family: "Roboto",sans-serif;
+  /* font-size: calc(1em * 0.9); */
   line-height: 1.6;
   color: var(--grey20);
-  background-color: #202224;
+  background-color: var(--bg);
 }
 
 /* inline source code */
 code {
-  font-family: monospace;
+  font-family: "Roboto Mono",monospace;
   background-color: var(--grey70);
   color: var(--green);
   border-radius: 4px;
@@ -58,8 +62,6 @@ code {
 
 /* pre formatted text (code syntax highlighting) */
 pre {
-  border: 1px solid #007d9c;
-  border-radius: 4px;
   background-color: unset;
   padding: 0.5em;
   overflow: scroll;
@@ -82,7 +84,7 @@ div.sourceCode {
 
 /* headings */
 h1, h2, h3, h4, h5, h6 {
-  color: var(--yellow);
+  color: var(--blue);
   line-height: 140%;
 }
 
@@ -102,7 +104,7 @@ th, td {
 }
 
 tr:hover {
-  background-color: #253443;
+  background-color: var(--grey60);
 }
 
 /* input fields */
@@ -123,7 +125,7 @@ button {
 }
 
 .rotate {
-  animation: rotation 180s infinite linear;
+  animation: rotation 69s infinite linear;
 }
 
 @keyframes rotation {
@@ -142,17 +144,19 @@ a {
 
  /* unvisited link */
 a:link {
-  color: var(--blue);
+  color: var(--cyan);
 }
 
 /* visited link */
 a:visited {
-  color: var(--purple);
+  color: var(--magenta);
 }
 
 /* mouse over link */
 a:hover {
   color: var(--white100);
+  background-color: var(--grey60);
+  padding: 2px 6px;
 }
 
 /* selected link */
@@ -162,7 +166,7 @@ a:active {
 
 /* lists */
 dt {
-  color: var(--green);
+  color: var(--orange);
   font-weight: bold;
 }
 
@@ -175,9 +179,9 @@ dt {
 /* Style the links inside the navigation bar */
 .topnav a {
   float: right;
-  color: var(--blue);
+  color: var(--cyan);
   text-align: center;
-  padding: 6px 12px;
+  padding: 2px 6px;
   text-decoration: none;
   font-size: 17px;
 }
@@ -189,8 +193,9 @@ dt {
 /* Change the color of links on hover */
 .topnav a:hover {
   border-radius: 4px;
-  background-color: var(--blue);
-  color: black;
+  background-color: var(--grey60);
+  color: white;
+  padding: 2px 6px;
 }
 
 .footer {
@@ -211,6 +216,8 @@ dt {
 
 .footer a:hover {
   color: var(--white100);
+  border-radius: 4px;
+  background-color: #253443;
 }
 
 .footer-text {
@@ -218,6 +225,10 @@ dt {
   color: var(--grey10);
   font-size:0.8em;
 }
+
+/* img { */
+/*   border: 4px solid var(--grey40); */
+/* } */
 
 /* For putting images side by side */
 .container {
@@ -239,13 +250,9 @@ dt {
   overflow-wrap: break-word ;
 }
 
-
-/* Centered left justified text */
 .centered {
-    text-align: center;
-}
-
-.centered .left-justified {
-    display: inline-block;
-    text-align: left;
+  text-align: left;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 }

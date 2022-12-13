@@ -38,22 +38,29 @@ update your system.
 
 To access what is being served on port 8384 from the remote computer on your
 local computer at port 9876
+
 ```sh
 ssh -L 9876:localhost:8384 user@ipaddr
 ```
+
 this is useful for example if you already have something running on your local
 machine on port 8384 and want to see the remotes port 8384
 
 ### Jupyter lab
 
 To access jupyter lab on a raspberry pi from an ipad browser...
+
 ```sh
 ssh -L localhost:9876:localhost:9876 user@ipaddr
 ```
+
 then from `user@ipaddr` issue a 
+
 ```
 jupyter lab --no-browser --port=9876
 ```
+
 to start the server. A good alias is 
+
 `alias jlremote='jupyter lab --no-browser --port=9876'
 
