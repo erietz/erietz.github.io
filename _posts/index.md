@@ -4,6 +4,7 @@ title: Posts
 
 <center>|     |       |      |      |
 |:--- | :---- | :--- | :--- |
+| Ɣ | 2022-12-13 | [Home Server Upgrade (Part 3)](2022-12-13-incremental-backups.md) | *linux, backups* | 
 | Ɣ | 2022-05-12 | [Home Server Upgrade (Part 2)](2022-05-12-home-server-part2.md) | *linux, wifi* | 
 | Ɣ | 2022-05-11 | [Home Server Upgrade](2022-05-11-home-server.md) | *linux, samba* | 
 | Ɣ | 2022-03-09 | [Blog Post Comments](2022-03-09-comments.md) | *web* | 

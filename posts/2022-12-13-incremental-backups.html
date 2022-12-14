@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Home Server Upgrade (Part 3)</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #665c54;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #665c54;  padding-left: 4px; }
+    div.sourceCode
+      { color: #ededed; background-color: #282828; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffffb3; font-weight: bold; } /* Alert */
+    code span.an { color: #80b1d3; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #b3de69; } /* Attribute */
+    code span.bn { color: #bebada; } /* BaseN */
+    code span.bu { color: #fdb462; } /* BuiltIn */
+    code span.cf { color: #fb8072; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #b3de69; } /* Char */
+    code span.cn { color: #ffffb3; } /* Constant */
+    code span.co { color: #80b1d3; font-style: italic; } /* Comment */
+    code span.cv { color: #80b1d3; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #ffffb3; } /* DataType */
+    code span.dv { color: #bebada; } /* DecVal */
+    code span.er { color: #ffffb3; font-weight: bold; } /* Error */
+    code span.ex { color: #fdb462; } /* Extension */
+    code span.fl { color: #bebada; } /* Float */
+    code span.fu { color: #b3de69; } /* Function */
+    code span.im { color: #fb8072; } /* Import */
+    code span.in { color: #80b1d3; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #fb8072; font-weight: bold; } /* Keyword */
+    code span.op { color: #ededed; } /* Operator */
+    code span.ot { color: #fb8072; } /* Other */
+    code span.pp { color: #80b1d3; } /* Preprocessor */
+    code span.sc { color: #b3de69; } /* SpecialChar */
+    code span.ss { color: #8dd3c7; } /* SpecialString */
+    code span.st { color: #8dd3c7; } /* String */
+    code span.va { color: #bebada; } /* Variable */
+    code span.vs { color: #8dd3c7; } /* VerbatimString */
+    code span.wa { color: #80b1d3; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="/assets/css/master.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<script src="/assets/js/navigation.js" charset="utf-8"></script>
+<header id="title-block-header">
+<h1 class="title">Home Server Upgrade (Part 3)</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#rsync" id="toc-rsync">Rsync</a></li>
+<li><a href="#shell-script-vs.-python"
+id="toc-shell-script-vs.-python">Shell script vs. Python</a>
+<ul>
+<li><a href="#config-file" id="toc-config-file">Config File</a></li>
+</ul></li>
+<li><a href="#cronjob" id="toc-cronjob">Cronjob</a></li>
+<li><a href="#log-file" id="toc-log-file">Log file</a></li>
+<li><a href="#backup-directory-structure"
+id="toc-backup-directory-structure">Backup Directory Structure</a></li>
+</ul>
+</nav>
+<p>I wanted to feel confident that my system backups were working as I
+expected so I decided to <a
+href="https://github.com/erietz/incremental-backups">roll my own
+solution</a> using rsync.</p>
+<h2 id="rsync">Rsync</h2>
+<blockquote>
+<p>rsync - a fast, versatile, remote (and local) file-copying tool</p>
+</blockquote>
+<p>If you have never heard of <code>rsync</code>, it is basically
+<code>scp</code> but better and more efficient. It uses a delta-transfer
+algorithm that is able to copy only the parts of the files that have
+changed between the source and existing files. This reduces the amount
+of data that is sent over a network.</p>
+<h2 id="shell-script-vs.-python">Shell script vs. Python</h2>
+<p>I saw some example incremental backup bash scripts online but to me
+they looked way too messy. For my own peace of mind, I decided to write
+a wrapper over <code>rsync</code> in python. This allowed me to write
+tests to verify that files were being backed up correctly and abstract
+the logic from declaring which files were being backed up.</p>
+<h3 id="config-file">Config File</h3>
+<p>The config file is just a python script that imports the wrapper. I
+have mine located at
+<code>/home/ethan/incremental-backups/run_backups.py</code> and it looks
+like this.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rsync.config <span class="im">import</span> Config</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rsync.backup <span class="im">import</span> backup</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>LOG_FILE <span class="op">=</span> <span class="st">&quot;/home/ethan/.local/share/backup/rsync-backups.log&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># will need to be root to run rsync for a different user</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>HOME_DIRECTORIES <span class="op">=</span> Config(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    source_dir<span class="op">=</span><span class="st">&quot;/home/&quot;</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    destination_dir<span class="op">=</span><span class="st">&quot;/media/backup_drive_linux/home_directory_backups/&quot;</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    exclude_file_patterns<span class="op">=</span>[</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;/home/*/.cache/&quot;</span>,          <span class="co"># no need for cached files</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;/home/*/.local/&quot;</span>,          <span class="co"># nvim plugins and python packages are huge</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;/home/*/.npm/&quot;</span>,            <span class="co"># what is the crap in here?</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;**/node_modules/&quot;</span>,         <span class="co"># yikes</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    log_file<span class="op">=</span>LOG_FILE</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>LARGE_HARDDRIVE <span class="op">=</span> Config(</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    source_dir<span class="op">=</span><span class="st">&quot;/mnt/hd2&quot;</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    destination_dir<span class="op">=</span><span class="st">&quot;/media/backup_drive_linux/hd2_backups/&quot;</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    log_file<span class="op">=</span>LOG_FILE</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>backup(HOME_DIRECTORIES)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>backup(LARGE_HARDDRIVE)</span></code></pre></div>
+<p>Here I declare two <code>Config</code> objects, one for the home
+directories on the system and one for a second hard drive on the
+machine. These two <code>Config</code>s are backed up separately.
+Personally, I think this is much cleaner than a shell script with all of
+the bizarre quoting rules.</p>
+<h2 id="cronjob">Cronjob</h2>
+<p>I set up a cron job to run the script every night at midnight. As I
+am backing up multiple home directories where I am not necessarily the
+owner of the files, the cronjob must be run as root. To edit the system
+crontab, use <code>sudo crontab -e</code> versus just
+<code>crontab -e</code> for your user crontab.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">MAILTO</span><span class="op">=</span>ewrietz@gmail.com</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># min   hour    day(mo)         month   day(we)         [user]  command</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span> 0 <span class="pp">*</span> <span class="pp">*</span> <span class="pp">*</span> /usr/bin/python3 /home/ethan/incremental-backups/run_backups.py</span></code></pre></div>
+<p>One problem that I ran into was the location of the log file that is
+defined in the config file. Initially, I had used
+<code>Path.home()/incremental-backups/run_backups.py</code> in the
+config, however as the cronjob was being run as root, the log file was
+ending up at <code>/root/.local/share/backup/rsync-backups.log</code>.
+As I wanted the log file to end up in my user’s home directory, simply
+using an absolute path in the config file solved the issue.</p>
+<h2 id="log-file">Log file</h2>
+<p>The cronjob has been running without at hitch since 06/08/2022. This
+is what the tail of the log file looks like for the job that ran this
+morning.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span>    12/13/2022 12:00:01 AM  Starting incremental backup from /media/backup_drive_linux/home_directory_backups/2022-12-12-00-00-02</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span>    12/13/2022 12:00:01 AM  Running [<span class="st">&#39;rsync&#39;</span>, <span class="st">&#39;--delete&#39;</span>, <span class="st">&#39;--archive&#39;</span>, <span class="st">&#39;--acls&#39;</span>, <span class="st">&#39;--xattrs&#39;</span>, <span class="st">&#39;--verbose&#39;</span>, <span class="st">&#39;--link-dest=/media/backup_drive_linux/home_directory_backups/latest&#39;</span>, <span class="st">&#39;--exclude=/home/*/.cache/&#39;</span>, <span class="st">&#39;--exclude=/home/*/.local/&#39;</span>, <span class="st">&#39;--exclude=/home/*/.npm/&#39;</span>, <span class="st">&#39;--exclude=**/node_modules/&#39;</span>, <span class="st">&#39;/home&#39;</span>, <span class="st">&#39;/media/backup_drive_linux/home_directory_backups/2022-12-13-00-00-01&#39;</span>]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span>    12/13/2022 12:00:03 AM  Time elapsed 1.1290129330009222 seconds</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span>    12/13/2022 12:00:03 AM  Finished backup successfully</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span>    12/13/2022 12:00:03 AM  Symlink created from /media/backup_drive_linux/home_directory_backups/latest to /media/backup_drive_linux/home_directory_backups/2022-12-13-00-00-01</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span>    12/13/2022 12:00:03 AM  Starting incremental backup from /media/backup_drive_linux/hd2_backups/2022-12-12-00-00-03</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span>    12/13/2022 12:00:03 AM  Running [<span class="st">&#39;rsync&#39;</span>, <span class="st">&#39;--delete&#39;</span>, <span class="st">&#39;--archive&#39;</span>, <span class="st">&#39;--acls&#39;</span>, <span class="st">&#39;--xattrs&#39;</span>, <span class="st">&#39;--verbose&#39;</span>, <span class="st">&#39;--link-dest=/media/backup_drive_linux/hd2_backups/latest&#39;</span>, <span class="st">&#39;/mnt/hd2&#39;</span>, <span class="st">&#39;/media/backup_drive_linux/hd2_backups/2022-12-13-00-00-03&#39;</span>]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span>    12/13/2022 12:00:04 AM  Time elapsed 1.6626670630066656 seconds</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span>    12/13/2022 12:00:04 AM  Finished backup successfully</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span>    12/13/2022 12:00:04 AM  Symlink created from /media/backup_drive_linux/hd2_backups/latest to /media/backup_drive_linux/hd2_backups/2022-12-13-00-00-03</span></code></pre></div>
+<h2 id="backup-directory-structure">Backup Directory Structure</h2>
+<p>The output directory contains a folder for each backup named using
+the date and time that the backup occurred.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[ethan@rietz</span> /media/backup_drive_linux/home_directory_backups]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">~</span> ls <span class="kw">|</span> <span class="fu">tail</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">2022-12-05-00-00-01</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">2022-12-06-00-00-01</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">2022-12-07-00-00-01</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">2022-12-08-00-00-01</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ex">2022-12-09-00-00-01</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ex">2022-12-10-00-00-06</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="ex">2022-12-11-00-00-01</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="ex">2022-12-12-00-00-02</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="ex">2022-12-13-00-00-01</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="ex">latest</span></span></code></pre></div>
+<p>There is one additional directory called <code>latest</code> which is
+a symbolic link to the latest backup directory. The <code>latest</code>
+directory is used by <code>rsync</code>. If a file is not changed since
+the last backup, a hard link is created to that file in the
+<code>latest</code> directory.</p>
+<p>As of today, I have 165 backups.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[ethan@rietz</span> /media/backup_drive_linux/home_directory_backups]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">~</span> ls <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">166</span></span></code></pre></div>
+<p>If we do an <code>ls -l</code>, it displays the number of reference
+counts, or hard links, to that inode.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[ethan@rietz</span> /media/backup_drive_linux/home_directory_backups]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">~</span> ls <span class="at">-al</span> 2022-05-24-21-50-17/home/ethan</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">total</span> 68</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-x---</span>   8 ethan ethan 4096 May 14  2022 .</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   4 root  root  4096 May 10  2022 ..</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxrwxr-x</span>   3 ethan ethan 4096 May  9  2022 .ansible</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-------</span> 165 ethan ethan  846 May  9  2022 .bash_history</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span> 165 ethan ethan  220 Jan  6  2022 .bash_logout</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span> 165 ethan ethan 3771 Jan  6  2022 .bashrc</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxrwx--x</span>   7 ethan ethan 4096 May 14  2022 .config</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxrwxr-x</span>   6 ethan ethan 4096 May  9  2022 .dotfiles</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxrwxr-x</span>   5 ethan ethan 4096 May 24  2022 git</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-------</span> 165 ethan ethan   20 May  9  2022 .lesshst</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-rw-r--</span>   9 ethan ethan 2769 May 13  2022 logs.txt</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span> 165 ethan ethan  807 Jan  6  2022 .profile</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span>   9 ethan ethan  787 May 10  2022 server.md</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="ex">drwx------</span>   2 ethan ethan 4096 May  9  2022 .ssh</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-r--r--</span> 165 ethan ethan    0 May  9  2022 .sudo_as_admin_successful</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxr-xr-x</span>   6 ethan ethan 4096 May 15  2022 Sync</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-------</span> 165 ethan ethan 2050 May  9  2022 .viminfo</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="ex">-rw-rw-r--</span> 150 ethan ethan  165 May 10  2022 .wget-hsts</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span> 165 ethan ethan   24 May  9  2022 .xinitrc <span class="at">-</span><span class="op">&gt;</span> .dotfiles/linux/.xinitrc</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span> 165 ethan ethan   24 May  9  2022 .Xmodmap <span class="at">-</span><span class="op">&gt;</span> .dotfiles/linux/.Xmodmap</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span> 165 ethan ethan   25 May  9  2022 .xprofile <span class="at">-</span><span class="op">&gt;</span> .dotfiles/linux/.xprofile</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span> 165 ethan ethan   27 May  9  2022 .Xresources <span class="at">-</span><span class="op">&gt;</span> .dotfiles/linux/.Xresources</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span> 165 ethan ethan   25 May  9  2022 .xsession <span class="at">-</span><span class="op">&gt;</span> .dotfiles/linux/.xsession</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="ex">lrwxrwxrwx</span> 165 ethan ethan   22 May  9  2022 .zshenv <span class="at">-</span><span class="op">&gt;</span> .dotfiles/unix/.zshenv</span></code></pre></div>
+<p>We can see that the files that were there in the first backup have
+165 hard links. There is a file system dependent upper limit on the
+number of inode references that can exist. On an ext4 formatted hard
+drive, that upper limit is the max value for a 16 bit number (65535). As
+long as I only do one backup per day, I should be good for the next 179
+years.</p>
+<script src="/assets/js/footer.js" charset="utf-8"></script>
+<hr>
+<script src="https://utteranc.es/client.js"
+        repo="erietz/erietz.github.io"
+        issue-term="pathname"
+        theme="photon-dark"
+        crossorigin="anonymous"
+        async>
+</script>
+<hr>
+</body>
+</html>
