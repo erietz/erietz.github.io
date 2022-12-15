@@ -187,6 +187,10 @@ dt {
   font-size: 17px;
 }
 
+.topnav a:hover {
+  color: var(--white100);
+}
+
 #topnav-home {
   float: left;
 }

@@ -67,6 +67,12 @@ and one for a second hard drive on the machine. These two `Config`s are backed
 up separately. Personally, I think this is much cleaner than a shell script
 with all of the bizarre quoting rules.
 
+I use [Syncthing](https://syncthing.net/) to sync the files I am currently
+working on from any machine into the home directory of the server. In this way
+I only need to back the server itself up. Files that I no longer need on every
+machine get archived to the second hard drive on the server and are shared over
+the network using Samba.
+
 ## Cronjob
 
 I set up a cron job to run the script every night at midnight. As I am backing

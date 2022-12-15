@@ -3,9 +3,12 @@
 from pathlib import Path
 import yaml
 
-FILES = sorted(Path('./_posts/').glob('*.md'), reverse=True)
-FILES = [f for f in FILES if 'index.md' not in f.name]
+FILES = sorted(
+    [f for f in Path('./_posts/').glob('*.md') if "index.md" not in f.name],
+    reverse=True
+)
 INDEX = Path('./_posts/index.md')
+
 
 def parse_frontmatter(file):
     with open(file, 'r') as f:
@@ -18,6 +21,7 @@ def parse_frontmatter(file):
             frontmatter += line
             line = next(f)
         return yaml.safe_load(frontmatter)
+
 
 with open(INDEX, 'w') as f:
     f.write('---\n')
