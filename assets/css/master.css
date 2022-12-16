@@ -1,10 +1,21 @@
-/* Author      : Ethan Rietz */
-/* Date        : 2021-06-14 */
-/* Description : Styling for my website */
+/*
+* Author      : Ethan Rietz
+* Date        : 2021-06-14
+* Description : Styling for my website
+*/
 
+
+/* imports {{{ */
+
+/* font awesome icons */
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css");
+/* roboto font */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500&display=swap');
+/* roboto mono font */
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@100;400;500&display=swap');
+
+/* }}} */
+/* color theme {{{ */
 
 :root {
   --bg: #353535;
@@ -26,6 +37,9 @@
   --grey10: #f9f9fa;
   --white100: ##ffffff;
 }
+
+/* }}} */
+/* elements {{{ */
 
 html {
   height: 100%;
@@ -73,15 +87,6 @@ pre code {
   color: unset;
 }
 
-div.sourceCode {
-  margin-top: 2em;
-  margin-bottom: 2em;
-}
-
-.sourceCode {
-  overflow: scroll;
-}
-
 /* headings */
 h1, h2, h3, h4, h5, h6 {
   color: var(--blue);
@@ -114,27 +119,6 @@ input {
 
 button {
   background-color: var(--grey10);
-}
-
-/* for centering images */
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 70%;
-}
-
-.rotate {
-  animation: rotation 69s infinite linear;
-}
-
-@keyframes rotation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(359deg);
-  }
 }
 
 /* anchors */
@@ -171,6 +155,46 @@ dt {
   font-weight: bold;
 }
 
+blockquote {
+  border-left: 4px solid var(--orange);
+  color: var(--grey40);
+  margin: 2em 0;
+  padding-left: 20px;
+}
+
+/* }}} */
+/* class selectors {{{ */
+
+.sourceCode {
+  overflow: scroll;
+}
+
+div .sourceCode {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+/* for centering images */
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+
+.rotate {
+  animation: rotation 69s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
 
 /* Add a black background color to the top navigation */
 .topnav {
@@ -189,10 +213,6 @@ dt {
 
 .topnav a:hover {
   color: var(--white100);
-}
-
-#topnav-home {
-  float: left;
 }
 
 .footer {
@@ -243,3 +263,12 @@ dt {
   width: 50%;
   padding: 10px;
 }
+
+/* }}} */
+/* id selector {{{ */
+
+#topnav-home {
+  float: left;
+}
+
+/* }}} */
