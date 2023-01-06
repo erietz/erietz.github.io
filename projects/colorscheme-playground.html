@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <script>
+
+      function setTextColor(event) {
+        document.querySelectorAll("body").forEach((b) => {
+          b.style["color"] = event.target.value;
+        });
+      }
+
+      function setBackground(event) {
+        document.querySelectorAll("body").forEach((b) => {
+          b.style["background-color"] = event.target.value;
+        });
+      }
+
+      function colorCode(event, className) {
+        Array.from(document.getElementsByClassName(className)).forEach((b) => {
+          b.style["color"] = event.target.value;
+        });
+      }
+
+    </script>
+
+    <style>
+      pre {
+        font-size: 30px;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <center>
+
+      <h1>Colorsheme Playground</h1>
+
+      <input type="color" id="textcolor" name="textcolor" value="#e66465" oninput="setTextColor(event);">
+      <label for="textcolor">Text</label>
+
+      <input type="color" id="background" name="background" value="#e66465" oninput="setBackground(event);">
+      <label for="background">Background</label>
+
+      <input type="color" id="keyword" name="keyword" value="#e66465" oninput="colorCode(event, 'keyword');">
+      <label for="keyword">Keyword</label>
+
+      <input type="color" id="function" name="function" value="#e66465" oninput="colorCode(event, 'function');">
+      <label for="function">Function</label>
+
+      <input type="color" id="paren" name="paren" value="#e66465" oninput="colorCode(event, 'paren');">
+      <label for="paren">Paren</label>
+
+      <input type="color" id="variable" name="variable" value="#e66465" oninput="colorCode(event, 'variable');">
+      <label for="variable">Variable</label>
+
+      <input type="color" id="number" name="number" value="#e66465" oninput="colorCode(event, 'number');">
+      <label for="number">Number</label>
+
+    </center>
+
+    <pre>
+
+      <span class="keyword">function</span> <span class="function">fib</span><span class="paren">(</span><span class="variable">n</span><span class="paren">){</span>
+        <span class="keyword">let</span> <span class="variable">tmp</span>;
+        <span class="keyword">let</span> [<span class="variable">first</span>, <span class="variable">second</span>] = <span class="paren">[</span><span class="number">0</span>, <span class="number">1</span><span class="paren">]</span>;
+        <span class="keyword">return function</span><span class="paren">() {</span>
+        <span class="variable">console</span>.<span class="function">log</span><span class="paren">(</span><span class="variable">first</span><span class="paren">)</span>
+          <span class="variable">tmp</span> = <span class="variable">first</span>;
+          <span class="variable">first</span> = <span class="variable">second</span>;
+          <span class="variable">second</span> = <span class="variable">tmp</span> + <span class="variable">second</span>;
+        <span class="paren">}</span>
+      <span class="paren">}</span>
+
+      <span class="keyword">const</span> <span class="variable">f</span> = <span class="function">fib</span><span class="paren">()</span>;
+      <span class="keyword">for</span> <span class="paren">(</span><span class="keyword">let</span> <span class="variable">i</span> = <span class="number">0</span>; <span class="variable">i</span> < <span class="number">10</span>; <span class="variable">i</span>++<span class="paren">) {</span>
+        <span class="function">f</span><span class="paren">()</span>;
+      <span class="paren">}</span>
+
+    </pre>
+
+  </body>
+
+</html>
+
