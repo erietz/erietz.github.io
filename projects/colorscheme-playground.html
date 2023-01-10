@@ -2,6 +2,9 @@
 <html>
   <head>
     <style>
+      button {
+        margin-top: 30px;
+      }
 
       body {
         background-color: #404040;
@@ -37,6 +40,17 @@
       }
     </style>
     <script>
+      const highlightGroups = [
+        "background",
+        "textcolor",
+        "keyword",
+        "function",
+        "paren",
+        "variable",
+        "number",
+        "string"
+      ];
+
       function setTextColor(color) {
         document.getElementById("textcolor").labels[1].innerHTML = color.toUpperCase();
         document.getElementById("code").style.color = color;
@@ -52,6 +66,14 @@
         Array.from(document.getElementsByClassName(className)).forEach((b) => {
           b.style["color"] = color;
         });
+      }
+
+      function copyColorCodes() {
+        const values = [];
+        for (const group of highlightGroups) {
+          values.push(document.getElementById(group).value);
+        }
+        navigator.clipboard.writeText(values);
       }
     </script>
   </head>
@@ -97,6 +119,9 @@
       <label for="string">String</label>
       <input type="color" id="string" name="string" value="#8dd3c7" oninput="setCodeColor(event.target.value, 'string');">
       <label for="string"></label>
+      <br/>
+
+      <button onclick="copyColorCodes()">Copy color codes to clipboard</button>
     </center>
 
     <div id="code" class="centered">
