@@ -2,6 +2,22 @@
 <html>
   <head>
     <style>
+
+      body {
+        background-color: #404040;
+        color: #eeeeee;
+      }
+
+      input {
+        width: 200px;
+      }
+
+      label {
+        display: inline-block;
+        width: 100px;
+        text-align: left;
+      }
+
       pre {
         font-size: 20px;
       }
@@ -22,14 +38,17 @@
     </style>
     <script>
       function setTextColor(color) {
+        document.getElementById("textcolor").labels[1].innerHTML = color.toUpperCase();
         document.getElementById("code").style.color = color;
       }
 
       function setBackground(color) {
+        document.getElementById("background").labels[1].innerHTML = color.toUpperCase();
         document.getElementById("code").style.backgroundColor = color;
       }
 
       function setCodeColor(color, className) {
+        document.getElementById(className).labels[1].innerHTML = color.toUpperCase();
         Array.from(document.getElementsByClassName(className)).forEach((b) => {
           b.style["color"] = color;
         });
@@ -40,34 +59,49 @@
     <center>
       <h1>Colorsheme Playground</h1>
 
-      <input type="color" id="textcolor" name="textcolor" value="#d5d5d5" oninput="setTextColor(event.target.value);">
       <label for="textcolor">Text</label>
+      <input type="color" id="textcolor" name="textcolor" value="#d5d5d5" oninput="setTextColor(event.target.value);">
+      <label for="textcolor"></label>
+      <br/>
 
-      <input type="color" id="background" name="background" value="#2A2A2A" oninput="setBackground(event.target.value);">
       <label for="background">Background</label>
+      <input type="color" id="background" name="background" value="#2A2A2A" oninput="setBackground(event.target.value);">
+      <label for="background"></label>
+      <br/>
 
-      <input type="color" id="keyword" name="keyword" value="#fb8072" oninput="setCodeColor(event.target.value, 'keyword');">
       <label for="keyword">Keyword</label>
+      <input type="color" id="keyword" name="keyword" value="#fb8072" oninput="setCodeColor(event.target.value, 'keyword');">
+      <label for="keyword"></label>
+      <br/>
 
-      <input type="color" id="function" name="function" value="#b3de69" oninput="setCodeColor(event.target.value, 'function');">
       <label for="function">Function</label>
+      <input type="color" id="function" name="function" value="#b3de69" oninput="setCodeColor(event.target.value, 'function');">
+      <label for="function"></label>
+      <br/>
 
-      <input type="color" id="paren" name="paren" value="#ffffb3" oninput="setCodeColor(event.target.value, 'paren');">
       <label for="paren">Paren</label>
+      <input type="color" id="paren" name="paren" value="#ffffb3" oninput="setCodeColor(event.target.value, 'paren');">
+      <label for="paren"></label>
+      <br/>
 
-      <input type="color" id="variable" name="variable" value="#80b1d3" oninput="setCodeColor(event.target.value, 'variable');">
       <label for="variable">Variable</label>
+      <input type="color" id="variable" name="variable" value="#80b1d3" oninput="setCodeColor(event.target.value, 'variable');">
+      <label for="variable"></label>
+      <br/>
 
-      <input type="color" id="number" name="number" value="#bebada" oninput="setCodeColor(event.target.value, 'number');">
       <label for="number">Number</label>
+      <input type="color" id="number" name="number" value="#bebada" oninput="setCodeColor(event.target.value, 'number');">
+      <label for="number"></label>
+      <br/>
 
-      <input type="color" id="string" name="string" value="#8dd3c7" oninput="setCodeColor(event.target.value, 'string');">
       <label for="string">String</label>
+      <input type="color" id="string" name="string" value="#8dd3c7" oninput="setCodeColor(event.target.value, 'string');">
+      <label for="string"></label>
     </center>
 
     <div id="code" class="centered">
       <pre>
-        <span class="keyword">function</span> <span class="function">fib</span><span class="paren">(</span><span class="variable">n</span><span class="paren">){</span>
+        <span class="keyword">function</span> <span class="function">fib</span><span class="paren">(</span><span class="variable">n</span><span class="paren">) {</span>
           <span class="keyword">let</span> <span class="paren">[</span><span class="variable">first</span>, <span class="variable">second</span><span class="paren">]</span> = <span class="paren">[</span><span class="number">0</span>, <span class="number">1</span><span class="paren">]</span>;
           <span class="keyword">return function</span><span class="paren">() {</span>
             <span class="variable">console</span>.<span class="function">log</span><span class="paren">(</span><span class="variable">first</span><span class="paren">)</span>
