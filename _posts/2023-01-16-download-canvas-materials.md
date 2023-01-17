@@ -21,7 +21,7 @@ two-factor authentication which makes accessing the pages quite difficult. I
 also considered using [Puppeteer](https://developer.chrome.com/docs/puppeteer/)
 but quickly ran into similar issues and ran out of patience. I finally settled
 on saving the pages as html since many of the pages included interactive
-javascript content and I had an quick hacky solution in mind.
+javascript content and I had a quick hacky solution in mind.
 
 ## Tutorial
 
@@ -65,5 +65,5 @@ adjust the preferences for the extension to not truncate the file names after
 
 <div class="attention warning">
 Opening over 100 tabs at once made the fans on my laptop go nuts and my
-computer get really hot.
+computer got really hot.
 </div>
