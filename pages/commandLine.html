@@ -128,10 +128,10 @@ Forwarding</a>
 <h3 id="get-fastest-mirrors-manjaro-only">Get fastest mirrors (Manjaro
 only)</h3>
 <div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pacman-mirrors <span class="at">--fasttrack</span> <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> pacman <span class="at">-Syyu</span></span></code></pre></div>
-<blockquote>
-<p>Tip: Every run of pacman-mirrors requires you to syncronize your
-database and update your system.</p>
-</blockquote>
+<div class="attention tip">
+<p>Every run of pacman-mirrors requires you to syncronize your database
+and update your system.</p>
+</div>
 <h2 id="ssh-port-forwarding">SSH Port Forwarding</h2>
 <p>To access what is being served on port 8384 from the remote computer
 on your local computer at port 9876</p>
@@ -143,9 +143,9 @@ your local machine on port 8384 and want to see the remotes port
 <p>To access jupyter lab on a raspberry pi from an ipad browser…</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-L</span> localhost:9876:localhost:9876 user@ipaddr</span></code></pre></div>
 <p>then from <code>user@ipaddr</code> issue a</p>
-<pre><code>jupyter lab --no-browser --port=9876</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> lab <span class="at">--no-browser</span> <span class="at">--port</span><span class="op">=</span>9876</span></code></pre></div>
 <p>to start the server. A good alias is</p>
-<p>`alias jlremote=‘jupyter lab –no-browser –port=9876’</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> jlremote=<span class="st">&#39;jupyter lab --no-browser --port=9876</span></span></code></pre></div>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
 </body>
 </html>

@@ -179,7 +179,7 @@ div .sourceCode {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 70%;
+  width: 100%;
 }
 
 .rotate {
@@ -262,6 +262,47 @@ div .sourceCode {
   margin: auto;
   width: 50%;
   padding: 10px;
+}
+
+/* notes, warnings, tips */
+.attention {
+  padding: 5px;
+  border: thin solid black;
+  margin: 0.5em ;
+  overflow: hidden;
+}
+
+.warning {
+  width: 100%;
+  background-color: #422;
+  border-color: #311;
+}
+
+.warning::before {
+  font-weight: bold;
+  content: "Warning: ";
+}
+
+.note {
+  width: 100%;
+  background-color: #224;
+  border-color: #113;
+}
+
+.note::before {
+  font-weight: bold;
+  content: "Note: ";
+}
+
+.tip {
+  width: 100%;
+  background-color: #242;
+  border-color: #131;
+}
+
+.tip::before {
+  font-weight: bold;
+  content: "Tip: ";
 }
 
 /* }}} */

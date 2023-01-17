@@ -31,8 +31,10 @@ connect 00:12:34:56:78:90
 sudo pacman-mirrors --fasttrack && sudo pacman -Syyu
 ```
 
-> Tip: Every run of pacman-mirrors requires you to syncronize your database and
-update your system. 
+<div class="attention tip">
+Every run of pacman-mirrors requires you to syncronize your database and update
+your system. 
+</div>
 
 ## SSH Port Forwarding
 
@@ -56,11 +58,13 @@ ssh -L localhost:9876:localhost:9876 user@ipaddr
 
 then from `user@ipaddr` issue a 
 
-```
+```sh
 jupyter lab --no-browser --port=9876
 ```
 
 to start the server. A good alias is 
 
-`alias jlremote='jupyter lab --no-browser --port=9876'
+```sh
+alias jlremote='jupyter lab --no-browser --port=9876
+```
 
