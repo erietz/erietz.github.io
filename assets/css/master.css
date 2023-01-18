@@ -77,7 +77,8 @@ code {
 /* pre formatted text (code syntax highlighting) */
 pre {
   background-color: unset;
-  padding: 0.5em;
+  padding-left: 2em;
+  padding-right: 2em;
   overflow: scroll;
 }
 
@@ -179,7 +180,7 @@ div .sourceCode {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
+  width: 90%;
 }
 
 .rotate {
@@ -274,8 +275,8 @@ div .sourceCode {
 
 .warning {
   width: 100%;
-  background-color: #422;
-  border-color: #311;
+  background-color: rgba(229,83,75,.15);
+  border-color: rgba(229,83,75,.4);
 }
 
 .warning::before {
@@ -285,8 +286,8 @@ div .sourceCode {
 
 .note {
   width: 100%;
-  background-color: #224;
-  border-color: #113;
+  background-color: rgba(65,132,228,.15);
+  border-color: rgba(65,132,228,.4);
 }
 
 .note::before {
@@ -296,8 +297,8 @@ div .sourceCode {
 
 .tip {
   width: 100%;
-  background-color: #242;
-  border-color: #131;
+  background-color: rgba(70,149,74,.15);
+  border-color: rgba(70,149,74,.4);
 }
 
 .tip::before {

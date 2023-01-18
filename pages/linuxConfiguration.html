@@ -8,10 +8,15 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -112,9 +117,10 @@ Up</a></li>
 </ul>
 </nav>
 <p>One of things that comes with using a minimal window manager, such as
-<a href="https://i3wm.org/">i3</a>, is having to maintain additional
-configuration files that a desktop environment would normally take care
-of. Most of my configuration files are kept under <a
+<a href="https://i3wm.org/">i3</a> or <a
+href="https://dwm.suckless.org/">dwm</a>, is having to maintain
+additional configuration files that a desktop environment would normally
+take care of. Most of my configuration files are kept under <a
 href="https://github.com/erietz/.ewr">version control</a>, but I have
 not found a clean way to maintain some of the X11 config files across
 multiple machines. For the time being, it seems that the best solution
@@ -133,9 +139,7 @@ laptop, which has a resolution of <code>2560x1600</code>, I doubled the
 scaling by bumping up <code>Xft.dpi</code> from <code>96</code> to
 <code>192</code>.</p>
 <div class="sourceCode" id="cb1"><pre
-class="sourceCode xorg"><code class="sourceCode xorg"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>! Xft.dpi:       96</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>! the number 192 is an integer multiple of 96</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Xft.dpi:       192 </span></code></pre></div>
+class="sourceCode ini"><code class="sourceCode ini"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Xft.dpi:       192</span></span></code></pre></div>
 <p>Adjusting the dpi value alone fixes most of the resolution problems,
 but certain icons and font sizes do not always scale properly for all
 programs. Most of the configuration in the following sections come from
@@ -202,9 +206,11 @@ the following to <code>~/.Xmodmap</code>.</li>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">clear</span> control</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">keycode</span> 66 = Control_L</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">add</span> control = Control_L Control_R</span></code></pre></div>
-<p>Note: Every time you plug in an external keyboard you will have to
-reload this file using <code>xmodmap ~/.Xmodmap</code>. This can be set
-to a keybinding using i3.</p>
+<div class="attention note">
+<p>Every time you plug in an external keyboard you will have to reload
+this file using <code>xmodmap ~/.Xmodmap</code>. This can be set to a
+keybinding using i3.</p>
+</div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bindsym</span> <span class="va">$mod</span>+Shift+x exec <span class="at">--no-startup-id</span> <span class="st">&quot;xmodmap </span><span class="va">$HOME</span><span class="st">/.Xmodmap&quot;</span></span></code></pre></div>
 <p><em>TODO: explore <a
 href="https://wiki.archlinux.org/title/X_keyboard_extension">xkb</a> as
@@ -213,6 +219,7 @@ an alternative to Xresources</em></p>
 Keybindings</h3>
 <p>One of the great features of a Mac is the system wide Emacs
 keybindings. These are the essentials:</p>
+<center>
 <table>
 <thead>
 <tr class="header">
@@ -222,51 +229,52 @@ keybindings. These are the essentials:</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td>ctrl-a</td>
+<td>CTRL-a</td>
 <td>Go to the beginning of the line</td>
 </tr>
 <tr class="even">
-<td>ctrl-e</td>
+<td>CTRL-e</td>
 <td>Go to the end of the line</td>
 </tr>
 <tr class="odd">
-<td>ctrl-k</td>
+<td>CTRL-k</td>
 <td>Kill to the end of the line</td>
 </tr>
 <tr class="even">
-<td>ctrl-f</td>
+<td>CTRL-f</td>
 <td>Go forward one character</td>
 </tr>
 <tr class="odd">
-<td>ctrl-b</td>
+<td>CTRL-b</td>
 <td>Go backward one character</td>
 </tr>
 <tr class="even">
-<td>ctrl-n</td>
+<td>CTRL-n</td>
 <td>Go to the next line</td>
 </tr>
 <tr class="odd">
-<td>ctrl-p</td>
+<td>CTRL-p</td>
 <td>Go to the previous line</td>
 </tr>
 <tr class="even">
-<td>ctrl-w</td>
+<td>CTRL-w</td>
 <td>Delete the word to the left</td>
 </tr>
 <tr class="odd">
-<td>ctrl-u</td>
+<td>CTRL-u</td>
 <td>Delete the entire line</td>
 </tr>
 <tr class="even">
-<td>ctrl-h</td>
+<td>CTRL-h</td>
 <td>Delete one character left</td>
 </tr>
 <tr class="odd">
-<td>ctrl-d</td>
+<td>CTRL-d</td>
 <td>Delete one character right</td>
 </tr>
 </tbody>
 </table>
+</center>
 <p>To enable these: Add the following line to
 <code>~/.config/gtk-3.0/settings.ini</code></p>
 <div class="sourceCode" id="cb9"><pre

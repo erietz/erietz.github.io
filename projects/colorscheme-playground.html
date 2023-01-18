@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="/assets/css/master.css" type="text/css" charset="utf-8">
     <style>
       button {
-        margin-top: 30px;
+        margin: 30px;
       }
 
       body {
@@ -28,7 +29,7 @@
       .centered {
         text-align: left;
         margin: auto;
-        width: 50%;
+        width: 100%;
         padding: 10px;
       }
 
@@ -36,8 +37,8 @@
         overflow: scroll;
         font-family: monospace;
         border: 10px solid grey;
-        margin-top: 100px;
-        margin-bottom: 100px;
+        margin-top: 50px;
+        margin-bottom: 50px;
       }
     </style>
     <script>
@@ -75,17 +76,18 @@
           values.push(document.getElementById(group).value);
         }
         navigator.clipboard.writeText(values);
+        alert(`Copied to clipboard ${values}`);
       }
     </script>
   </head>
   <body>
+    <script src="/assets/js/navigation.js" charset="utf-8"></script>
     <center>
       <h1>Colorsheme Playground</h1>
 
       <label for="textcolor">Text</label>
       <input type="color" id="textcolor" name="textcolor" value="#d5d5d5" oninput="setTextColor(event.target.value);">
       <label for="textcolor"></label>
-      <br/>
 
       <label for="background">Background</label>
       <input type="color" id="background" name="background" value="#2A2A2A" oninput="setBackground(event.target.value);">
@@ -95,7 +97,6 @@
       <label for="keyword">Keyword</label>
       <input type="color" id="keyword" name="keyword" value="#fb8072" oninput="setCodeColor(event.target.value, 'keyword');">
       <label for="keyword"></label>
-      <br/>
 
       <label for="function">Function</label>
       <input type="color" id="function" name="function" value="#b3de69" oninput="setCodeColor(event.target.value, 'function');">
@@ -105,7 +106,6 @@
       <label for="paren">Paren</label>
       <input type="color" id="paren" name="paren" value="#ffffb3" oninput="setCodeColor(event.target.value, 'paren');">
       <label for="paren"></label>
-      <br/>
 
       <label for="variable">Variable</label>
       <input type="color" id="variable" name="variable" value="#80b1d3" oninput="setCodeColor(event.target.value, 'variable');">
@@ -115,14 +115,12 @@
       <label for="number">Number</label>
       <input type="color" id="number" name="number" value="#bebada" oninput="setCodeColor(event.target.value, 'number');">
       <label for="number"></label>
-      <br/>
 
       <label for="string">String</label>
       <input type="color" id="string" name="string" value="#8dd3c7" oninput="setCodeColor(event.target.value, 'string');">
       <label for="string"></label>
       <br/>
 
-      <button onclick="copyColorCodes()">Copy color codes to clipboard</button>
     </center>
 
     <div id="code" class="centered">
@@ -142,6 +140,10 @@
         <span class="paren">}</span>
       </pre>
     </div>
+
+    <center>
+      <button onclick="copyColorCodes()">Copy color codes to clipboard</button>
+    </center>
 
     <hr>
     <script src="https://utteranc.es/client.js"

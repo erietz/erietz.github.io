@@ -2,12 +2,12 @@
 title: Linux Configuration
 ---
 
-One of things that comes with using a minimal window manager, such as [i3], is
-having to maintain additional configuration files that a desktop environment
-would normally take care of. Most of my configuration files are kept under
-[version control], but I have not found a clean way to maintain some of the X11
-config files across multiple machines. For the time being, it seems that the
-best solution is to simply take notes of how I have configured things.
+One of things that comes with using a minimal window manager, such as [i3] or
+[dwm], is having to maintain additional configuration files that a desktop
+environment would normally take care of. Most of my configuration files are
+kept under [version control], but I have not found a clean way to maintain some
+of the X11 config files across multiple machines. For the time being, it seems
+that the best solution is to simply take notes of how I have configured things.
 
 ## Screen Resolution
 
@@ -23,10 +23,8 @@ be way too tiny to read. To fix this issue, I modified the dpi setting in the
 `~/.Xresources` file. For my laptop, which has a resolution of `2560x1600`, I
 doubled the scaling by bumping up `Xft.dpi` from `96` to `192`.
 
-```xorg
-! Xft.dpi:       96
-! the number 192 is an integer multiple of 96
-Xft.dpi:       192 
+```ini
+Xft.dpi:       192
 ```
 
 Adjusting the dpi value alone fixes most of the resolution problems, but
@@ -112,8 +110,10 @@ keycode 66 = Control_L
 add control = Control_L Control_R
 ```
 
-Note: Every time you plug in an external keyboard you will have to reload this
-file using `xmodmap ~/.Xmodmap`. This can be set to a keybinding using i3.
+<div class="attention note">
+Every time you plug in an external keyboard you will have to reload this file
+using `xmodmap ~/.Xmodmap`. This can be set to a keybinding using i3.
+</div>
 
 ```sh
 bindsym $mod+Shift+x exec --no-startup-id "xmodmap $HOME/.Xmodmap"
@@ -126,19 +126,23 @@ bindsym $mod+Shift+x exec --no-startup-id "xmodmap $HOME/.Xmodmap"
 One of the great features of a Mac is the system wide Emacs keybindings. These
 are the essentials:
 
+<center>
+
 | Key    | Description                     |
 | ---    | ---                             |
-| ctrl-a | Go to the beginning of the line |
-| ctrl-e | Go to the end of the line       |
-| ctrl-k | Kill to the end of the line     |
-| ctrl-f | Go forward one character        |
-| ctrl-b | Go backward one character       |
-| ctrl-n | Go to the next line             |
-| ctrl-p | Go to the previous line         |
-| ctrl-w | Delete the word to the left     |
-| ctrl-u | Delete the entire line          |
-| ctrl-h | Delete one character left       |
-| ctrl-d | Delete one character right      |
+| CTRL-a | Go to the beginning of the line |
+| CTRL-e | Go to the end of the line       |
+| CTRL-k | Kill to the end of the line     |
+| CTRL-f | Go forward one character        |
+| CTRL-b | Go backward one character       |
+| CTRL-n | Go to the next line             |
+| CTRL-p | Go to the previous line         |
+| CTRL-w | Delete the word to the left     |
+| CTRL-u | Delete the entire line          |
+| CTRL-h | Delete one character left       |
+| CTRL-d | Delete one character right      |
+
+</center>
 
 To enable these: Add the following line to `~/.config/gtk-3.0/settings.ini`
 
@@ -166,6 +170,7 @@ Remove the word `quite` from the line. Then run `sudo update-grub`. Note, this
 line will look slightly different if the disk is encrypted.
 
 [i3]: https://i3wm.org/
+[dwm]: https://dwm.suckless.org/
 [version control]: https://github.com/erietz/.ewr
 [archwiki]: https://wiki.archlinux.org/title/HiDPI
 [xkb]: https://wiki.archlinux.org/title/X_keyboard_extension
