@@ -47,6 +47,7 @@ html {
 }
 
 body {
+  max-width: 80em;
   position: relative;
   min-height: 80%;
 
@@ -209,7 +210,7 @@ div .sourceCode {
   float: right;
   /* color: var(--cyan); */
   text-align: center;
-  padding: 1rem 2rem;
+  padding: 0.5rem 1.5rem;
   text-decoration: none;
   font-size: 17px;
 }
