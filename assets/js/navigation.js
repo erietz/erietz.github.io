@@ -1,8 +1,8 @@
 document.write('\
-    <div class="topnav">\
-      <a href="/pages/cv.html">cv</a>\
-      <a href="/posts/index.html">posts</a>\
-      <a href="/projects/index.html">projects</a>\
-      <a id="topnav-home" href="/index.html">home</a>\
-    </div>\
+    <header class="topnav">\
+      <a href="/pages/cv.html">CV</a>\
+      <a href="/posts/index.html">POSTS</a>\
+      <a href="/projects/index.html">PROJECTS</a>\
+      <a id="topnav-home" href="/index.html">HOME</a>\
+    </header>\
 ');

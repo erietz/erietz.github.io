@@ -11,12 +11,16 @@
     div.columns{display: flex; gap: min(4vw, 1.5em);}
     div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
     ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
       width: 0.8em;
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -88,6 +92,7 @@
   <![endif]-->
 </head>
 <body>
+<main class="main-content">
 <header id="title-block-header">
 <h1 class="title">Command line Cheat Sheet</h1>
 </header>
@@ -146,6 +151,7 @@ your local machine on port 8384 and want to see the remotes port
 <div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">jupyter</span> lab <span class="at">--no-browser</span> <span class="at">--port</span><span class="op">=</span>9876</span></code></pre></div>
 <p>to start the server. A good alias is</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> jlremote=<span class="st">&#39;jupyter lab --no-browser --port=9876</span></span></code></pre></div>
+</main>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
 </body>
 </html>

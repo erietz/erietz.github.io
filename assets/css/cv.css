@@ -1,0 +1,20 @@
+h1, h2 {
+  color: var(--blue);
+  border-bottom: 1px solid #aaaaaa;
+}
+
+h3 {
+  color: var(--blue);
+}
+
+body {
+  font-size: 1.1em;
+  /* font-family: Georgia, serif; */
+  /* color: #222; */
+  line-height: 1.5;
+  padding: 2em 0;
+}
+
+/* .myself { */
+/*   color: var(--orange); */
+/* } */

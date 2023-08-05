@@ -11,8 +11,11 @@
     div.columns{display: flex; gap: min(4vw, 1.5em);}
     div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
     ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
       width: 0.8em;
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
@@ -20,8 +23,7 @@
   </style>
   <link rel="stylesheet" href="/assets/css/master.css" />
   <script src="/assets/js/navigation.js" charset="utf-8"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4832700594272187"
-  crossorigin="anonymous"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
@@ -30,6 +32,7 @@
   <![endif]-->
 </head>
 <body>
+<main class="main-content">
 <header id="title-block-header">
 <h1 class="title">Doconce for vim</h1>
 </header>
@@ -48,6 +51,7 @@ anything similar for vim. So I wrote my first vim plugin (<a
 href="https://github.com/erietz/vim-doconce">vim-doconce</a>). It is
 amazing how much easier it is to write and read code with syntax
 highlighting.</p>
+</main>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
 <hr>
 <script src="https://utteranc.es/client.js"

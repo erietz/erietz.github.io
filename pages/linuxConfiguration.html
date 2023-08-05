@@ -11,12 +11,16 @@
     div.columns{display: flex; gap: min(4vw, 1.5em);}
     div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
     ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
       width: 0.8em;
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -88,6 +92,7 @@
   <![endif]-->
 </head>
 <body>
+<main class="main-content">
 <header id="title-block-header">
 <h1 class="title">Linux Configuration</h1>
 </header>
@@ -292,6 +297,7 @@ class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#
 <p>Remove the word <code>quite</code> from the line. Then run
 <code>sudo update-grub</code>. Note, this line will look slightly
 different if the disk is encrypted.</p>
+</main>
 <script src="/assets/js/footer.js" charset="utf-8"></script>
 </body>
 </html>
