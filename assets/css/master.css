@@ -214,9 +214,15 @@ div .sourceCode {
   /* color: var(--cyan); */
   text-align: center;
   padding: 0.25rem 0.5rem;
+  margin: 0.5em;
   text-decoration: none;
   font-size: 17px;
 }
+
+#topnav-home {
+  float: left;
+}
+
 
 /* .topnav a:hover { */
 /*   color: var(--white100); */
@@ -315,10 +321,6 @@ div .sourceCode {
 /* }}} */
 /* id selector {{{ */
 
-#topnav-home {
-  float: left;
-}
-
 .full-size-img {
     background-image: url("/assets/img/panorama.png");
     background-size: cover;
@@ -327,19 +329,29 @@ div .sourceCode {
     height: 35vh;
 }
 
-#glamor-shot {
-	/* display: block; */
-	border-radius: 7em;
-	width: 14em;
-	height: 14em;
+#glamour-shot {
+  display: block;
+  border-radius: 7em;
+  width: 14em;
+  height: 14em;
   margin: 0;
   /* float: right; */
   /* clear: right; */
   position: absolute;
   right: -16em;
   top: -5em;
+  max-width: 100%;
 }
 
+
+@media screen and (min-width:320px) {
+  #glamour-shot important {
+    position: relative;
+    overflow: hidden;
+    float: right;
+    clear: right;
+  }
+}
 
 
 /* }}} */
