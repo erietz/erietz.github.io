@@ -1,20 +1,30 @@
 h1, h2 {
-  color: var(--blue);
-  border-bottom: 1px solid #aaaaaa;
+  /* color: var(--blue); */
+  border-bottom: 1px solid #000000;
 }
 
-h3 {
-  color: var(--blue);
+h3, dt {
+  color: black;
 }
 
 body {
-  font-size: 1.1em;
+  /* font-size: 1.1em; */
   /* font-family: Georgia, serif; */
   /* color: #222; */
   line-height: 1.5;
   padding: 2em 0;
 }
 
+main {
+  max-width: 50em;
+}
+
 /* .myself { */
 /*   color: var(--orange); */
 /* } */
+
+@media print {
+  body {
+    font-size: 13px;
+  }
+}
