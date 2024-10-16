@@ -14,6 +14,11 @@
 /* JetBrains mono font */
 @import url('https://fonts.googleapis.com/css?family=JetBrains Mono');
 
+/* latin modern roman */
+@import url('https://fonts.cdnfonts.com/css/latin-modern-roman');
+
+@import url('https://fonts.cdnfonts.com/css/latin-modern-mono');
+
 /* }}} */
 /* color theme {{{ */
 
@@ -84,7 +89,7 @@ body {
   padding-bottom: 4em;
 
 
-  font-family: "Roboto",sans-serif;
+  font-family: "LMRoman10","Roboto",sans-serif;
   font-size: 1em;
   line-height: 2;
   color: var(--grey90);
@@ -92,14 +97,14 @@ body {
 }
 
 main {
-  max-width: 50em;
+  max-width: 45em;
   margin-left: auto;
   margin-right: auto;
 }
 
 /* inline source code */
 code {
-  font-family: "JetBrains Mono",monospace;
+  font-family: "LMMono10","JetBrains Mono",monospace;
   background-color: var(--grey70);
   color: var(--green);
   border-radius: 4px;
@@ -136,10 +141,10 @@ th, td {
   text-align: left;
 }
 
-tr:hover {
-  color: var(--grey30);
-  background-color: var(--forestgreen);
-}
+/* tr:hover { */
+/*   color: var(--grey30); */
+/*   background-color: var(--forestgreen); */
+/* } */
 
 tr:hover > anchor  {
   color: var(--grey30);
@@ -174,8 +179,8 @@ a {
 a:hover {
   color: white;
   background-color: var(--forestgreen);
-  padding: 2px 6px;
-  border-radius: 4px;
+  padding: 1px 3px;
+  border-radius: 2px;
 }
 
 /* selected link */
@@ -187,6 +192,12 @@ a:active {
 dt {
   color: var(--orange);
   font-weight: bold;
+}
+
+dd ul, dd ol {
+    margin-left: 0; /* Remove default margin */
+    padding-left: 0; /* Remove default padding */
+    list-style-position: inside; /* Optional: control bullet placement */
 }
 
 blockquote {
@@ -276,7 +287,7 @@ to {
 
 .footer-text {
   display: block;
-  color: var(--grey10);
+  /* color: var(--grey10); */
   font-size:0.8em;
 }
 
@@ -289,7 +300,7 @@ to {
 }
 
 .containerblock {
-  max-width: 350px ;
+  max-width: 200px ;
   text-align: center ;
   padding-left: 10px ;
   padding-right: 10px ;
