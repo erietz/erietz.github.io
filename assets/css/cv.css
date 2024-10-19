@@ -15,9 +15,45 @@ body {
   padding: 2em 0;
 }
 
-main {
-  max-width: 50em;
+
+/* General layout for the resume section */
+.job {
+  margin-bottom: 1.5em; /* Adds space between job entries */
 }
+
+.job-header {
+  display: flex; /* Flexbox for aligning position and dates on the same line */
+  justify-content: space-between; /* Positions items at opposite ends */
+  align-items: baseline; /* Aligns text vertically */
+}
+
+.company {
+  font-size: 1.1em;
+  font-weight: bold; /* Make the company name bold */
+  margin-top: 0em; /* Adds space between position and company */
+}
+
+.position {
+  font-style: italic; /* Italicize the position */
+  margin: 0px;
+  /* color: #333; */
+}
+
+.dates {
+  float: right; /* Align dates to the right */
+  /* font-weight: bold; */
+  font-style: italic;
+  /* font-size: 1em; /1* Dates styling *1/ */
+  /* color: #777; /1* Lighter color for dates *1/ */
+}
+
+.description {
+  margin-top: 0.5em; /* Space above description */
+  font-size: 1em;
+  color: #444;
+  line-height: 1.5; /* Improves readability */
+}
+
 
 /* .myself { */
 /*   color: var(--orange); */
