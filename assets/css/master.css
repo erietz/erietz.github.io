@@ -96,11 +96,47 @@ body {
   background-color: var(--bg);
 }
 
+/* main { */
+/*   max-width: 45em; */
+/*   margin-left: auto; */
+/*   margin-right: auto; */
+/* } */
+
+
 main {
-  max-width: 45em;
+  width: 90%; /* Use most of the screen width */
+  max-width: 50em; /* Cap the width to prevent overly wide content */
   margin-left: auto;
   margin-right: auto;
+  padding: 1em; /* Add padding for comfortable spacing */
 }
+
+
+@media (max-width: 768px) {
+  main {
+    width: 91%; /* Use nearly the full width on smaller screens */
+    max-width: 100%; /* Ensure no fixed width applies */
+    padding: 1em; /* Maintain padding */
+  }
+}
+
+
+
+ /* /1* For tablets and small devices *1/ */
+/* @media (max-width: 768px) { */
+ /*  main { */
+ /*    max-width: 90%; /1* Use more of the screen width *1/ */
+ /*    padding: 1em; /1* Ensure some padding for spacing *1/ */
+ /*  } */
+/* } */
+
+/* /1* Styles for mobile devices *1/ */
+/* @media (max-width: 480) { */
+/*   main { */
+/*     max-width: 90%; /1* Use more of the screen width *1/ */
+/*     padding: 1em; /1* Ensure some padding for spacing *1/ */
+/*   } */
+/* } */
 
 /* inline source code */
 code {
@@ -370,27 +406,35 @@ to {
   height: 35vh;
 }
 
+
 #glamour-shot {
   display: block;
-  border-radius: 7em;
-  width: 14em;
-  height: 14em;
-  margin: 0;
-  /* float: right; */
-  /* clear: right; */
-  position: absolute;
-  right: -16em;
-  top: -5em;
-  max-width: 100%;
+  border-radius: 50%; /* Makes the image circular */
+  width: 13em; /* Set a consistent width and height */
+  height: 13em;
+  margin: 0; /* Reset any margins */
+  max-width: 100%; /* Ensure it doesn't overflow */
+  object-fit: cover; /* Ensures the image fills the circle nicely */
 }
 
+/* Desktop view */
+@media (min-width: 769px) {
+  #glamour-shot {
+    float: right; /* Floats the image to the right of the text */
+    margin-left: 1em;
+    margin-bottom: 1em;
+    margin-right: 9em;
+  }
+}
 
-@media screen and (min-width:320px) {
-  #glamour-shot important {
-    position: relative;
-    overflow: hidden;
-    float: right;
-    clear: right;
+/* Mobile view */
+@media (max-width: 768px) {
+  #glamour-shot {
+    float: none; /* Removes the float on smaller screens */
+    display: block; /* Ensures it's treated as a block element */
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5em; /* Adds space between image and text */
   }
 }
 
