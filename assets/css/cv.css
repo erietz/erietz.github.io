@@ -27,4 +27,8 @@ main {
   body {
     font-size: 13px;
   }
+
+  .no-print {
+    display: none;
+  }
 }
