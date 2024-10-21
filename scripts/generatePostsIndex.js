@@ -73,7 +73,6 @@ async function main() {
   console.log('index.md file generated successfully.');
 }
 
-// Call the generateIndex function
 main().catch(err => {
   console.error('Error generating index.md:', err);
 });
