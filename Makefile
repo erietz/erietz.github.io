@@ -7,8 +7,8 @@ PD_FLAGS := --standalone --toc --mathjax \
 			--include-in-header ./assets/navigation.html \
 			--include-before-body ./assets/main_start.html \
 			--include-after-body ./assets/main_end.html \
-			--include-after-body ./assets/footer.html \
-			--highlight-style ./assets/pandoc/set3.theme
+			--include-after-body ./assets/footer.html # \
+			# --highlight-style ./assets/pandoc/set3.theme
 
 PD_FLAGS_WITH_COMMENTS := --include-after-body ./assets/comments.html
 

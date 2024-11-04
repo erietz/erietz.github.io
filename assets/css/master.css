@@ -141,8 +141,8 @@ main {
 /* inline source code */
 code {
   font-family: "LMMono10","JetBrains Mono",monospace;
-  background-color: var(--grey70);
-  color: var(--green);
+  /* background-color: var(--grey70); */
+  color: var(--hover);
   border-radius: 4px;
 }
 
