@@ -12,7 +12,7 @@ PD_FLAGS := --standalone --toc --mathjax \
 
 PD_FLAGS_WITH_COMMENTS := --include-after-body ./assets/comments.html
 
-build: $(HTML_FILES) index Makefile
+build: $(HTML_FILES) index Makefile assets/files/rietzCV.pdf
 
 posts/%.html: _posts/%.md
 	pandoc $(PD_FLAGS)  $(PD_FLAGS_WITH_COMMENTS) $^ -o $@
@@ -28,6 +28,9 @@ index:
 	pandoc $(PD_FLAGS)  _posts/index.md -o posts/index.html
 	sed -i.bak 's/\(href=".*\).md">/\1.html">/' ./posts/index.html
 	rm ./posts/index.html.bak
+
+assets/files/rietzCV.pdf: pages/cv.html
+	npm run printResume
 
 clean:
 	rm $(HTML_FILES)

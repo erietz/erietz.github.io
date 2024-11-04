@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "generatePostsIndex": "node ./scripts/generatePostsIndex.js",
+    "printResume": "node ./scripts/printResume.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@playwright/test": "^1.48.2",
     "glob": "^11.0.0",
     "http-server": "^14.1.1",
     "yaml": "^2.6.0"

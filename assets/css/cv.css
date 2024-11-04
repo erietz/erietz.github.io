@@ -62,9 +62,15 @@ body {
 @media print {
   body {
     font-size: 13px;
+    padding: 0px;
+    margin: 0px;
   }
 
   .no-print {
     display: none;
+  }
+
+  div {
+    break-inside: avoid;
   }
 }
