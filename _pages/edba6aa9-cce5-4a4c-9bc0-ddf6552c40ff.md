@@ -1,7 +1,7 @@
 # Ethans 30th B-day Carne Asada Sign up
 
 Please fill out the form below for yourself and for any guests so that I can
-know how much meat and beer to aquire.
+know how much meat and beer to acquire.
 
 <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScZlui67uNNLMQIRiHJ89UH3qOmw7ztnPQu62n79CYc9ViW7g/viewform?embedded=true" width="640" height="625" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 
