@@ -15,6 +15,7 @@
     "@playwright/test": "^1.48.2",
     "glob": "^11.0.0",
     "http-server": "^14.1.1",
+    "prettier": "^3.5.3",
     "yaml": "^2.6.0"
   }
 }
