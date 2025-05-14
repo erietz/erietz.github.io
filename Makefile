@@ -1,52 +1,65 @@
-SRC_DIRS := src/_posts src/_projects src/_pages
+SRC_ROOT := src
+SRC_DIRS := $(SRC_ROOT)/posts $(SRC_ROOT)/projects $(SRC_ROOT)/pages
 SRC_MD_FILES := $(shell find $(SRC_DIRS) -type f -name '*.md')
 SRC_HTML_FILES := $(shell find $(SRC_DIRS) -type f -name '*.html')
-DEST_HTML_FILES := $(patsubst src/_%.md,%.html,$(SRC_MD_FILES)) $(patsubst src/_%.html,%.html,$(SRC_HTML_FILES))
 
-PD_FLAGS := --standalone --toc --mathjax \
-			-c /assets/css/master.css \
-			--include-in-header ./assets/navigation.html \
-			--include-before-body ./assets/main_start.html \
-			--include-after-body ./assets/main_end.html \
-			--include-after-body ./assets/footer.html # \
-			# --highlight-style ./assets/pandoc/set3.theme
+# Convert source paths to output paths
+DEST_HTML_FILES := $(patsubst $(SRC_ROOT)/%,%,$(SRC_MD_FILES:.md=.html)) \
+                   $(patsubst $(SRC_ROOT)/%,%,$(SRC_HTML_FILES))
+
+PD_FLAGS := \
+	--standalone \
+	--toc \
+	--mathjax \
+	-c /assets/css/master.css \
+	--include-in-header ./assets/navigation.html \
+	--include-before-body ./assets/main_start.html \
+	--include-after-body ./assets/main_end.html \
+	--include-after-body ./assets/footer.html
+
 PD_FLAGS_WITH_COMMENTS := --include-after-body ./assets/comments.html
 
+build: $(DEST_HTML_FILES) posts/index.html assets/files/rietzCV.pdf
 
-build: $(DEST_HTML_FILES) src/_posts/index.md Makefile assets/files/rietzCV.pdf
+# Pattern rules for Markdown files
+%.html: $(SRC_ROOT)/posts/%.md
+	pandoc $(PD_FLAGS) $(PD_FLAGS_WITH_COMMENTS) $< -o $@
 
+%.html: $(SRC_ROOT)/projects/%.md
+	pandoc $(PD_FLAGS) $(PD_FLAGS_WITH_COMMENTS) $< -o $@
 
-projects/%.html: src/_projects/%.md
-	pandoc $(PD_FLAGS)  $(PD_FLAGS_WITH_COMMENTS) $^ -o $@
+%.html: $(SRC_ROOT)/pages/%.md
+	pandoc $(PD_FLAGS) $< -o $@
 
-projects/%.html: src/_projects/%.html
-	cp $^ $@
+# Pattern rules for raw HTML files
+%.html: $(SRC_ROOT)/posts/%.html
+	cp $< $@
 
-pages/%.html: src/_pages/%.md
-	pandoc $(PD_FLAGS) $^ -o $@
+%.html: $(SRC_ROOT)/projects/%.html
+	cp $< $@
 
-pages/%.html: src/_pages/%.html
-	cp $^ $@
+%.html: $(SRC_ROOT)/pages/%.html
+	cp $< $@
 
-posts/%.html: src/_posts/%.md
-	pandoc $(PD_FLAGS)  $(PD_FLAGS_WITH_COMMENTS) $^ -o $@
+# Generate posts index
+posts/index.html: $(SRC_ROOT)/posts/index.md
+	pandoc $(PD_FLAGS) $< -o $@
+	sed -i.bak 's/\(href=".*\).md">/\1.html">/' $@
+	rm $@.bak
 
-# This needs built after the dest html files are generated because of the sed
-# command.
-SRC_POSTS := $(shell find src/_posts -type f -name '*.md' ! -name 'index.md')
-src/_posts/index.md: $(SRC_POSTS)
+# Rebuild index.md if any post changes (excluding index.md itself)
+$(SRC_ROOT)/posts/index.md: $(filter-out $(SRC_ROOT)/posts/index.md,$(SRC_MD_FILES))
 	npm run generatePostsIndex
-	pandoc $(PD_FLAGS)  src/_posts/index.md -o posts/index.html
-	sed -i.bak 's/\(href=".*\).md">/\1.html">/' ./posts/index.html
-	rm ./posts/index.html.bak
 
+# Resume PDF generation
 assets/files/rietzCV.pdf: pages/cv.html
 	npm run printResume
 
 clean:
-	rm $(DEST_HTML_FILES)
-	rm -f src/_posts/index.md
-	rm assets/files/rietzCV.pdf
+	rm -f $(DEST_HTML_FILES)
+	rm -f $(SRC_ROOT)/posts/index.md
+	rm -f posts/index.html
+	rm -f assets/files/rietzCV.pdf
 
 serve:
 	npx http-server
