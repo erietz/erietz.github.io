@@ -22,23 +22,23 @@ PD_FLAGS_WITH_COMMENTS := --include-after-body ./assets/comments.html
 build: $(DEST_HTML_FILES) posts/index.html assets/files/rietzCV.pdf
 
 # Pattern rules for Markdown files
-%.html: $(SRC_ROOT)/posts/%.md
+posts/%.html: $(SRC_ROOT)/posts/%.md
 	pandoc $(PD_FLAGS) $(PD_FLAGS_WITH_COMMENTS) $< -o $@
 
-%.html: $(SRC_ROOT)/projects/%.md
+projects/%.html: $(SRC_ROOT)/projects/%.md
 	pandoc $(PD_FLAGS) $(PD_FLAGS_WITH_COMMENTS) $< -o $@
 
-%.html: $(SRC_ROOT)/pages/%.md
+pages/%.html: $(SRC_ROOT)/pages/%.md
 	pandoc $(PD_FLAGS) $< -o $@
 
 # Pattern rules for raw HTML files
-%.html: $(SRC_ROOT)/posts/%.html
+posts/%.html: $(SRC_ROOT)/posts/%.html
 	cp $< $@
 
-%.html: $(SRC_ROOT)/projects/%.html
+projects/%.html: $(SRC_ROOT)/projects/%.html
 	cp $< $@
 
-%.html: $(SRC_ROOT)/pages/%.html
+pages/%.html: $(SRC_ROOT)/pages/%.html
 	cp $< $@
 
 # Generate posts index

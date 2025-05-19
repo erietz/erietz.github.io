@@ -8,21 +8,12 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    /* The extra [class] is a hack that increases specificity enough to
-       override a similar rule in reveal.js */
-    ul.task-list[class]{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      font-size: inherit;
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
-    /* CSS for syntax highlighting */
+    ul.task-list{list-style: none;}
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +24,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -95,20 +86,17 @@
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#intro" id="toc-intro">Intro</a></li>
-<li><a href="#installation" id="toc-installation">Installation</a>
+<li><a href="#intro">Intro</a></li>
+<li><a href="#installation">Installation</a>
 <ul>
-<li><a href="#setup-static-ip-address"
-id="toc-setup-static-ip-address">Setup Static IP Address</a></li>
-<li><a href="#supported-os" id="toc-supported-os">Supported OS</a></li>
-<li><a href="#docker" id="toc-docker">Docker</a></li>
+<li><a href="#setup-static-ip-address">Setup Static IP Address</a></li>
+<li><a href="#supported-os">Supported OS</a></li>
+<li><a href="#docker">Docker</a></li>
 </ul></li>
-<li><a href="#setup-dns-on-each-device"
-id="toc-setup-dns-on-each-device">Setup DNS on each device</a>
+<li><a href="#setup-dns-on-each-device">Setup DNS on each device</a>
 <ul>
-<li><a href="#iphone" id="toc-iphone">iPhone</a></li>
-<li><a href="#desktop-linux" id="toc-desktop-linux">Desktop
-Linux</a></li>
+<li><a href="#iphone">iPhone</a></li>
+<li><a href="#desktop-linux">Desktop Linux</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -140,34 +128,34 @@ show below support pi-hole.</p>
 <col style="width: 33%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Distribution</th>
 <th>Release</th>
 <th>Architecture</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Raspberry Pi OS (formerly Raspbian)</td>
 <td>Stretch / Buster / Bullseye</td>
 <td>ARM</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Ubuntu</td>
 <td>16.x / 18.x / 20.x /21.x</td>
 <td>ARM / x86_64</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Debian</td>
 <td>9 / 10 /11</td>
 <td>ARM / x86_64 / i386</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Fedora</td>
 <td>33 / 34</td>
 <td>ARM / x86_64</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>CentOS</td>
 <td>7 / 8</td>
 <td>x86_64</td>

@@ -8,21 +8,12 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    /* The extra [class] is a hack that increases specificity enough to
-       override a similar rule in reveal.js */
-    ul.task-list[class]{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      font-size: inherit;
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
-    /* CSS for syntax highlighting */
+    ul.task-list{list-style: none;}
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +24,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -95,27 +86,22 @@
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#screen-resolution" id="toc-screen-resolution">Screen
-Resolution</a></li>
-<li><a href="#high-dpi" id="toc-high-dpi">High DPI</a>
+<li><a href="#screen-resolution">Screen Resolution</a></li>
+<li><a href="#high-dpi">High DPI</a>
 <ul>
-<li><a href="#gtk-themeicons" id="toc-gtk-themeicons">GTK
-Theme/Icons</a></li>
-<li><a href="#qt5" id="toc-qt5">QT5</a></li>
-<li><a href="#additional-gtkqt5-tweaks"
-id="toc-additional-gtkqt5-tweaks">Additional GTK/QT5 Tweaks</a></li>
-<li><a href="#morc_menu" id="toc-morc_menu">morc_menu</a></li>
-<li><a href="#electron-apps" id="toc-electron-apps">Electron
-Apps</a></li>
+<li><a href="#gtk-themeicons">GTK Theme/Icons</a></li>
+<li><a href="#qt5">QT5</a></li>
+<li><a href="#additional-gtkqt5-tweaks">Additional GTK/QT5
+Tweaks</a></li>
+<li><a href="#morc_menu">morc_menu</a></li>
+<li><a href="#electron-apps">Electron Apps</a></li>
 </ul></li>
-<li><a href="#key-remaps" id="toc-key-remaps">Key remaps</a>
+<li><a href="#key-remaps">Key remaps</a>
 <ul>
-<li><a href="#system-wide-emacs-keybindings"
-id="toc-system-wide-emacs-keybindings">System Wide Emacs
+<li><a href="#system-wide-emacs-keybindings">System Wide Emacs
 Keybindings</a></li>
 </ul></li>
-<li><a href="#verbose-boot-up" id="toc-verbose-boot-up">Verbose Boot
-Up</a></li>
+<li><a href="#verbose-boot-up">Verbose Boot Up</a></li>
 </ul>
 </nav>
 <p>One of things that comes with using a minimal window manager, such as
@@ -224,53 +210,53 @@ keybindings. These are the essentials:</p>
 <center>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Key</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>CTRL-a</td>
 <td>Go to the beginning of the line</td>
 </tr>
-<tr>
+<tr class="even">
 <td>CTRL-e</td>
 <td>Go to the end of the line</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>CTRL-k</td>
 <td>Kill to the end of the line</td>
 </tr>
-<tr>
+<tr class="even">
 <td>CTRL-f</td>
 <td>Go forward one character</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>CTRL-b</td>
 <td>Go backward one character</td>
 </tr>
-<tr>
+<tr class="even">
 <td>CTRL-n</td>
 <td>Go to the next line</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>CTRL-p</td>
 <td>Go to the previous line</td>
 </tr>
-<tr>
+<tr class="even">
 <td>CTRL-w</td>
 <td>Delete the word to the left</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>CTRL-u</td>
 <td>Delete the entire line</td>
 </tr>
-<tr>
+<tr class="even">
 <td>CTRL-h</td>
 <td>Delete one character left</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>CTRL-d</td>
 <td>Delete one character right</td>
 </tr>
