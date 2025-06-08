@@ -48,10 +48,10 @@ function isPortInUse(port) {
     printBackground: true,
     displayHeaderFooter: false,
     margin: {
-      top: "1.5cm",
-      bottom: "1.5cm",
-      left: "1.5cm",
-      right: "1.5cm",
+      top: "1.0cm",
+      bottom: "1.0cm",
+      left: "1.0cm",
+      right: "1.0cm",
     },
   });
 
