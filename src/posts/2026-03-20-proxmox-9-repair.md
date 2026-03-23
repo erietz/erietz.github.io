@@ -7,6 +7,10 @@ categories:
   - debian
 ---
 
+## Intro
+
+I managed to botch my Proxmox installation in a rather classic way: I tried to upgrade from Debian 12 to 13 while watching *The Pitt* on HBO Max, only half paying attention. Predictably, I missed some critical pre-upgrade warnings, and my system wouldn't boot. This post documents the successful repair procedure for anyone else who might find themselves in a similar situation (distracted or otherwise).
+
 ## Background
 
 ### What Happened
