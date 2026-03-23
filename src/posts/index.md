@@ -5,6 +5,7 @@ title: Posts
 <center>
 |     |       |      |      |
 |:--- | :---- | :--- | :--- |
+| Ɣ | 2026-03-20 | [Proxmox 9 Boot Repair Session](2026-03-20-proxmox-9-repair.md) | *linux, proxmox, homelab, debian* |
 | Ɣ | 2023-01-16 | [Download Canvas Course Materials](2023-01-16-download-canvas-materials.md) | *web, lifehack* |
 | Ɣ | 2022-12-13 | [Home Server Upgrade (Part 3)](2022-12-13-incremental-backups.md) | *linux, backups* |
 | Ɣ | 2022-05-12 | [Home Server Upgrade (Part 2)](2022-05-12-home-server-part2.md) | *linux, wifi* |
