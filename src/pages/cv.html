@@ -18,13 +18,190 @@
     <center>
       <h1 class="myself">Ethan W. Rietz</h1>
       <div>
-        <p style="display: inline-block; text-align: left;">
-          email: <a href="mailto:ewrietz@gmail.com">ewrietz@gmail.com</a>
-          <br />
-          url: <a href="https://erietz.dev/">https://erietz.dev/</a>
+        <p class="contact">
+          <a href="mailto:ewrietz@gmail.com">ewrietz@gmail.com</a>
+          &nbsp;&middot;&nbsp;
+          <a href="https://erietz.dev/">erietz.dev</a>
+          &nbsp;&middot;&nbsp;
+          <a href="https://github.com/erietz">github.com/erietz</a>
         </p>
       </div>
     </center>
+
+    <h2>Summary</h2>
+
+    <p>
+      Backend and platform engineer leading the whole server side at a startup:
+      API architecture, Azure infrastructure, MySQL, CI/CD, and the AI platform,
+      owned from design through production operations.
+    </p>
+
+    <h2>Technical Skills</h2>
+
+    <dl class="skills">
+      <dt>Languages</dt>
+      <dd>TypeScript, JavaScript, SQL, Go, Python, C#, Bash</dd>
+
+      <dt>Backend</dt>
+      <dd>Node.js, REST, GraphQL, WebSockets, RabbitMQ, Express</dd>
+
+      <dt>Data</dt>
+      <dd>MySQL (schema design, query optimization, administration), dbmate
+        migrations, Typesense, Algolia</dd>
+
+      <dt>Cloud &amp; Infrastructure</dt>
+      <dd>Azure (App Service, Functions, MySQL Flexible Server, API Management,
+        Blob Storage, CDN, Service Bus), GitHub Actions, Docker, Ansible,
+        Linux</dd>
+
+      <dt>AI / LLM</dt>
+      <dd>Vercel AI SDK, Anthropic and OpenAI APIs, tool use and structured
+        outputs, prompt caching, agent frameworks, MCP</dd>
+
+      <dt>Integrations</dt>
+      <dd>Shopify (Admin GraphQL, App Store, OAuth, webhooks), Braintree,
+        FedEx / UPS / EasyPost, Logicbroker, Klaviyo, Postmark</dd>
+    </dl>
+
+    <h2>Professional</h2>
+
+    <div class="job">
+      <div>
+        <span class="company">Coreleap</span>
+        <span class="dates">Jan 2023 - Now</span>
+      </div>
+      <p class="position">Software Engineer, Peg and The Rush Market</p>
+      <p class="org-note">
+        Omaha retail-technology company operating The Rush Market and Peg.
+        Formerly Rush ReCommerce.
+      </p>
+      <p class="scope">
+        <strong>Lead backend engineer.</strong> Owner of backend architecture,
+        cloud infrastructure, databases, and release engineering across both
+        product lines.
+        Peg is an AI agent that processes ecommerce returns in real time,
+        deciding for each item whether to refund it, swap it for an exchange or
+        store credit, offer the customer a discount to keep it, send it back to
+        the retailer, or resell it.
+      </p>
+      <ul>
+        <li><strong>Founding backend engineer for Peg.</strong> Authored roughly 90%
+          of the primary API service, defined the layered service architecture
+          the team still builds on, and remained its top contributor for two
+          years.</li>
+
+        <li><strong>Built the AI platform behind Peg's return decisions.</strong>
+          Skills that read customer photos, assess damage, judge resale
+          condition, and check an item against the retailer's return policy all
+          run through a provider-agnostic LLM client with retries, circuit breakers,
+          and per-skill fallback models, so a vendor outage degrades the
+          experience instead of breaking it. Prompts, model choice, and
+          reasoning tier live in a database-driven registry, tunable without a
+          deploy.</li>
+
+        <li><strong>Built the resale side of the product</strong>, where returned
+          items still worth selling go to live auction rather than back to a
+          warehouse. Proxy bidding with dynamic increments, auction expiry and
+          win handling, auto-relisting, buy-it-now, auto-checkout, and penalties
+          for winners who do not pay, with bid updates pushed over WebSockets.
+          The winning bidder receives the item directly from the customer who
+          returned it, so it never makes the return trip.</li>
+
+        <li><strong>Built the returner profile and risk scoring</strong> behind
+          Peg's fraud prevention, which flags serial returners and blocks
+          high-risk accounts before a return is approved.</li>
+
+        <li><strong>Designed and shipped the public Shopify app</strong> that
+          retailers install to connect their store. Took it through App Store
+          commercialization: usage-based volume
+          pricing through the App Events API with deterministic idempotency, the
+          mandatory privacy-compliance webhooks, an OAuth token model migration
+          from offline to expiring online tokens, and a REST to GraphQL Admin
+          API migration.</li>
+
+        <li><strong>Cut Azure infrastructure spend 76%</strong>, an annual saving on
+          the order of a full engineering salary, through a self-scoped audit and remediation program: app-service rationalization, Windows to
+          Linux migrations to shed licensing cost, whole-environment
+          decommissioning, and three-year reserved capacity, while absorbing an
+          entirely new product stack inside the reduced envelope.</li>
+
+        <li><strong>Migrated the entire production MySQL estate</strong> (5
+          hosts, 23 Azure App Service targets across 8 services) onto new
+          Flexible Server instances with zero data loss, reclaiming 4.8 TB of
+          storage (&minus;77%) and carrying a MySQL 5.7 to 8.0 upgrade in the
+          same cutover. Wrote an orchestration CLI with dry-run diffing and
+          one-command rollback, and rehearsed the cutover against preprod
+          first.</li>
+
+        <li><strong>Consolidated three Node services and five private packages
+          into one strict-mode TypeScript pnpm monorepo</strong> with per-app
+          change-detection CI/CD, so a change in one app builds and deploys only
+          that app. Introduced dbmate schema migrations, a CI drift check, a
+          house migration linter, and a Dockerized DB-backed integration test
+          suite.</li>
+
+        <li><strong>Integrated Logicbroker dropship end to end</strong>: orders,
+          inventory, product feed, shipments, returns, and invoicing for 100+
+          vendors with zero manual steps, plus the reusable API client
+          package.</li>
+
+        <li><strong>Owned the RushMarket API</strong> behind
+          <a href="https://rushmarket.com" target="_blank">rushmarket.com</a>,
+          the Corelink warehouse admin tool, and the vendor-facing returns
+          portal: pricing and markdown engines, liquidation and multi-box
+          processing workflows, cycle counting, and the operational reporting
+          suite. Also the <strong>Geographic Display Engine</strong>, which pulls
+          carrier ship costs and calculates profit margins across the major US
+          metro shipping zones, and the <strong>external API</strong> that
+          vendors and third-party logistics partners integrate with directly,
+          published and secured through Azure API Management.</li>
+
+        <li><strong>Primary reviewer and merge gate for the backend
+          codebase.</strong> Built the team's Jira, database, and PR-review
+          agent tooling, plus the Ansible-managed VM fleet the engineering
+          team's AI coding agents run on. Occasional
+          small feature work in the Vue/Quasar frontend.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <span class="company">Werner Enterprises</span>
+      <span class="dates">Apr 2021 - Nov 2022</span>
+      <p class="position">Software Intern (Oct 2021 - Nov 2022)</p>
+      <ul>
+        <li>Built a real-time data sync application between legacy Werner
+          applications and the Mastery Logistics Systems Mastermind TMS, using
+          Azure Service Buses for reliable message delivery.</li>
+        <li>Developed mobile applications with the Ionic framework on a C#/.NET
+          backend, with extensive unit and integration test suites in MSTest.</li>
+      </ul>
+      <p>Tech Stack: C#, TypeScript/Angular, Azure, SQL Server, Entity Framework</p>
+
+      <p class="position">Software QA Intern (Apr 2021 - Oct 2021)</p>
+      <ul>
+        <li>Tested APIs, UIs, and mobile devices using a variety of testing
+          methods.</li>
+      </ul>
+      <p>Tech Stack: Postman, Perfecto, AS400, Db2, Azure Cosmos DB, Python, JavaScript</p>
+    </div>
+
+    <div class="job cv-only">
+      <span class="company">Agilent Technologies</span>
+      <span class="dates">2017 - 2019</span>
+      <p class="position">Manufacturing Associate</p>
+      <p>Manufactured liquid consumable products (gels, buffers, DNA/RNA ladders
+        and markers) for Agilent’s capillary electrophoresis instruments in an
+        aseptic environment.</p>
+    </div>
+
+    <div class="job cv-only">
+      <span class="company">Limnology Laboratory</span>
+      <span class="dates">2014 - 2015</span>
+      <p class="position">Chemistry Technician</p>
+      <p>Worked in a laboratory certified by the Iowa Department of Natural
+        Resources to analyze water nutrients for the Iowa Lakes Survey Monitoring
+        Program.</p>
+    </div>
 
     <h2>Education</h2>
 
@@ -52,105 +229,7 @@
       <p class="position">Bachelor of Science: Biochemistry (GPA: 3.51)</p>
     </div>
 
-    <h2>Professional</h2>
-
-
-    <div class="job">
-      <div>
-        <span class="company">Rush ReCommerce</span>
-        <span class="dates">Jan 2023 - Now</span>
-      </div>
-      <p class="position">Software Engineer</p>
-      <ul>
-        <li>Joined a lean engineering team at a startup; became the <strong>sole backend engineer</strong> after ~20
-          months, taking ownership of backend systems, infrastructure, and data.</li>
-        <li>Built a <strong>real-time auction system</strong> using WebSockets that powers a unique
-          <strong>customer-to-customer resale experience</strong>: customers return items via the Peg mobile app
-          (connected through our Shopify app), triggering live auctions on <code>peg.com</code>. Winning bidders receive
-          direct shipment from the original purchaser.
-        </li>
-        <li>Designed a <strong>public Shopify app</strong> from scratch, enabling retailers to offer
-          integrated self-service return flows directly through peg and Shopify.</li>
-        <li>Integrated <strong>Logicbroker</strong> to automate product syncing, order flow, shipment tracking, and
-          invoicing for 100+ vendors with zero manual steps.</li>
-        <li>Maintained and expanded the <strong>RushMarket API</strong>, powering:
-          <ul>
-            <li><a href="https://rushmarket.com" target="_blank">rushmarket.com</a> — customer-facing eCommerce
-              storefront</li>
-            <li><a href="https://corelink.rushmarket.com" target="_blank">corelink.rushmarket.com</a> — internal
-              return-processing admin tool</li>
-            <li><a href="https://central.rushrecommerce.com" target="_blank">central.rushrecommerce.com</a> —
-              vendor-facing returns
-              portal</li>
-          </ul>
-        </li>
-        <li>Acted as <strong>Database Administrator</strong>, managing MySQL schema changes, query performance, and
-          backups.</li>
-        <li>Managed <strong>Azure infrastructure</strong> for backend services: provisioned App Services, configured
-          deployment pipelines, and maintained MySQL instances.</li>
-        <li>Took over and enhanced a <strong>geographic display engine</strong> used to assess profitability across
-          metro shipping zones.</li>
-        <li>Delivered production-ready systems quickly with minimal supervision in a high-autonomy, fast-moving
-          environment.</li>
-      </ul>
-      <p>Tech Stack: Node.js, MySQL, RabbitMQ, Azure, Shopify, REST APIs, WebSockets, GraphQL</p>
-    </div>
-
-
-    <!-- <div class="job"> -->
-    <!--   <div> -->
-    <!--     <span class="company">Rush ReCommerce</span> -->
-    <!--     <span class="dates">Jan 2023 - Now</span> -->
-    <!--   </div> -->
-    <!--   <p class="position">Software Engineer</p> -->
-    <!--   <ul> -->
-    <!--     <li>Developed APIs for software used internally by employees, APIs for a web application provided to vendors and -->
-    <!--       third party logistic warehouse partners, and an external API used directly by vendors.</li> -->
-    <!--     <li>Integrated Logicbroker, a drop ship solution, into the existing Shopify eCommerce platform. The integration -->
-    <!--       included automated product and inventory feeds, order creation, shipment handling, and invoice processing for -->
-    <!--       100+ vendors with zero human interaction.</li> -->
-    <!--     <li>Developed APIs for a SaaS application provided to vendors to process online returns at their own facilities. -->
-    <!--     </li> -->
-    <!--     <li>Worked on a geographical display engine which obtains ship costs and calculates profit margins for the major -->
-    <!--       US metros.</li> -->
-    <!--   </ul> -->
-    <!--   <p>Tech Stack: Node.js, MySQL, RabbitMQ, Azure</p> -->
-    <!-- </div> -->
-
-    <div class="job">
-      <span class="company">Werner Enterprises</span>
-      <span class="dates">Apr 2021 - Nov 2022</span>
-      <p class="position">Software Intern (Oct 2021 - Nov 2022)</p>
-      <ul>
-        <li>Worked on a real-time data sync application between legacy Werner applications and the Mastery Logistics
-          Systems Mastermind TMS, utilizing Azure Service Buses to ensure reliable message delivery.</li>
-        <li>Developed mobile applications using the Ionic framework and C#/.NET on the back end.</li>
-        <li>Wrote extensive unit and integration test suites using MSTest.</li>
-      </ul>
-      <p>Tech Stack: C#, TypeScript/Angular, Azure, SQL Server, Entity Framework</p>
-
-      <p class="position">Software QA Intern (Apr 2021 - Oct 2021)</p>
-      <ul>
-        <li>Tested APIs, UIs, and mobile devices using a variety of testing methods.</li>
-      </ul>
-      <p>Tech Stack: Postman, Perfecto, AS400, Db2, Azure Cosmos DB, Python, JavaScript</p>
-    </div>
-
-    <div class="job">
-      <span class="company">Agilent Technologies</span>
-      <span class="dates">2017 - 2019</span>
-      <p class="position">Manufacturing Associate</p>
-      <p>Manufactured liquid consumable products (gels, buffers, DNA/RNA ladders and markers) for Agilent’s capillary
-        electrophoresis instruments in an aseptic environment.</p>
-    </div>
-
-    <div class="job">
-      <span class="company">Limnology Laboratory</span>
-      <span class="dates">2014 - 2015</span>
-      <p class="position">Chemistry Technician</p>
-      <p>Worked in a laboratory certified by the Iowa Department of Natural Resources to analyze water nutrients for the
-        Iowa Lakes Survey Monitoring Program.</p>
-    </div>
+    <div class="cv-only">
 
     <h2>Research</h2>
 
@@ -714,6 +793,8 @@
           </tbody>
         </table>
       </center>
+    </div>
+
     </div>
 
     <br />

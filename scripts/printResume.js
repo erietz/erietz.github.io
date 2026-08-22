@@ -42,6 +42,10 @@ function isPortInUse(port) {
     waitUntil: "networkidle",
   });
 
+  // The PDF is the *resume*: a trimmed, software-focused version of the full
+  // CV that lives on the web. Anything marked .cv-only is dropped here.
+  await page.addStyleTag({ content: ".cv-only { display: none !important; }" });
+
   await page.pdf({
     path: "./assets/files/rietzCV.pdf",
     format: "Letter",

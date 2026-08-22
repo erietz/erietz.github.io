@@ -62,6 +62,7 @@ body {
 @media print {
   body {
     font-size: 13px;
+    line-height: 1.35;
     padding: 0px;
     margin: 0px;
   }
@@ -70,7 +71,77 @@ body {
     display: none;
   }
 
+  /* Small units stay intact... */
   div {
     break-inside: avoid;
   }
+
+  /* ...but a long job entry flows across a page boundary rather than being
+     pushed whole onto the next page and stranding half of the previous one. */
+  .job {
+    break-inside: auto;
+  }
+
+  .job > p,
+  dl.skills {
+    break-inside: avoid;
+  }
+
+  /* A long bullet is allowed to split across a page boundary, but never to
+     leave a single dangling line on either side of it. Holding whole bullets
+     together instead wastes most of a page whenever one lands near the bottom. */
+  .job li {
+    orphans: 2;
+    widows: 2;
+  }
+
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+}
+
+/* One-line descriptor of an employer whose name isn't self-explanatory */
+.org-note {
+  margin: 0.2em 0 0 0;
+  font-size: 0.9em;
+  color: #555;
+}
+
+/* Ownership / scope statement that sits above a job's bullets */
+.scope {
+  margin: 0.5em 0 0.5em 0;
+}
+
+/* Technical skills: label on the left, comma-separated list on the right */
+dl.skills {
+  margin: 0.5em 0;
+}
+
+dl.skills dt {
+  float: left;
+  clear: left;
+  width: 11em;
+  font-weight: bold;
+}
+
+dl.skills dd {
+  margin-left: 11.5em;
+  margin-bottom: 0.35em;
+}
+
+@media (max-width: 40em) {
+  dl.skills dt {
+    float: none;
+    width: auto;
+  }
+
+  dl.skills dd {
+    margin-left: 0;
+    margin-bottom: 0.6em;
+  }
+}
+
+.contact {
+  text-align: center;
 }
